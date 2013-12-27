@@ -39,7 +39,7 @@ state? Then users could access any cursor at any time.
 Currently when building a generic component you are locked into Om's
 API. We could replace the explicit Om dependency by instead requiring
 only a higher level shared dependency like `core.async`. Setting app
-state or local component state then can be designed such other
+state or local component state then can be designed such that other
 rendering systems may be used. Then the only remaining assumption is
 that the component function takes two parameters - one is the data
 representing the component, the other is an optional map containing
