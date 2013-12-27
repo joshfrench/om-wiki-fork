@@ -1,1 +1,1 @@
-Welcome to the om wiki!
+* [[Design]]
