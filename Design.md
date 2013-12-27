@@ -4,7 +4,9 @@ I'm still not completely happy with how state is handled. In contrast
 dealing with paths has become considerably cleaner with the inclusion
 of the `ICursor` types - users can simply access their application
 data using the ClojureScript standard library and we can track the
-path under the hood.
+path under the hood. This important given the last section on this
+page - users can build components and be completely oblivious to the
+path abstraction.
 
 The state tension lies in the fact that we want components to be
 shareable and in order to be shareable they need to be oblivious as to
