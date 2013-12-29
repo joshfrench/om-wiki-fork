@@ -1,15 +1,5 @@
 ### Warts
 
-#### Getting data from root
-
-For joining together components being able to access data from the
-root of the application state is useful. Now that paths are implicit
-we've dropped `:abs-path` option to `om.core/build`. This functionality
-should be restored.
-
-Perhaps we should allows users to create and name an application
-state? Then users could access any cursor at any time.
-
 #### Preventing Lock-in
 
 Currently when building a generic component you are locked into Om's
