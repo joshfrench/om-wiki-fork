@@ -21,14 +21,15 @@ React's, but we do not actually pass raw React props or states to
 implementors of the life cycle protocols. Instead we pass immutable
 values in both cases.
 
-It's useful to have component local state for two reasons. Often you
-do not want to pollute the original data with transient application
-state information. Editing a text field is a good example of this. The
-other useful aspect of being able to set component local state is that
-it's always guaranteed to be up-to-date. This is not true for
-application state since Om renders on `requestAnimationFrame`, and
-application state information is only guaranteed to be consistent
-during the render phase.
+While it may not seem so at first, it's useful to preserve something
+like React's component local state for two reasons. Often you do not
+want to pollute the original data with transient application state
+information. Editing a text field is a good example of this. The other
+useful aspect of being able to set component local state is that it's
+always guaranteed to be up-to-date. This is not true for application
+state since Om renders on `requestAnimationFrame`, and application
+state information is only guaranteed to be consistent during the
+render phase.
 
 ## Application State
 
