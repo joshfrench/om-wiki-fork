@@ -18,7 +18,7 @@ leaves these be.
 
 Om presents a model more or less conceptually similar to
 React's, but we do not actually pass raw React props or states to
-implementors of the life cycle protocols. Instead we pass immutable
+implementers of the life cycle protocols. Instead we pass immutable
 values in both cases.
 
 While it may not seem so at first, it's useful to preserve something
