@@ -29,7 +29,8 @@ useful aspect of being able to set component local state is that it's
 always guaranteed to be up-to-date. This is not true for application
 state since Om renders on `requestAnimationFrame`, and application
 state information is only guaranteed to be consistent during the
-render phase.
+render phase. Thus event handlers must ask for an update-to-date
+view of the application state.
 
 ## Application State
 
