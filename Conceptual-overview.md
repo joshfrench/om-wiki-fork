@@ -16,7 +16,7 @@ leaves these be.
 
 ## Components
 
-Om presents a model more or less conceptually similar to
+Om offers an approach more or less analogous to
 React's, but we do not actually pass raw React props or states to
 implementers of the life cycle protocols. Instead we pass immutable
 values in both cases.
