@@ -51,4 +51,5 @@ path information to determine their location in the app state. You can
 interact with them with many of the standard Clojure APIs. You can
 even make cursors out of JavaScript natives like numbers and strings!
 Cursors means Om component are freed from knowing or caring where in the
-app state their data comes while still having the ability to update it.
+app state their data comes while still having the ability to update it
+preserving component modularity.
