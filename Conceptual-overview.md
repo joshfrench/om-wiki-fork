@@ -40,3 +40,15 @@ state. `om.core/transact!` is used to transition the application
 state. The transition function should not rely on information not
 obtained by `om.core/read`, `om.core/get-state`, `om.core/transact!`,
 or `om.core/update!`.
+
+## Cursors
+
+Om components like React components take props. In Om components the
+props are actually a *cursor* into the app state. Cursors are
+conceptually analogous to functional lenses and zippers. Don't be
+afraid it just means that Om component props *internally* maintain
+path information to determine their location in the app state. You can
+interact with them with many of the standard Clojure APIs. You can
+even make cursors out of JavaScript natives like numbers and strings!
+Cursors means Om component are freed from knowing or caring where in the
+app state their data comes while still having the ability to update it.
