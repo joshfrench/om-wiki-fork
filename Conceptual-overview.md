@@ -45,7 +45,7 @@ or `om.core/update!`.
 
 Om components like React components take props. In Om components the
 props are actually a *cursor* into the app state. Cursors are
-conceptually analogous to functional lenses and zippers. Don't be
+conceptually related to functional lenses and zippers. Don't be
 afraid it just means that Om component props *internally* maintain
 path information to determine their location in the app state. You can
 interact with them with many of the standard Clojure APIs. You can
