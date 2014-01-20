@@ -47,34 +47,45 @@ following:
 ```
 
 Place your cursor at the end of the expression and type the key chord
-`Command-ENTER` to evalute it. Again it will take a second to make the
+`Command-ENTER` to evaluate it. Again it will take a second to make the
 initial connection. After the connection is made and the application
 is updated, edit the string again, re-evaluate and you will see that
 updating the application on fly is pretty snappy.
 
-Before processing remove the `swap!` expression
+Before proceeding remove the `swap!` expression
 
 ## Om basics
 
 In Om the application state is held in an `atom`, the one reference
-type build into ClojureScript. If you change the value of the atom via
-`swap!` or `reset!` this will always trigger a re-render of the
-application. Everything in the atom should be an associative data
-structure - either a ClojureScript map or indexed sequential data
-structure such as vector.
+type built into ClojureScript. If you change the value of the atom via
+`swap!` or `reset!` this will always trigger a re-render of any Om
+roots (we'll explain this in a second). You can think of this atom as
+the database of your client side application. Everything in the atom
+should be an associative data structure - either a ClojureScript map
+or indexed sequential data structure such as vector.
 
 ### om.core/root
 
 `om.core/root` (which is aliased to `om/root` here), establishes a
-Om rendering loop on a specific element in the dom. `om.core/root` is
-idempotent, that is, it's safe to evaluate it multiple times. It takes
-up four argument, but we're only interested in the three argument
-case. The first argument is application state atom. The second
-argument is a function that takes the application state data and the
-backing React component, here called `owner`. This function must
-return an Om component, a React component, or some other value that
-React itself knows how to render. The third argument is the target DOM
-node.
+Om rendering loop on a specific element in the DOM. The `om.root`
+expression in the tutorial at this point looks like this:
+
+```clj
+(om/root
+  app-state
+  (fn [app owner]
+    (dom/h1 nil (:text app)))
+  (. js/document (getElementById "app")))
+```
+
+`om.core/root` is idempotent, that is, it's safe to evaluate it
+multiple times. It takes up to four arguments, but we're only
+interested in the three argument case. The first argument is the
+application state atom. The second argument is a function that takes
+the application state data and the backing React component, here
+called `owner`. This function must return an Om component, a React
+component, or some other value that React itself knows how to
+render. The third argument is the target DOM node.
 
 There can be multiple roots. Edit the `index.html`, replace `<div
 id="app"></div>` with the following:
@@ -110,7 +121,7 @@ to look like the following:
 Place your cursor at the end of this expression and evaluate it. You
 should see the second `h1` tag magically appear.
 
-At the end of the file type the following and evalute it.
+At the end of the file type the following and evaluate it.
 
 ```clj
 (swap! app-state assoc :text "Multiple roots!")
