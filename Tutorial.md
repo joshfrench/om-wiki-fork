@@ -129,3 +129,47 @@ At the end of the file type the following and evaluate it.
 You should see both `h1` tags update on the fly. Multiple roots are
 fully supported and synchronized to render on the same
 `requestAnimationFrame`.
+
+Before proceeding remove the `<div id="app1"></div>` from
+`index.html` and remove the second `om/root` expression and the
+`swap!` expression. Save and refresh the browser.
+
+## Rendering a list of things
+
+Change the `app-state` expression to the following and evaluate
+it. Don't bother refreshing,
+[John McCarthy](http://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist))
+would be pissed!
+
+```clj
+(def app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
+```
+
+Change the `om/root` expression to the following and evaluate it, you
+should see a list of animals now.
+
+```clj
+(om/root
+  app-state
+  (fn [app owner]
+    (apply dom/ul nil
+      (map #(dom/li nil %) (:list app))))
+  (. js/document (getElementById "app0")))
+```
+
+You might have noticed that the first argument to `dom/ul` and
+`dom/li` is `nil`. This argument is how you set DOM attributes. Change
+the `om/root` expression to the following and evaluate it:
+
+```clj
+(om/root
+  app-state
+  (fn [app owner]
+    (apply dom/ul #js {:className "animals"}
+      (map #(dom/li nil %) (:list app))))
+  (. js/document (getElementById "app0")))
+```
+
+If you right click on the list in Google Chrome and select **Inspect
+Element** you should see that the `ul` tag in the DOM does indeed have
+its CSS class attribute set to "animals".
