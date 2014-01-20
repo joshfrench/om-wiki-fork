@@ -36,13 +36,17 @@ Open the JavaScript Console. You can do this via the Chrome menu
 selection *View > Developer > JavaScript*. If everything went well you
 should see `XHR finished loading ...` in the console.
 
+Arrange your windows so that you can see both the Chrome window and
+your source code at the same time.
+
 Now at the bottom of the `om_tut.cljs` source file write the following:
 
 ```clj
 (swap! app-state assoc :text "Do it live!")
 ```
 
-Place your cursor at the end of the expression and the key chord
-`Command-ENTER`. Again it will take a second to make the initial
-connection. Edit the string, re-evalute and you will see that updating
-the application on fly is pretty snappy.
+Place your cursor at the end of the expression and type the key chord
+`Command-ENTER` to evalute it. Again it will take a second to make the
+initial connection. After the connection is made and the application
+is updated, edit the string again, re-evaluate and you will see that
+updating the application on fly is pretty snappy.
