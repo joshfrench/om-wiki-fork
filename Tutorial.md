@@ -138,7 +138,7 @@ Before proceeding remove the `<div id="app1"></div>` from
 
 Change the `app-state` expression to the following and evaluate
 it. Don't bother refreshing,
-[John McCarthy](http://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist))
+[John McCarthy](http://library.stanford.edu/collections/john-mccarthy-papers-0)
 would be pissed!
 
 ```clj
