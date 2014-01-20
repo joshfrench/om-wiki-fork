@@ -33,11 +33,10 @@ options select **Browser (External)**. Copy and paste the script tag
 before the `<div id="app"></div>`.
 
 Open the JavaScript Console. You can do this via the Chrome menu
-selection **View > Developer > JavaScript**. If everything went well you
-should see `XHR finished loading ...` in the console.
-
-Arrange your windows so that you can see both the Chrome window and
-your source code at the same time.
+selection **View > Developer > JavaScript**. If everything went well
+you should see `XHR finished loading ...` in the console. Refresh your
+browser and arrange your windows so that you can see both the Chrome
+window and your source code at the same time.
 
 Now at the bottom of the `src/om_tut/core.cljs` source file write the
 following:
