@@ -107,7 +107,7 @@ with the following:
 ```
 
 Refresh your browser. You should see just one `h1` tag on the
-page. Copy and past the `om/root` expression and edit the second
+page. Copy and paste the `om/root` expression and edit the second
 to look like the following:
 
 ```clj
