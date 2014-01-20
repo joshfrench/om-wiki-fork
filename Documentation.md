@@ -48,3 +48,10 @@ cycle API present in Facebook's React.
 ### bind
 
 ### graft
+
+# om.dom
+
+The dom functions map directly to the DOM api presented by React. For
+example `React.DOM.div` becomes `om.dom/div`. The arguments are
+exactly the same as React, the first argument is `props`, all
+subsequent arguments are `children`.
