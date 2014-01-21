@@ -49,9 +49,9 @@ Place your cursor at the end of the expression and type the key chord
 `Command-ENTER` to evaluate it. Again it will take a second to make the
 initial connection. After the connection is made and the application
 is updated, edit the string again, re-evaluate and you will see that
-updating the application on fly is pretty snappy.
+updating the application on the fly is pretty snappy.
 
-Before proceeding remove the `swap!` expression
+Before proceeding remove the `swap!` expression.
 
 ## Om basics
 
