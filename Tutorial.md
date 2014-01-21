@@ -185,13 +185,13 @@ literal. ClojureScript support data literals for JavaScript via
 
 `#js [...]` is for JavaScript arrays:
 
-```
+```clj
 #js [1 2 3]
 ```
 
 The `#js` reader literal support is shallow, take note of the
 following:
 
-```
+```clj
 #js {:foo [1 2 3]} ;; a JS object with a persistent vector in it
 ```
