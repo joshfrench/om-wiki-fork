@@ -173,3 +173,25 @@ the `om/root` expression to the following and evaluate it:
 If you right click on the list in Google Chrome and select **Inspect
 Element** you should see that the `ul` tag in the DOM does indeed have
 its CSS class attribute set to "animals".
+
+`#js {...}` and `#js [...]` is what is referred to as a reader
+literal. ClojureScript support data literals for JavaScript via
+`#js`. `#js {...}` is for JavaScript objects:
+
+```clj
+#js {:foo "bar"}  ;; is equivalent to
+#js {"foo" "bar"}
+```
+
+`#js [...]` is for JavaScript arrays:
+
+```
+#js [1 2 3]
+```
+
+The `#js` reader literal support is shallow, take note of the
+following:
+
+```
+#js {:foo [1 2 3]} ;; a JS object with a persistent vector in it
+```
