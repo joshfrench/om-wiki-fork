@@ -30,7 +30,7 @@ That's pretty boring isn't it? Let's do some live coding instead.
 Type the key chord `Control-SPACE` to open up the command list. Start
 typing `Add Connection`, press enter to select it. In the list of
 options select **Browser (External)**. Copy and paste the script tag
-before the `<div id="app"></div>`.
+into index.html before the `<div id="app"></div>`.
 
 Open the JavaScript Console. You can do this via the Chrome menu
 selection **View > Developer > JavaScript**. If everything went well
