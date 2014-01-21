@@ -58,10 +58,11 @@ Before proceeding remove the `swap!` expression.
 In Om the application state is held in an `atom`, the one reference
 type built into ClojureScript. If you change the value of the atom via
 `swap!` or `reset!` this will always trigger a re-render of any Om
-roots (we'll explain this in a second). You can think of this atom as
-the database of your client side application. Everything in the atom
-should be an associative data structure - either a ClojureScript map
-or indexed sequential data structure such as vector.
+roots attached to it (we'll explain this in a second). You can think
+of this atom as the database of your client side
+application. Everything in the atom should be an associative data
+structure - either a ClojureScript map or indexed sequential data
+structure such as vector.
 
 ### om.core/root
 
