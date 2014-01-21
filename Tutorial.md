@@ -25,7 +25,7 @@ Open `src/om_tut/core.cljs` in Light Table. Change `:text` value of
 `app-state` to be something else other than `Hello World!`. Save the
 file. Refresh your browser and you should see the new contents.
 
-That's pretty boring isn't it. Let's do some live coding instead.
+That's pretty boring isn't it? Let's do some live coding instead.
 
 Type the key chord `Control-SPACE` to open up the command list. Start
 typing `Add Connection`, press enter to select it. In the list of
