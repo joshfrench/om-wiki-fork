@@ -195,3 +195,34 @@ following:
 ```clj
 #js {:foo [1 2 3]} ;; a JS object with a persistent vector in it
 ```
+
+## Life without a templating language
+
+In Om you have the full power of the ClojureScript language when building
+your user interface. At the same time, Om leaves the door open for
+alternate syntaxes for describing the DOM if that's your cup of tea.
+
+Lets edit our code so we get zebra striping on the list. Lets add a
+helper function `stripe` before the `om/root` expression:
+
+```clj
+(defn stripe [text bgc]
+  (let [st #js {:backgroundColor bgc}]
+    (dom/li #js {:style st} text)))
+```
+
+Don't forget to evaluate it!
+
+Then change the `om/root` expression to the following and evaluate it:
+
+```clj
+(om/root
+  app-state
+  (fn [app owner]
+    (apply dom/ul #js {:className "animals"}
+      (map stripe (:list app) (cycle ["#ff0" "#fff"]))))
+  (. js/document (getElementById "app0")))
+```
+
+As we can see ClojureScript offers powerful functional tools that put
+most templating languages completely to shame.
