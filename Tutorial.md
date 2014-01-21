@@ -62,7 +62,7 @@ roots attached to it (we'll explain this in a second). You can think
 of this atom as the database of your client side
 application. Everything in the atom should be an associative data
 structure - either a ClojureScript map or indexed sequential data
-structure such as vector.
+structure such as a vector.
 
 ### om.core/root
 
