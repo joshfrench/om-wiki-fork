@@ -153,7 +153,7 @@ should see a list of animals now.
   app-state
   (fn [app owner]
     (apply dom/ul nil
-      (map #(dom/li nil %) (:list app))))
+      (map (fn [text] (dom/li nil text)) (:list app))))
   (. js/document (getElementById "app0")))
 ```
 
@@ -166,7 +166,7 @@ the `om/root` expression to the following and evaluate it:
   app-state
   (fn [app owner]
     (apply dom/ul #js {:className "animals"}
-      (map #(dom/li nil %) (:list app))))
+      (map (fn [text] (dom/li nil text)) (:list app))))
   (. js/document (getElementById "app0")))
 ```
 
