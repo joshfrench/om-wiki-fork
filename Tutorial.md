@@ -176,7 +176,7 @@ Element** you should see that the `ul` tag in the DOM does indeed have
 its CSS class attribute set to "animals".
 
 `#js {...}` and `#js [...]` is what is referred to as a reader
-literal. ClojureScript support data literals for JavaScript via
+literal. ClojureScript supports data literals for JavaScript via
 `#js`. `#js {...}` is for JavaScript objects:
 
 ```clj
@@ -203,7 +203,7 @@ In Om you have the full power of the ClojureScript language when building
 your user interface. At the same time, Om leaves the door open for
 alternate syntaxes for describing the DOM if that's your cup of tea.
 
-Lets edit our code so we get zebra striping on the list. Lets add a
+Let's edit our code so we get zebra striping on the list. Lets add a
 helper function `stripe` before the `om/root` expression:
 
 ```clj
