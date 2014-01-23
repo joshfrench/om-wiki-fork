@@ -271,6 +271,19 @@ are used to `update-in` and related functions.
 
 ### read
 
+```clj
+(defn read
+  ([cursor f] ...)
+  ([cursor korks f] ...))
+```
+
+Outside of the render phase you cannnot interact directly with
+cursors outside of a handleful of functions: `om.core/transact!` and
+`om.core/update!` being some of the few exceptions. `om.core/read` is
+also allowed. Given a `cursor` and a function `f`, read will invoke
+`f` with a cursor using `cursor` that consistent with the current
+application state.
+
 ### get-node
 
 ```clj
