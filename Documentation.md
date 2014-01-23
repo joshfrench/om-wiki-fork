@@ -151,7 +151,8 @@ how to update itself.
 ```
 
 `owner` is the backing Om component. `korks` is a key or sequence of
-keys. Will return the specified piece of component local state.
+keys. Will return the specified piece of component local state. Will
+always return pending state.
 
 ### get-shared
 
@@ -202,19 +203,106 @@ target.
   ([f cursor m] ...))
 ```
 
+Constructs a Om component. `f` must be a function that returns an
+instance of `om.core/IRender` or `om.core/IRenderState`. `f` must take
+two argument - a cursor and the backing Om component usually referred
+to as the owner. `f` can should take a third argument if `:opts` is
+specified in `m`. `cursor` should be an Om cursor onto the application
+state. `m` is an optional map of options.
+
+Only the following keys are allowed.
+
+`:key` - a keyword that will be used to lookup a value in `cursor` to
+be used a React key.
+
+`:react-key` - a value to use as a React key.
+
+`:fn` - a function to apply to `cursor` before invoking `f`.
+
+`:init-state` - a map of initial state to set on the component.
+
+`:state` - a map of state to merge into the component.
+
+`:opts` - a map of side information that is neither a cursor onto the
+application state nor a component local state.
+
 ### build-all
+
+```clj
+(defn build-all
+  ([f xs] ...)
+  ([f xs m] ...)
+```
+
+Conceptually the same as `om.core/build`, the only difference is that
+it returns an array of Om components.
 
 ### transact!
 
+```clj
+(defn transact!
+  ([cursor f] ...)
+  ([cursor korks f & args]))
+```
+
+The primary way to transition application state. `cursor` is a Om
+cursor into the application state. `f` is a function that will receive
+the specified piece of application state. `korks` is an optional
+key or sequence of keys to access in the cursor. `om.core/transact!`
+can be given additional args to pass to `f`.
+
+```clj
+(transact! cursor :text "Changed this!")
+```
+
 ### update!
+
+```clj
+(defn update!
+  ([cursor f & args] ...))
+```
+
+Similar to `om.core/transact!` but allows a more natural order if you
+are used to `update-in` and related functions.
+
+```clj
+(update! cursor assoc-in [:text] "Changed this!")
+```
 
 ### read
 
 ### get-node
 
+```clj
+(defn get-node
+  ([owner ref] ...))
+```
+
+`owner` is the backing Om component. `ref` is a JavaScript String that
+references a DOM node. This functionality is identical to the
+`getNode` in React.
+
 ### set-state!
 
+```clj
+(defn set-state!
+  ([owner korks v] ...))
+```
+
+`owner` is the backing Om component. `korks` is a key or sequences of
+keys. `v` is the value to set. Will trigger a Om re-render.
+
 ### get-render-state
+
+```clj
+(defn get-render-state
+  ([owner] ...)
+  ([owner korks] ...))
+```
+
+`owner` is the backing Om component. `korks` is an optional key or
+sequences of keys. Similar to `om.core/get-state` except always
+returns the rendered state. Useful for detecting state transitions.
 
 ### bind
 
