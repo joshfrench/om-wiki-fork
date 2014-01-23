@@ -210,7 +210,7 @@ to as the owner. `f` can should take a third argument if `:opts` is
 specified in `m`. `cursor` should be an Om cursor onto the application
 state. `m` is an optional map of options.
 
-Only the following keys are allowed.
+Only the following keys are allowed in `m`.
 
 `:key` - a keyword that will be used to lookup a value in `cursor` to
 be used a React key.
