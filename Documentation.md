@@ -29,7 +29,7 @@ should be stored in component local state - `om.core/IInitState` or
   (init-state [this]))
 ```
 
-Called only once a Om component. Implementations should return a map
+Called only once on an Om component. Implementations should return a map
 of initial state.
 
 ```clj
@@ -54,7 +54,7 @@ You should implement this if you really know what you're doing. Even
 then you probably shouldn't.
 
 Implementations should return a boolean value. If true then the
-components `om.core/IRender` or `om.core/IRenderState` implementation
+component's `om.core/IRender` or `om.core/IRenderState` implementation
 will be called.
 
 `next-props` is the next application state that the component is
@@ -107,7 +107,7 @@ Called when React has rendered the component into the DOM.
   (render [this]))
 ```
 
-Called on all changed to application state or component local
+Called on all changes to application state or component local
 state. Must return an Om component, a React component, or a some value
 that React knows how to render.
 
