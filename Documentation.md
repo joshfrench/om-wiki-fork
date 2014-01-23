@@ -163,8 +163,8 @@ always return pending state.
 ```
 
 `owner` is the backing Om component. `korks` is a key or sequence of
-keys. Will return data that shared across the entire render tree. You
-can set global shared data with `om.core/root`.
+keys. It will return data that is shared across the entire render tree. 
+You can set global shared data with `om.core/root`.
 
 ### root
 
@@ -174,16 +174,16 @@ can set global shared data with `om.core/root`.
   ([value shared f target] ...))
 ```
 
-`value` is either an tree of associative ClojureScript data structures
-or a atom wrapping a tree of associative ClojureScript data
-structures. `f` is a function return an instance of `IRender`,
+`value` is either a tree of associative ClojureScript data structures
+or an atom wrapping a tree of associative ClojureScript data
+structures. `f` is a function returning an instance of `IRender`,
 `IRenderState`, a React component, or some value that React knows how
 to render. `f` takes two arguments, a root cursor on the application
 state and the backing Om component for the root. `shared` is an
 optional map of values shared across the entire render tree. `target`
 is the DOM node to install the Om render loop on.
 
-`om.core/root` is idempontent. You may safely call it multiple
+`om.core/root` is idempotent. You may safely call it multiple
 times. Only one Om render loop is ever allowed on a particular DOM
 target.
 
@@ -203,10 +203,10 @@ target.
   ([f cursor m] ...))
 ```
 
-Constructs a Om component. `f` must be a function that returns an
+Constructs an Om component. `f` must be a function that returns an
 instance of `om.core/IRender` or `om.core/IRenderState`. `f` must take
-two argument - a cursor and the backing Om component usually referred
-to as the owner. `f` can should take a third argument if `:opts` is
+two arguments - a cursor and the backing Om component usually referred
+to as the owner. `f` can take a third argument if `:opts` is
 specified in `m`. `cursor` should be an Om cursor onto the application
 state. `m` is an optional map of options.
 
@@ -245,7 +245,7 @@ it returns an array of Om components.
   ([cursor korks f & args]))
 ```
 
-The primary way to transition application state. `cursor` is a Om
+The primary way to transition application state. `cursor` is an Om
 cursor into the application state. `f` is a function that will receive
 the specified piece of application state. `korks` is an optional
 key or sequence of keys to access in the cursor. `om.core/transact!`
@@ -277,8 +277,8 @@ are used to `update-in` and related functions.
   ([cursor korks f] ...))
 ```
 
-Outside of the render phase you cannnot interact directly with
-cursors outside of a handleful of functions: `om.core/transact!` and
+Outside of the render phase you cannot interact directly with
+cursors outside of a handful of functions: `om.core/transact!` and
 `om.core/update!` being some of the few exceptions. `om.core/read` is
 also allowed. Given a `cursor` and a function `f`, read will invoke
 `f` with a cursor using `cursor` that consistent with the current
