@@ -50,8 +50,8 @@ of initial state.
   (should-update [this next-props next-state]))
 ```
 
-You should implement this if you really know what you're doing. Even
-then you probably shouldn't.
+You should only implement this if you really know what you're
+doing. Even then you probably shouldn't.
 
 Implementations should return a boolean value. If true then the
 component's `om.core/IRender` or `om.core/IRenderState` implementation
