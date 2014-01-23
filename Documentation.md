@@ -306,7 +306,34 @@ returns the rendered state. Useful for detecting state transitions.
 
 ### bind
 
+```clj
+(defn bind [f cursor & args]
+  ...)
+```
+
+A convenience for constructing event handlers. Takes a function `f`
+that should receive the event as the first argument, followed by
+`cursor` and any other extra arguments speicified. In the body of `f`,
+`cursor` is guaranteed to be consistent with the current application
+state.
+
 ### graft
+
+```clj
+(defn graft [value cursor]
+  ...)
+```
+
+Sometimes it's useful to create stateful Om components that do not
+manipulate or correspond to application state. However these component
+still need be a part of the render tree, `om.core/graft` supports
+this. Given any old `value` and `cursor` `om.core/graft` will return a
+new cursor that can be used to construct an Om component that is
+connected to the render tree.
+
+```clj
+(build my-widget (graft {:text "I'm not in the app state!"} cursor))
+```
 
 # om.dom
 
