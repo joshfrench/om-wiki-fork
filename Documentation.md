@@ -235,7 +235,7 @@ be used a React key.
 `:state` - a map of state to merge into the component.
 
 `:opts` - a map of side information that is neither a cursor onto the
-application state nor a component local state.
+application state nor component local state.
 
 ### build-all
 
@@ -246,7 +246,8 @@ application state nor a component local state.
 ```
 
 Conceptually the same as `om.core/build`, the only difference is that
-it returns an array of Om components.
+it returns an array of Om components. `xs` is a sequence of
+cursors. `f` and `m` are the same as `om.core/build`.
 
 ### transact!
 
@@ -289,7 +290,7 @@ are used to `update-in` and related functions.
 ```
 
 Outside of the render phase you cannot interact directly with
-cursors outside of a handful of functions: `om.core/transact!` and
+cursors besides a handful of functions: `om.core/transact!` and
 `om.core/update!` being some of the few exceptions. `om.core/read` is
 also allowed. Given a `cursor` and a function `f`, read will invoke
 `f` with a cursor using `cursor` that consistent with the current
@@ -304,7 +305,7 @@ application state.
 
 `owner` is the backing Om component. `ref` is a JavaScript String that
 references a DOM node. This functionality is identical to the
-`getNode` in React.
+`ReactComponent.getDOMNode` in React.
 
 ### set-state!
 
@@ -313,8 +314,9 @@ references a DOM node. This functionality is identical to the
   ([owner korks v] ...))
 ```
 
-`owner` is the backing Om component. `korks` is a key or sequences of
-keys. `v` is the value to set. Will trigger a Om re-render.
+Sets component local state. `owner` is the backing Om
+component. `korks` is a key or sequences of keys. `v` is the value to
+set. Will trigger a Om re-render.
 
 ### get-render-state
 
@@ -324,9 +326,10 @@ keys. `v` is the value to set. Will trigger a Om re-render.
   ([owner korks] ...))
 ```
 
-`owner` is the backing Om component. `korks` is an optional key or
-sequences of keys. Similar to `om.core/get-state` except always
-returns the rendered state. Useful for detecting state transitions.
+Returns rendered component local state. `owner` is the backing Om
+component. `korks` is an optional key or sequences of keys. Similar to
+`om.core/get-state` except always returns the rendered state. Useful
+for detecting state transitions.
 
 ### bind
 
@@ -337,7 +340,7 @@ returns the rendered state. Useful for detecting state transitions.
 
 A convenience for constructing event handlers. Takes a function `f`
 that should receive the event as the first argument, followed by
-`cursor` and any other extra arguments speicified. In the body of `f`,
+`cursor` and any other extra arguments. In the body of `f`,
 `cursor` is guaranteed to be consistent with the current application
 state.
 
@@ -350,10 +353,10 @@ state.
 
 Sometimes it's useful to create stateful Om components that do not
 manipulate or correspond to application state. However these component
-still need be a part of the render tree, `om.core/graft` supports
-this. Given any old `value` and `cursor` `om.core/graft` will return a
+still need to be a part of the render tree, `om.core/graft` supports
+this. Given any `value` and a `cursor` `om.core/graft` will return a
 new cursor that can be used to construct an Om component that is
-connected to the render tree.
+attached to the render tree.
 
 ```clj
 (build my-widget (graft {:text "I'm not in the app state!"} cursor))
