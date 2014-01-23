@@ -69,8 +69,8 @@ always a map.
 ```
 
 Called once when the component is about to be mounted into the DOM. A
-useful place to establish persistent information like core.async
-channels.
+useful place to establish persistent information and control like
+core.async channels and go loops.
 
 ### IDidMount
 
@@ -79,7 +79,11 @@ channels.
   (did-mount [this node]))
 ```
 
-Called once when the component has been mounted into the DOM.
+Called once when the component has been mounted into the DOM. `node`
+is the DOM node associated with this component.
+
+This is a good place to initialize persistent information and control
+that needs the DOM to be present.
 
 ### IWillUpdate
 
@@ -91,6 +95,10 @@ Called once when the component has been mounted into the DOM.
 Not called on the first render, will be called on all subsequent
 renders. This is a good place to detect and act on state transitions.
 
+`next-props` is the next application state associated with this
+component. `next-state` is the next component local state, it is
+always a map.
+
 ### IDidUpdate
 
 ```clj
@@ -98,7 +106,10 @@ renders. This is a good place to detect and act on state transitions.
   (did-update [this prev-props prev-state root-node]))
 ```
 
-Called when React has rendered the component into the DOM.
+Called when React has rendered the component into the
+DOM. `prev-props` is the previous application state associated with
+this component. `prev-state` is the previous component local state, it
+is always a map. `root-node` is the DOM node associated with this component.
 
 ### IRender
 
@@ -123,7 +134,7 @@ If you implement `om.core/IRender` you should not implement
 
 The only difference between `om.core/IRender` and
 `om.core/IRenderState` is that `IRenderState` implementations get the
-state as an argument.
+state as an argument. `state` is always a map, you can use destructuring.
 
 If you implement `om.core/IRenderState` you should not implement
 `omc.core/IRender`.
