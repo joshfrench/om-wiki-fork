@@ -237,7 +237,7 @@ Change the `om/root` expression to the following, don't evaluate it
 yet since we haven't defined `contacts-view`.
 
 ```clj
-(om/root app-state contacts-view (. js/document (getElementById "app")))
+(om/root app-state contacts-view (. js/document (getElementById "contacts")))
 ```
 
 Let's edit `app-state` so it look like this:
