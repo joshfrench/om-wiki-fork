@@ -330,7 +330,7 @@ be able to communicate to some entity does have that power.
 
 ## Intercomponent communication
 
-For communication between components we will sure core.async
+For communication between components we will use core.async
 channels. Change your namespace form to the following:
 
 ```clj
