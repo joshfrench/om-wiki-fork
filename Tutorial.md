@@ -270,7 +270,7 @@ After `app-state` lets add the following code:
 In order to build a Om component we must use `om.core/build` for a
 single component and `om.core/build-all` to build many components. In
 this case we want to display a contact list so we want to use
-`om.core/build-all`. `contacts-view` returns `div` with a `h1` and
+`om.core/build-all`. `contacts-view` returns a `div` with a `h1` and
 `ul` tag in it. We want to render several `li` element so we call
 `apply` on `dom/ul`.
 
