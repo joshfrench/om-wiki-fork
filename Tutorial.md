@@ -329,3 +329,78 @@ Contacts don't need to be able delete themselves, however they should
 be able to communicate to some entity does have that power.
 
 ## Intercomponent communication
+
+For communication between components we will sure core.async
+channels. Change your namespace form to the following:
+
+```clj
+(ns om-tut.core
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]
+            [cljs.core.async :refer [put! chan]]))
+```
+
+Save your file and refresh the browser. Change `contacts-view` to the
+following:
+
+```clj
+(defn contact-view [contact owner]
+  (reify
+    om/IRenderState
+    (render-state [this {:keys [delete]}]
+      (dom/li nil
+        (dom/span nil (display-name contact))
+        (dom/button #js {:onClick (fn [e] (put! delete contact))} "Delete")))))
+```
+
+We've change `om/IRender` to `om/IRenderState`. This is because we
+will receive the delete notification channel as part of our component
+state. We've also added a `onClick` handler to the button which writes
+the contact onto the channel. This is actually a bug as we will soon
+see.
+
+Change `contacts-view` to the following. It's a big change, don't
+worry we'll walk through all of it.
+
+```clj
+(defn contacts-view [app owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:delete (chan)})
+    om/IWillMount
+    (will-mount [_]
+      (let [delete (om/get-state owner :delete)]
+        (go (loop []
+          (let [contact (<! delete)]
+            (om/transact! app :contacts
+              (fn [xs] (into [] (remove #(= contact %) xs))))
+            (recur))))))
+    om/IRenderState
+    (render-state [this {:keys [delete]}]
+      (dom/div nil
+        (dom/h1 nil "Contact list")
+        (apply dom/ul nil
+          (om/build-all contact-view (:contacts app)
+            {:init-state {:delete delete}}))))))
+```
+
+First we set the initial state by implementing `om/IInitState`. We
+just allocate a core.async channel. It's extremely important we don't
+do this in a `let` binding around `reify`. This is a common
+mistake. Remember the `contacts-view` function will potentially be
+invoked many, many times. We also change `om/IRender` to
+`om/IRenderState` as we want to get the delete channel so we can pass
+it down.
+
+We then implement `om/IWillMount` so that we can establish a go loop
+that will listen for events from the children contact views. If we get
+a delete event we remove that from the application state with
+`om.core/transact!`. This code contains a bug which we will explain
+momentarily.
+
+Evaluate the new code and try it out. As you'll see, clicking on the
+delete button won't do anything. What went wrong?
+
+## Debugging Om Components
