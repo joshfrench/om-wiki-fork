@@ -281,21 +281,6 @@ are used to `update-in` and related functions.
 (update! cursor assoc-in [:text] "Changed this!")
 ```
 
-### read
-
-```clj
-(defn read
-  ([cursor f] ...)
-  ([cursor korks f] ...))
-```
-
-Outside of the render phase you cannot interact directly with
-cursors besides a handful of functions: `om.core/transact!` and
-`om.core/update!` being some of the few exceptions. `om.core/read` is
-also allowed. Given a `cursor` and a function `f`, read will invoke
-`f` with a cursor using `cursor` that consistent with the current
-application state.
-
 ### get-node
 
 ```clj
@@ -330,19 +315,6 @@ Returns rendered component local state. `owner` is the backing Om
 component. `korks` is an optional key or sequences of keys. Similar to
 `om.core/get-state` except always returns the rendered state. Useful
 for detecting state transitions.
-
-### bind
-
-```clj
-(defn bind [f cursor & args]
-  ...)
-```
-
-A convenience for constructing event handlers. Takes a function `f`
-that should receive the event as the first argument, followed by
-`cursor` and any other extra arguments. In the body of `f`,
-`cursor` is guaranteed to be consistent with the current application
-state.
 
 ### graft
 
