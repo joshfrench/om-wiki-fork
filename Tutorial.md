@@ -230,8 +230,8 @@ most templating languages completely to shame.
 
 ## Your first Om component
 
-Change `<div id="app0"></div>` to `<div id="contacts"></div>` and
-refresh your browser.
+Change `<div id="app0"></div>` to `<div id="contacts"></div>`, remove
+`stripe` from `src/om_tut/core.cljs` and refresh your browser.
 
 Change the `om/root` expression to the following, don't evaluate it
 yet since we haven't defined `contacts-view`.
@@ -258,11 +258,70 @@ After `app-state` lets add the following code:
 (defn contacts-view [app owner]
   (reify
     om/IRender
-    (render [_]
-      (array
+    (render [this]
+      (dom/div nil
         (dom/h1 nil "Contact list")
-        (dom/ul nil
-          (om/build-all (:contacts app) contact-view))))))
+        (apply dom/ul nil
+          (om/build-all contact-view (:contacts app)))))))
 ```
+
+In order to build a Om component we must use `om.core/build` for a
+single component and `om.core/build-all` to build many components. In
+this case we want to display a contact list so we want to use
+`om.core/build-all`. `contacts-view` returns `div` with a `h1` and
+`ul` tag in it. We want to render several `li` element so we call
+`apply` on `dom/ul`.
+
+Let's write `contact-view` now. Add it before `contacts-view`.
+
+```clj
+(defn contact-view [contact owner]
+  (reify
+    om/IRender
+    (render [this]
+      (dom/li nil (display-name contact)))))
+```
+
+Pretty simple. Now for `display-name`. Add it before `contact-view`.
+
+```clj
+(defn display-name [{:keys [first last] :as contact}]
+  (str last ", " first (middle-name contact)))
+```
+
+Here we get a taste of map destructuring. Pretty handy. Finally let's
+write the `middle-name` helper.
+
+```clj
+(defn middle-name [{:keys [middle middle-initial]}]
+  (cond
+    middle (str " " middle)
+    middle-initial (str " " middle-initial ".")))
+```
+
+Again some map destructuring.
+
+Let's start evaling code! Eval each form one by one. When you hit the
+final form you should see the list of contacts.
+
+## Enhancing your first Om component
+
+Let's try deleting contacts. Change `contact-view` to the following:
+
+```clj
+(defn contact-view [contact owner]
+  (reify
+    om/IRender
+    (render [this]
+      (dom/li nil
+        (dom/span nil (display-name contact))
+        (dom/button nil "Delete")))))
+```
+
+Evaluate this and the `om/root` expression. You should see delete
+buttons now, however clicking on them won't do anything.
+
+Contacts don't need to be able delete themselves, however they should
+be able to communicate to some entity does have that power.
 
 ## Intercomponent communication
