@@ -301,7 +301,9 @@ write the `middle-name` helper.
 
 Again some map destructuring.
 
-Let's start evaling code! Eval each form one by one. When you hit the
+Let's start evaling code!
+
+Eval each form one by one. When you hit the
 final form you should see the list of contacts.
 
 ## Enhancing your first Om component
