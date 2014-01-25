@@ -227,7 +227,7 @@ Then change the `om/root` expression to the following and evaluate it:
   (. js/document (getElementById "app0")))
 ```
 
-As we can see ClojureScript offers powerful functional tools that puts
+As we can see ClojureScript offers powerful functional tools that put
 most templating languages completely to shame.
 
 ## Your first Om component
