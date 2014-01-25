@@ -425,7 +425,7 @@ state or you can dereference them to get at their current value.
 The current value is fine as that's all we need to get rid of a
 contact anyhow. You can fix `contact-view` to the following:
 
-```
+```clj
 (defn contact-view [contact owner]
   (reify
     om/IRenderState
@@ -438,3 +438,97 @@ contact anyhow. You can fix `contact-view` to the following:
 The only thing that changed was `contact` to `@contact`. Evaluate this
 code and the `om/root` expression. You should now be able to delete
 people from the list contacts.
+
+## Adding Contacts
+
+Let's modify our application so we can add new contacts. Change the
+top namespace form to the following and refresh your browser:
+
+```clj
+(ns om-tut.core
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]
+            [cljs.core.async :refer [put! chan]]
+            [clojure.data :as data]
+            [clojure.string :as string]))
+```
+
+Let's add a new function called `parse-contact`. Evaluate it.
+
+```clj
+(defn parse-contact [contact-str]
+  (let [[first middle last :as parts] (string/split contact-str #"\s+")
+        [first last middle] (if (nil? last) [first middle] [first last middle])
+        middle (when middle (string/replace middle "." ""))
+        c (if middle (count middle) 0)]
+    (when (>= (reduce + (map #(if % 1 0) parts)) 2)
+      (cond-> {:first first :last last}
+        (== c 1) (assoc :middle-initial middle)
+        (>= c 2) (assoc :middle middle)))))
+```
+
+There of course many ways to write `parse-contact` and this is not
+particularly the best way, however it illustrate many common
+idioms. It's worth taking the time to understand it before proceeding.
+
+Try it on some input!
+
+```clj
+(parse-contact "Gerald J. Sussman")
+```
+
+Once you've seen that it basically works lets write `add-contact`, it
+should look like the following:
+
+```clj
+(defn add-contact [app owner]
+  (let [new-contact (-> (om/get-node owner "new-contact")
+                        .-value
+                        parse-contact)]
+    (when new-contact
+      (om/transact! app :contacts conj new-contact))))
+```
+
+We need to use `om.core/get-node` so that we can extract the value
+from the text field. We'll see how we set this up, your contacts view
+should look like the following:
+
+```clj
+(defn contacts-view [app owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:delete (chan)})
+    om/IWillMount
+    (will-mount [_]
+      (let [delete (om/get-state owner :delete)]
+        (go (loop []
+              (let [contact (<! delete)]
+                (om/transact! app :contacts
+                  (fn [xs] (vec (remove #(= contact %) xs))))
+                (recur))))))
+    om/IRenderState
+    (render-state [this state]
+      (dom/div nil
+        (dom/h1 nil "Contact list")
+        (apply dom/ul nil
+          (om/build-all contact-view (:contacts app)
+            {:init-state state}))
+        (dom/div nil
+          (dom/input #js {:type "text" :ref "new-contact"})
+          (dom/button #js {:onClick #(add-contact app owner)} "Add contact"))))))
+```
+
+Notice that the input field specified `:ref`, this is a feature of
+React for the few cases where you need direct access to a DOM node.
+
+Re-evaluate `contacts-view` and the `om/root` form. You should now be
+able to add contacts as long as you provide at least a first and last
+name.
+
+This is a lot of information. As a challenge I recommend trying to
+clearing the text field when a real contact has been added. This is
+harder than it looks so don't get discouraged. If you spend more then
+15, 20 minutes on it feel free to proceed to the next section and
+we'll show how to do it.
