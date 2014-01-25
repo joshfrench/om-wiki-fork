@@ -469,8 +469,9 @@ Let's add a new function called `parse-contact`. Evaluate it.
 ```
 
 There of course many ways to write `parse-contact` and this is not
-particularly the best way, however it illustrate many common
-idioms. It's worth taking the time to understand it before proceeding.
+particularly the best way, however it illustrates many common
+idioms. If you're not experienced with Clojure or ClojureScript it's
+worth taking the time to understand it before proceeding.
 
 Try it on some input!
 
