@@ -529,7 +529,7 @@ able to add contacts as long as you provide at least a first and last
 name.
 
 This is a lot of information. As a challenge I recommend trying to
-clearing the text field when a real contact has been added. This is
+clear the text field when a real contact has been added. This is
 harder than it looks so don't get discouraged. If you spend more then
 15, 20 minutes on it feel free to proceed to the next section and
 we'll show how to do it.
