@@ -341,7 +341,7 @@ channels. Change your namespace form to the following:
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [cljs.core.async :refer [put! chan]]))
+            [cljs.core.async :refer [put! chan <!]]))
 ```
 
 Save your file and refresh the browser. Change `contact-view` to the
