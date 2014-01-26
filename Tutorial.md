@@ -344,7 +344,7 @@ channels. Change your namespace form to the following:
             [cljs.core.async :refer [put! chan]]))
 ```
 
-Save your file and refresh the browser. Change `contacts-view` to the
+Save your file and refresh the browser. Change `contact-view` to the
 following:
 
 ```clj
