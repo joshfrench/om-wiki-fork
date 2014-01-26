@@ -593,9 +593,9 @@ Yikes! You can no longer enter anything. Let's take a moment to
 consider what's going on.
 
 We've added a new piece of state to `contacts-view`. Regardless of
-what the user may type we now setting the value of the input field to
+what the user may type we are now setting the value of the input field to
 the value of the `:text` state property. We need to keep this in sync
-with the user input. Let's change `contacts-view` again adding an
+with the user input. Let's change `contacts-view` again by adding an
 event listener to watch when the input field changes:
 
 ```clj
@@ -627,7 +627,7 @@ event listener to watch when the input field changes:
           (dom/button #js {:onClick #(add-contact app owner)} "Add contact"))))))
 ```
 
-Before evaluting that let's add `handle-change`:
+Before evaluating that let's add `handle-change` before `contacts-view`:
 
 ```clj
 (defn handle-change [e owner {:keys [text]}]
