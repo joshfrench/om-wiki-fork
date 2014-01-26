@@ -294,7 +294,8 @@ Pretty simple. Now for `display-name`. Add it before `contact-view`.
 ```
 
 Here we get a taste of map destructuring. Pretty handy. Finally let's
-write the `middle-name` helper.
+write the `middle-name` helper, it should come before `display-name`
+in your file.
 
 ```clj
 (defn middle-name [{:keys [middle middle-initial]}]
