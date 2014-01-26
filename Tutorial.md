@@ -534,3 +534,130 @@ clear the text field when a real contact has been added. This is
 harder than it looks so don't get discouraged. If you spend more then
 15, 20 minutes on it feel free to proceed to the next section and
 we'll show how to do it.
+
+## Dealing with text input fields
+
+React's declarative model, and thus Om's, makes dealing with input
+both a little more challenging, but also more flexible. The "easiest"
+way to clear the text field would be by changing `add-contact` to
+the following:
+
+```clj
+(defn add-contact [app owner]
+  (let [input (om/get-node owner "new-contact")
+        new-contact (-> input .-value parse-contact)]
+    (when new-contact
+      (om/transact! app :contacts conj new-contact)
+      (set! (.-value input) ""))))
+```
+
+This works great, but any time you find yourself leaning heavily on
+refs it's probably worth stepping back and considering whether the
+same thing could be accomplished in a more declarative manner.
+
+Since `contacts-view` "owns" the text field we should consider making
+it's value a part of `contacts-view`s local state. Let's change
+`contacts-view` to the following, evaluate it and re-evaluate the
+`om/root` expression:
+
+```clj
+(defn contacts-view [app owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:delete (chan)
+       :text ""})
+    om/IWillMount
+    (will-mount [_]
+      (let [delete (om/get-state owner :delete)]
+        (go (loop []
+              (let [contact (<! delete)]
+                (om/transact! app :contacts
+                  (fn [xs] (vec (remove #(= contact %) xs))))
+                (recur))))))
+    om/IRenderState
+    (render-state [this state]
+      (dom/div nil
+        (dom/h1 nil "Contact list")
+        (apply dom/ul nil
+          (om/build-all contact-view (:contacts app)
+            {:init-state state}))
+        (dom/div nil
+          (dom/input #js {:type "text" :ref "new-contact" :value (:text state)})
+          (dom/button #js {:onClick #(add-contact app owner)} "Add contact"))))))
+```
+
+Try typing in the text field.
+
+Yikes! You can no longer enter anything. Let's take a moment to
+consider what's going on.
+
+We've added a new piece of state to `contacts-view`. Regardless of
+what the user may type we now setting the value of the input field to
+the value of the `:text` state property. We need to keep this in sync
+with the user input. Let's change `contacts-view` again adding an
+event listener to watch when the input field changes:
+
+```clj
+(defn contacts-view [app owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:delete (chan)
+       :text ""})
+    om/IWillMount
+    (will-mount [_]
+      (let [delete (om/get-state owner :delete)]
+        (go (loop []
+              (let [contact (<! delete)]
+                (om/transact! app :contacts
+                  (fn [xs] (vec (remove #(= contact %) xs))))
+                (recur))))))
+    om/IRenderState
+    (render-state [this state]
+      (dom/div nil
+        (dom/h1 nil "Contact list")
+        (apply dom/ul nil
+          (om/build-all contact-view (:contacts app)
+            {:init-state state}))
+        (dom/div nil
+          (dom/input 
+            #js {:type "text" :ref "new-contact" :value (:text state)
+                 :onChange #(handle-change % owner state)})
+          (dom/button #js {:onClick #(add-contact app owner)} "Add contact"))))))
+```
+
+Before evaluting that let's add `handle-change`:
+
+```clj
+(defn handle-change [e owner {:keys [text]}]
+  (om/set-state! owner :text (.. e -target -value)))
+```
+
+Now evaluate `handle-change`, `contacts-view` and `om/root`. You
+should now be able to type in the text field again.
+
+That seemed like a lot of work for little gain ... except we just saw
+we have really fine grained control over user input entry. For example
+name can't have number in them, let prevent that now by modify
+`handle-change`:
+
+```clj
+(defn handle-change [e owner {:keys [text]}]
+  (let [value (.. e -target -value)]
+    (if-not (re-find #"[0-9]" value)
+      (om/set-state! owner :text value)
+      (om/set-state! owner :text text))))
+```
+
+Evaluate `handle-change`, `contact-view`, and `om/root`. You can type
+names however no change will occur if you attempt to enter a
+number. Pretty slick.
+
+**Note**: If you are familiar with React you'll notice that this is a
+little bit clunkier than in React, here we have to make sure to set
+the state of the text field even if we don't want it to change. This
+is a side effect of React's internals clashing a bit with Om's
+optimization of always rendering on requestAnimationFrame.
+
+## Higher Order Views
