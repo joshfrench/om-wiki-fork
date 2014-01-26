@@ -655,7 +655,7 @@ names however no change will occur if you attempt to enter a
 number. Pretty slick.
 
 **Note**: If you are familiar with React you'll notice that this is a
-little bit chunkier than in React, here we have to make sure to set
+little bit clunkier than in React, here we have to make sure to set
 the state of the text field even if we don't want it to change. This
 is a side effect of React's internals clashing a bit with Om's
 optimization of always rendering on requestAnimationFrame.
