@@ -655,9 +655,80 @@ names however no change will occur if you attempt to enter a
 number. Pretty slick.
 
 **Note**: If you are familiar with React you'll notice that this is a
-little bit clunkier than in React, here we have to make sure to set
+little bit chunkier than in React, here we have to make sure to set
 the state of the text field even if we don't want it to change. This
 is a side effect of React's internals clashing a bit with Om's
 optimization of always rendering on requestAnimationFrame.
 
-## Higher Order Views
+## Higher Order Components
+
+The most powerful components are those who sub-components can be
+parameterized. In order to focus on this concept let leave aside user
+input and other complications for now. As a challenge you should try
+to re-add these facilities yourself after you've worked through this
+section.
+
+Let's start fresh. Your `index.html` should like the following, don't
+forget to include Light Table's connection script tag:
+
+```html
+<html>
+    <body>
+        <div id="registry"></div>
+        <script src="http://fb.me/react-0.8.0.js"></script>
+        <script src="out/goog/base.js" type="text/javascript"></script>
+        <script src="om_tut.js" type="text/javascript"></script>
+        <script type="text/javascript">goog.require("om_tut.core");</script>
+    </body>
+</html>
+```
+
+Your source file should look like the following:
+
+```clj
+(ns om-tut.core
+  (:require [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]
+            [clojure.string :as string]))
+
+(enable-console-print!)
+
+(def app-state
+  (atom
+    {:people
+     [{:type :student
+       :first "Ben" :last "Bitdiddle" :email "benb@mit.edu"}
+      {:type :student 
+       :first "Alyssa" :middle-initial "P" :last "Hacker" :email "aphacker@mit.edu"}
+      {:type :professor
+       :first "Gerald" :middle "Jay" :last "Sussman" :email "metacirc@mit.edu"
+       :classes [:6001 :6946]}
+      {:type :student
+       :first "Eva" :middle "Lu" :last "Ator" :email "eval@mit.edu"}
+      {:type :student
+       :first "Louis" :last "Reasoner" :email "prolog@mit.edu"}
+      {:type :professor
+       :first "Hal" :last "Abelson" :email "evalapply@mit.edu"
+       :classes [:6001]}]
+     :classes
+     {:6001 "The Structure and Interpretation of Computer Programs"
+      :6946 "The Structure and Interpretation of Classical Mechanics"}}))
+
+(defn middle-name [{:keys [middle middle-initial]}]
+  (cond
+    middle (str " " middle)
+    middle-initial (str " " middle-initial ".")))
+
+(defn display-name [{:keys [first last] :as contact}]
+  (str last ", " first (middle-name contact)))
+
+(defn registry-view [app owner]
+  (reify
+    om/IRenderState
+    (render-state [_ state]
+      (dom/div nil
+        (dom/h1 nil "Registry")))))
+
+(om/root app-state registry-view (. js/document (getElementById "registry")))
+```
+
