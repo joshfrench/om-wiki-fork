@@ -639,7 +639,7 @@ should now be able to type in the text field again.
 
 That seemed like a lot of work for little gain ... except we just saw
 we have really fine grained control over user input entry. For example
-name can't have number in them, let prevent that now by modify
+a name can't have a number in it, let's prevent that now by modifying
 `handle-change`:
 
 ```clj
