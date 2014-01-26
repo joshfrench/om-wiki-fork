@@ -556,7 +556,7 @@ refs it's probably worth stepping back and considering whether the
 same thing could be accomplished in a more declarative manner.
 
 Since `contacts-view` "owns" the text field we should consider making
-it's value a part of `contacts-view`s local state. Let's change
+it's value a part of `contacts-view`'s local state. Let's change
 `contacts-view` to the following, evaluate it and re-evaluate the
 `om/root` expression:
 
