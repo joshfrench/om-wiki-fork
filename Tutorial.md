@@ -782,7 +782,9 @@ the documentation. Don't worry that the docstring currently says it's
 experimental - some similar functionality like it will exist, but it
 will likely be more flexible.
 
-Finally let's fix up `registry-view`:
+Finally let's fix up `registry-view`. It's gorgeously succinct and
+devoid of all the conditional madness you often find in templating
+languages.
 
 ```clj
 (defn registry-view [app owner]
