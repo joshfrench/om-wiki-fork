@@ -801,4 +801,12 @@ Evaluate everything and you should see the results.
 
 Hopefully the view composability and extensibility offered by Om puts
 a gleam in your eye. There's more enough here to keep if occupied for
-hours if you wish to take it further.
+hours if you wish to take it further yourself.
+
+Otherwise in the next section we'll show we can easily modify each
+professor's class list and even make it possible to edit the class
+name inline.
+
+## Interactivity & Higher Order Components
+
+## Async Application State
