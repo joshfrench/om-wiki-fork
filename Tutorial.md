@@ -1,6 +1,11 @@
 This tutorial is optimized for usage with
 [Light Table](http://www.lighttable.com/).
 
+This tutorial assumes familiarity with Clojure or ClojureScript. If
+you are not familiar, we recommend going through the
+[ClojureScript tutorial for Light Table](http://github.com/swannodette/lt-cljs-tutorial)
+first.
+
 Install [Leiningen](http://leiningen.org). Then at the command line
 run the following where you like on the command line:
 
