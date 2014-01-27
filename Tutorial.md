@@ -732,7 +732,7 @@ Your source file should look like the following:
 (om/root app-state registry-view (. js/document (getElementById "registry")))
 ```
 
-Now what we want is for registry-view to render different views for
+Now what we want is for `registry-view` to render different views for
 different types of people without hardcoding. Here we'll see how
 multimethods in ClojureScript really shine.
 
