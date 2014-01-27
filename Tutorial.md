@@ -737,3 +737,66 @@ Your source file should look like the following:
 (om/root app-state registry-view (. js/document (getElementById "registry")))
 ```
 
+Now what we want is for registry-view to render different views for
+different types of people without hardcoding. Here we'll see how
+multimethods in ClojureScript really shine.
+
+After `display-name` let's write the following:
+
+```clj
+(defmulti entry-view (fn [person] (:type person)))
+
+(defmethod entry-view :student
+  [person owner] (student-view person owner))
+
+(defmethod entry-view :professor
+  [person owner] (professor-view person owner)) 
+```
+
+Don't evaluate these yet as we haven't written `student-view` or
+`professor-view`. Take a moment to let the idea sink, we're adding a
+level of indirection so that `entry-view` can delegate to any other
+view as long as we supplied a `defmethod` for it!
+
+Let's write the underlying views now before `entry-view`:
+
+```clj
+(defn student-view [student owner]
+  (reify
+    om/IRender
+    (render [_]
+      (dom/li nil (display-name student)))))
+
+(defn professor-view [professor owner]
+  (reify
+    om/IRender
+    (render [_]
+      (dom/li nil
+        (dom/div nil (display-name professor))
+        (dom/label nil "Classes")
+        (dom/ul nil
+          (into-array
+            (map
+              #(dom/li nil (om/join professor [:classes %]))
+              (:classes professor))))))))
+```
+
+Hopefully you can now attempt a guess at what this code is doing.
+
+Finally let's fix up `registry-view`:
+
+```clj
+(defn registry-view [app owner]
+  (reify
+    om/IRenderState
+    (render-state [_ state]
+      (dom/div nil
+        (dom/h1 nil "Registry")
+        (dom/ul nil
+          (om/build-all entry-view (:people app)))))))
+```
+
+Evaluate everything and you should see the results.
+
+Hopefully the view composability and extensibility offered by Om puts
+a gleam in your eye.
