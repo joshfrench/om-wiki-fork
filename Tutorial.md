@@ -67,9 +67,9 @@ roots attached to it (we'll explain this in a second). You can think
 of this atom as the database of your client side
 application. Everything in the atom should be an associative data
 structure - either a ClojureScript map or indexed sequential data
-structure such as a vector, list and lazy sequences are not
-allowed. It's particularly easy to forget this when updating indexed
-sequences in the application state.
+structure such as a vector. This mean you should never put lists or lazy
+sequences into the application state. It's particularly easy to forget
+this when updating indexed sequences in the application state.
 
 ### om.core/root
 
