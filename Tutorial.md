@@ -769,11 +769,9 @@ Let's write the underlying views now before `entry-view`:
       (dom/li nil
         (dom/div nil (display-name professor))
         (dom/label nil "Classes")
-        (dom/ul nil
-          (into-array
-            (map
-              #(dom/li nil (om/join professor [:classes %]))
-              (:classes professor))))))))
+        (apply dom/ul nil
+          (map #(dom/li nil (om/join professor [:classes %]))
+            (:classes professor)))))))
 ```
 
 Hopefully you can now attempt a guess at what this code is
