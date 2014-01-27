@@ -781,7 +781,11 @@ Let's write the underlying views now before `entry-view`:
               (:classes professor))))))))
 ```
 
-Hopefully you can now attempt a guess at what this code is doing.
+Hopefully you can now attempt a guess at what this code is
+doing. Rather than explain `om.core/join` directly I recommend reading
+the documentation. Don't worry that the docstring currently says it's
+experimental - some similar functionality like it will exist, but it
+will likely be more flexible.
 
 Finally let's fix up `registry-view`:
 
@@ -799,4 +803,5 @@ Finally let's fix up `registry-view`:
 Evaluate everything and you should see the results.
 
 Hopefully the view composability and extensibility offered by Om puts
-a gleam in your eye.
+a gleam in your eye. There's more enough here to keep if occupied for
+hours if you wish to take it further.
