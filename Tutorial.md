@@ -739,7 +739,7 @@ multimethods in ClojureScript really shine.
 After `display-name` let's write the following:
 
 ```clj
-(defmulti entry-view (fn [person] (:type person)))
+(defmulti entry-view (fn [person _] (:type person)))
 
 (defmethod entry-view :student
   [person owner] (student-view person owner))
