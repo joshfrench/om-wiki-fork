@@ -701,19 +701,14 @@ Your source file should look like the following:
 (def app-state
   (atom
     {:people
-     [{:type :student
-       :first "Ben" :last "Bitdiddle" :email "benb@mit.edu"}
-      {:type :student 
-       :first "Alyssa" :middle-initial "P" :last "Hacker" :email "aphacker@mit.edu"}
-      {:type :professor
-       :first "Gerald" :middle "Jay" :last "Sussman" :email "metacirc@mit.edu"
-       :classes [:6001 :6946]}
-      {:type :student
-       :first "Eva" :middle "Lu" :last "Ator" :email "eval@mit.edu"}
-      {:type :student
-       :first "Louis" :last "Reasoner" :email "prolog@mit.edu"}
-      {:type :professor
-       :first "Hal" :last "Abelson" :email "evalapply@mit.edu"
+     [{:type :student :first "Ben" :last "Bitdiddle" :email "benb@mit.edu"}
+      {:type :student :first "Alyssa" :middle-initial "P" :last "Hacker" 
+       :email "aphacker@mit.edu"}
+      {:type :professor :first "Gerald" :middle "Jay" :last "Sussman" 
+       :email "metacirc@mit.edu" :classes [:6001 :6946]}
+      {:type :student :first "Eva" :middle "Lu" :last "Ator" :email "eval@mit.edu"}
+      {:type :student :first "Louis" :last "Reasoner" :email "prolog@mit.edu"}
+      {:type :professor :first "Hal" :last "Abelson" :email "evalapply@mit.edu" 
        :classes [:6001]}]
      :classes
      {:6001 "The Structure and Interpretation of Computer Programs"
