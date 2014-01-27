@@ -797,13 +797,13 @@ languages.
 
 Evaluate everything and you should see the results.
 
-Hopefully the view composability and extensibility offered by Om puts
-a gleam in your eye. There's more enough here to keep if occupied for
+Hopefully the view composition and extensibility offered by Om puts
+a gleam in your eye. There's more than enough here to keep you occupied for
 hours if you wish to take it further yourself.
 
-Otherwise in the next section we'll show we can easily modify each
-professor's class list and even make it possible to edit the class
-name inline.
+Otherwise in the next section we'll show you how we can easily modify
+each professor's class list and even make it possible to edit the
+class name inline.
 
 ## Interactivity & Higher Order Components
 
