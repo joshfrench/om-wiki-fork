@@ -61,6 +61,10 @@ will be called.
 associated with. `next-state` is the next component local state, it is
 always a map.
 
+In your implementation if you wish to detect prop transitions you
+must use `om.core/get-props`. This is because your component
+constructor function is called with the updated props.
+
 ### IWillMount
 
 ```clj
@@ -98,6 +102,10 @@ renders. This is a good place to detect and act on state transitions.
 `next-props` is the next application state associated with this
 component. `next-state` is the next component local state, it is
 always a map.
+
+In your implementation if you wish to detect prop transitions you
+must use `om.core/get-props`. This is because your component
+constructor function is called with the updated props.
 
 ### IDidUpdate
 
