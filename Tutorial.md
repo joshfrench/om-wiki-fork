@@ -676,7 +676,7 @@ input and other complications for now. As a challenge you should try
 to re-add these facilities yourself after you've worked through this
 section.
 
-Let's start fresh. Your `index.html` should like the following, don't
+Let's start fresh. Your `index.html` should look like the following, don't
 forget to include Light Table's connection script tag:
 
 ```html
