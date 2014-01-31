@@ -773,19 +773,11 @@ Let's write the underlying views now before `entry-view`:
         (dom/div nil (display-name professor))
         (dom/label nil "Classes")
         (apply dom/ul nil
-          (map #(dom/li nil (om/join professor [:classes %]))
-            (:classes professor)))))))
+          (map #(dom/li nil %) (:classes professor)))))))
 ```
 
-Hopefully you can now attempt a guess at what this code is
-doing. Rather than explain `om.core/join` directly I recommend reading
-the documentation. Don't worry that the docstring currently says it's
-experimental - some similar functionality like it will exist, but it
-will likely be more flexible.
-
-Finally let's fix up `registry-view`. It's gorgeously succinct and
-devoid of all the conditional madness you often find in templating
-languages.
+Finally let's fix up `registry-view`. It's succinct and we've kept it
+clean of conditionals.
 
 ```clj
 (defn registry-view [app owner]
@@ -795,7 +787,21 @@ languages.
       (dom/div nil
         (dom/h1 nil "Registry")
         (dom/ul nil
-          (om/build-all entry-view (:people app)))))))
+          (om/build-all entry-view (people app)))))))
+```
+
+The only missing bit now is the `people` function. We want to make
+sure to render professors with their list of actual class
+titles. Before `registry-view` write the following:
+
+```clj
+(defn people [app]
+  (->> (:people app)
+    (mapv (fn [x]
+            (if (:classes x)
+              (update-in x [:classes]
+                (fn [cs] (mapv (:classes app) cs)))
+               x)))))
 ```
 
 Evaluate everything and you should see the results.
@@ -805,8 +811,8 @@ a gleam in your eye. There's more than enough here to keep you occupied for
 hours if you wish to take it further yourself.
 
 Otherwise in the next section we'll show you how we can easily modify
-each professor's class list and even make it possible to edit the
-class name inline.
+each professor's class list and make those changes visible in
+multiple locations on the screen.
 
 ## Interactivity & Higher Order Components
 
