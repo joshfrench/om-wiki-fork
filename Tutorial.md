@@ -898,7 +898,7 @@ When the input loses focus we want to exit editing mode:
 These are all helpers for our soon to be written `editable`
 component. `editable` takes a JavaScript string and presents it while
 also making it editable. In order for this to work the JavaScript
-string need to support the cursor interface. We don't need to
+string need to support the Om cursor interface. We don't need to
 implement this ourselves but we do need make sure that JavaScript
 strings implement `ICloneable` so that Om can do the hard work for
 you.
