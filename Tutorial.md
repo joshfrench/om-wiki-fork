@@ -955,6 +955,19 @@ We have to use `om.core/value` here because React doesn't know how to
 handle JavaScript String objects. This is also why we implement
 `IValue` above.
 
+Let's use `editable` in `classes-view`:
+
+```clj
+(defn classes-view [app owner]
+  (reify
+    om/IRender
+    (render [_]
+      (dom/div #js {:id "classes"}
+        (dom/h2 nil "Classes")
+        (apply dom/ul nil
+          (map #(om/build editable %) (vals (:classes app))))))))
+```
+
 That's it, evaluate everything or refresh the browser. You should now
 be able to edit class titles in the `classes-view`. Notice that the
 class name in `registry-view` stay perfectly in sync.
