@@ -865,7 +865,7 @@ one:
 Evaluate the new forms and both `om/root` expressions, you should see
 the new bits of UI.
 
-Let make class names editable inline. To accomplish this we want to
+Let's make class names editable inline. To accomplish this we want to
 make a reusable component that we can plug in wherever we like. This
 will be the most complicated component we have seen so far.
 
