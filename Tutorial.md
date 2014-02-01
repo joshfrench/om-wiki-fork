@@ -970,7 +970,7 @@ Let's use `editable` in `classes-view`:
 
 That's it, evaluate everything or refresh the browser. You should now
 be able to edit class titles in the `classes-view`. Notice that the
-class name in `registry-view` stays perfectly in sync.
+class titles in `registry-view` stay perfectly in sync.
 
 As a challenge render the classes in `professor-view` with `editable`
 instead of just rendering strings.
