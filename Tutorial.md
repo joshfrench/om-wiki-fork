@@ -832,7 +832,6 @@ include the LT connection script tag:
         </style>
     </head>
     <body>
-        <script type='text/javascript' id='lt_ws' src='http://localhost:65407/socket.io/lighttable/ws.js'></script>
         <div id="registry"></div>
         <div id="classes"></div>
         <script src="http://fb.me/react-0.8.0.js"></script>
