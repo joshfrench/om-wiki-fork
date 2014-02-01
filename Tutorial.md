@@ -910,7 +910,7 @@ us.
 ```
 
 Sadly this is not enough because JavaScript String objects and
-primitive string are not the same thing:
+JavaScript primitive strings are not the same thing:
 
 ```clj
 (extend-type js/String
