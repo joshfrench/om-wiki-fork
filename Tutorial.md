@@ -935,7 +935,7 @@ moment to read it and you'll see that it's quite simple.
     (init-state [_]
       {:editing false})
     om/IRenderState
-    (render-state [_ {:keys [edit-text editing]}]
+    (render-state [_ {:keys [editing]}]
       (dom/li nil
         (dom/span #js {:style (display (not editing))} (om/value text))
         (dom/input
