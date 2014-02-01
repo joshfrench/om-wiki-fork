@@ -973,7 +973,10 @@ be able to edit class titles in the `classes-view`. Notice that the
 class titles in `registry-view` stay perfectly in sync.
 
 As a challenge render the classes in `professor-view` with `editable`
-instead of just rendering strings.
+instead of just rendering strings. It's just a one line change. If you
+get it working notice how editing the class titles from deep within
+the `register-view` "just works". This is the modularity that Om
+cursors provide.
 
 Next we'll cover loading application state asynchronously.
 
