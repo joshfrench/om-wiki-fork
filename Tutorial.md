@@ -784,7 +784,7 @@ clean of conditionals.
   (reify
     om/IRenderState
     (render-state [_ state]
-      (dom/div nil
+      (dom/div #js {:id "registry"}
         (dom/h2 nil "Registry")
         (dom/ul nil
           (om/build-all entry-view (people app)))))))
@@ -819,9 +819,20 @@ multiple locations on the screen.
 Let's change `index.html` to the following, again don't forget to
 include the LT connection script tag:
 
-```clj
+```html
 <html>
+    <head>
+        <style>
+            ul li input {
+                width: 400px;
+            }
+            ul li button {
+                margin-left: 10px;
+            }
+        </style>
+    </head>
     <body>
+        <script type='text/javascript' id='lt_ws' src='http://localhost:65407/socket.io/lighttable/ws.js'></script>
         <div id="registry"></div>
         <div id="classes"></div>
         <script src="http://fb.me/react-0.8.0.js"></script>
@@ -839,7 +850,7 @@ Let add `classes-view` after `registry-view`:
   (reify
     om/IRender
     (render [_]
-      (dom/div nil
+      (dom/div #js {:id "classes"}
         (dom/h2 nil "Classes")
         (apply dom/ul nil
           (map #(dom/li nil %) (vals (:classes app))))))))
@@ -856,7 +867,103 @@ Evaluate the new forms and both `om/root` expressions, you should see
 the new bits of UI.
 
 Let make class names editable inline. To accomplish this we want to
-make a reusable component that we can plugin wherever we like.
+make a reusable component that we can plug in wherever we like. This
+will be the most complicated component we have seen so far.
+
+When the user edits a class name we should hide the original text and
+present an input field. So we need a little helper function to do
+this. After `app-state` add `display`:
+
+```clj
+(defn display [show]
+  (if show
+    #js {}
+    #js {:display "none"}))
+```
+
+Every time a user presses a key while editing a class name we want to
+update the application state:
+
+```clj
+(defn handle-change [e text owner]
+  (om/transact! text (fn [_] (.. e -target -value))))
+```
+
+When the input loses focus we want to exit editing mode:
+
+```clj
+(defn commit-change [text owner]
+  (om/set-state! owner :editing false))
+```
+
+These are all helpers for our soon to be written `editable`
+component. `editable` takes a JavaScript string and presents it while
+also making it editable. In order for this to work the JavaScript
+string need to support the cursor interface. We don't need to
+implement this ourselves but we do need make sure that JavaScript
+strings implement `ICloneable` so that Om can do the hard work for
+you.
+
+```clj
+(extend-type string
+  ICloneable
+  (-clone [s] (js/String. s)))
+```
+
+Sadly this is not enough because JavaScript String objects and
+primitive string are not the same thing:
+
+```clj
+(extend-type js/String
+  ICloneable
+  (-clone [s] (js/String. s))
+  om/IValue
+  (-value [s] (str s)))
+```
+
+The ClojureScript compiler will emit a warning. Normally you don't
+want to ignore it but in this case we'll make an exception in order to
+keep the `editable` component as simple as possible. We'll explain
+`IValue` in a moment.
+
+This is the editable component, this might look like a lot but take a
+moment to read it and you'll see that it's quite simple.
+
+```clj
+(defn editable [text owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:editing false})
+    om/IRenderState
+    (render-state [_ {:keys [edit-text editing]}]
+      (dom/li nil
+        (dom/span #js {:style (display (not editing))} (om/value text))
+        (dom/input
+          #js {:style (display editing)
+               :value (om/value text)
+               :onChange #(handle-change % text owner)
+               :onKeyPress #(when (== (.-keyCode %) 13)
+                              (commit-change text owner))
+               :onBlur (fn [e] (commit-change text owner))})
+        (dom/button
+          #js {:style (display (not editing))
+               :onClick #(om/set-state! owner :editing true)}
+          "Edit")))))
+```
+
+We have to use `om.core/value` here because React doesn't know how to
+handle JavaScript String objects. This is also why we implement
+`IValue` above.
+
+That's it, evaluate everything or refresh the browser. You should now
+be able to edit class titles in the `classes-view`. Notice that the
+class name in `registry-view` stay perfectly in sync.
+
+As a challenge render the classes in `professor-view` with `editable`
+instead of just rendering strings.
+
+Next we'll cover loading application state asynchronously.
 
 ## Async Application State
 
