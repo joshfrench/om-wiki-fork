@@ -816,6 +816,48 @@ multiple locations on the screen.
 
 ## Interactivity & Higher Order Components
 
+Let's change `index.html` to the following, again don't forget to
+include the LT connection script tag:
+
+```clj
+<html>
+    <body>
+        <div id="registry"></div>
+        <div id="classes"></div>
+        <script src="http://fb.me/react-0.8.0.js"></script>
+        <script src="out/goog/base.js" type="text/javascript"></script>
+        <script src="om_tut.js" type="text/javascript"></script>
+        <script type="text/javascript">goog.require("om_tut.core");</script>
+    </body>
+</html>
+```
+
+Let add `classes-view` after `registry-view`:
+
+```clj
+(defn classes-view [app owner]
+  (reify
+    om/IRender
+    (render [_]
+      (dom/div nil
+        (dom/h2 nil "Classes")
+        (apply dom/ul nil
+          (map #(dom/li nil %) (vals (:classes app))))))))
+```
+
+Let's use it by adding a new `om/root` expression after the existing
+one:
+
+```clj
+(om/root app-state classes-view (. js/document (getElementById "classes")))
+```
+
+Evaluate the new forms and both `om/root` expressions, you should see
+the new bits of UI.
+
+Let make class names editable inline. To accomplish this we want to
+make a reusable component that we can plugin wherever we like.
+
 ## Async Application State
 
 ## Speculative UI Programming
