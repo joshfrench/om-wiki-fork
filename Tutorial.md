@@ -24,7 +24,7 @@ This will start auto building so that recompiles will occur when you
 save a file. The first build will take a few seconds. Once the build
 has succeeded open `index.html` in your favorite browser (we recommend
 Google Chrome as it has excellent support for source maps). You should
-see an `h1` tag with the text content `Hello World!` in it.
+see an `h2` tag with the text content `Hello World!` in it.
 
 Open `src/om_tut/core.cljs` in Light Table. Change `:text` value of
 `app-state` to be something else other than `Hello World!`. Save the
@@ -84,7 +84,7 @@ expression in the tutorial at this point looks like this:
 (om/root
   app-state
   (fn [app owner]
-    (dom/h1 nil (:text app)))
+    (dom/h2 nil (:text app)))
   (. js/document (getElementById "app")))
 ```
 
@@ -112,11 +112,11 @@ with the following:
 (om/root
   app-state
   (fn [app owner]
-    (dom/h1 nil (:text app)))
+    (dom/h2 nil (:text app)))
   (. js/document (getElementById "app0")))
 ```
 
-Refresh your browser. You should see just one `h1` tag on the
+Refresh your browser. You should see just one `h2` tag on the
 page. Copy and paste the `om/root` expression and edit the second
 one to look like the following:
 
@@ -124,12 +124,12 @@ one to look like the following:
 (om/root
   app-state
   (fn [app owner]
-    (dom/h1 nil (:text app)))
+    (dom/h2 nil (:text app)))
   (. js/document (getElementById "app1"))) ;; <-- "app0" to "app1"
 ```
 
 Place your cursor at the end of this expression and evaluate it. You
-should see the second `h1` tag magically appear.
+should see the second `h2` tag magically appear.
 
 At the end of the file type the following and evaluate it.
 
@@ -137,7 +137,7 @@ At the end of the file type the following and evaluate it.
 (swap! app-state assoc :text "Multiple roots!")
 ```
 
-You should see both `h1` tags update on the fly. Multiple roots are
+You should see both `h2` tags update on the fly. Multiple roots are
 fully supported and synchronized to render on the same
 `requestAnimationFrame`.
 
@@ -272,7 +272,7 @@ After `app-state` lets add the following code:
     om/IRender
     (render [this]
       (dom/div nil
-        (dom/h1 nil "Contact list")
+        (dom/h2 nil "Contact list")
         (apply dom/ul nil
           (om/build-all contact-view (:contacts app)))))))
 ```
@@ -280,7 +280,7 @@ After `app-state` lets add the following code:
 In order to build a Om component we must use `om.core/build` for a
 single component and `om.core/build-all` to build many components. In
 this case we want to display a contact list so we want to use
-`om.core/build-all`. `contacts-view` returns a `div` with a `h1` and
+`om.core/build-all`. `contacts-view` returns a `div` with a `h2` and
 `ul` tag in it. We want to render several `li` element so we call
 `apply` on `dom/ul`.
 
@@ -391,7 +391,7 @@ worry we'll walk through all of it.
     om/IRenderState
     (render-state [this {:keys [delete]}]
       (dom/div nil
-        (dom/h1 nil "Contact list")
+        (dom/h2 nil "Contact list")
         (apply dom/ul nil
           (om/build-all contact-view (:contacts app)
             {:init-state {:delete delete}}))))))
@@ -521,7 +521,7 @@ should look like the following:
     om/IRenderState
     (render-state [this state]
       (dom/div nil
-        (dom/h1 nil "Contact list")
+        (dom/h2 nil "Contact list")
         (apply dom/ul nil
           (om/build-all contact-view (:contacts app)
             {:init-state state}))
@@ -586,7 +586,7 @@ it's value a part of `contacts-view`'s local state. Let's change
     om/IRenderState
     (render-state [this state]
       (dom/div nil
-        (dom/h1 nil "Contact list")
+        (dom/h2 nil "Contact list")
         (apply dom/ul nil
           (om/build-all contact-view (:contacts app)
             {:init-state state}))
@@ -624,7 +624,7 @@ event listener to watch when the input field changes:
     om/IRenderState
     (render-state [this state]
       (dom/div nil
-        (dom/h1 nil "Contact list")
+        (dom/h2 nil "Contact list")
         (apply dom/ul nil
           (om/build-all contact-view (:contacts app)
             {:init-state state}))
@@ -730,7 +730,7 @@ Your source file should look like the following:
     om/IRenderState
     (render-state [_ state]
       (dom/div nil
-        (dom/h1 nil "Registry")))))
+        (dom/h2 nil "Registry")))))
 
 (om/root app-state registry-view (. js/document (getElementById "registry")))
 ```
@@ -785,7 +785,7 @@ clean of conditionals.
     om/IRenderState
     (render-state [_ state]
       (dom/div nil
-        (dom/h1 nil "Registry")
+        (dom/h2 nil "Registry")
         (dom/ul nil
           (om/build-all entry-view (people app)))))))
 ```
