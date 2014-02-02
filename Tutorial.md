@@ -843,7 +843,7 @@ include the LT connection script tag:
 </html>
 ```
 
-Let add `classes-view` after `registry-view`:
+Let's add `classes-view` after `registry-view`:
 
 ```clj
 (defn classes-view [app owner]
