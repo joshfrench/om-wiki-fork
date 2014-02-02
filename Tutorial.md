@@ -956,6 +956,21 @@ We have to use `om.core/value` here because React doesn't know how to
 handle JavaScript String objects. This is also why we implement
 `IValue` above.
 
+We also need to update `professor-view` since the class title might be
+a String object instead of a primitive string:
+
+```clj
+(defn professor-view [professor owner]
+  (reify
+    om/IRender
+    (render [_]
+      (dom/li nil
+        (dom/div nil (display-name professor))
+        (dom/label nil "Classes")
+        (apply dom/ul nil
+          (map #(dom/li nil (om/value %)) (:classes professor)))))))
+```
+
 Let's use `editable` in `classes-view`:
 
 ```clj
