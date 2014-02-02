@@ -715,7 +715,8 @@ Your source file should look like the following:
        :classes [:6001]}]
      :classes
      {:6001 "The Structure and Interpretation of Computer Programs"
-      :6946 "The Structure and Interpretation of Classical Mechanics"}}))
+      :6946 "The Structure and Interpretation of Classical Mechanics"
+      :1806 "Linear Algebra"}}))
 
 (defn middle-name [{:keys [middle middle-initial]}]
   (cond
