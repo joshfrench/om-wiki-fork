@@ -254,7 +254,7 @@ application state nor component local state.
 ```
 
 Conceptually the same as `om.core/build`, the only difference is that
-it returns an array of Om components. `xs` is a sequence of
+it returns a sequence of Om components. `xs` is a sequence of
 cursors. `f` and `m` are the same as `om.core/build`.
 
 ### transact!
