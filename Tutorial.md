@@ -787,7 +787,7 @@ clean of conditionals.
     (render-state [_ state]
       (dom/div #js {:id "registry"}
         (dom/h2 nil "Registry")
-        (dom/ul nil
+        (apply dom/ul nil
           (om/build-all entry-view (people app)))))))
 ```
 
