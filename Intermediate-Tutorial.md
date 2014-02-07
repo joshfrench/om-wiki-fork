@@ -1,5 +1,3 @@
-## Async Application State
-
 For this next tutorial we're going to get more
 ambitious. We're going to build an Om front end to a simple
 [Ring](http://github.com/ring-clojure) application that talks to
