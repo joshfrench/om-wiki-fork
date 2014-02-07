@@ -998,7 +998,7 @@ Next we'll cover loading application state asynchronously.
 
 ## Async Application State
 
-For this next tutorial we're going to get considerably more
+For this next tutorial we're going to get more
 ambitious. We're going to build an Om front end to a simple
 [Ring](http://github.com/ring-clojure) application that talks to
 [Datomic](http://datomic.com) for persistence. You can of course swap
