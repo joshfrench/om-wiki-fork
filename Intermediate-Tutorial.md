@@ -163,7 +163,7 @@ relying on core.async.
 Now we write simple utility for making async requests to the server
 with EDN:
 
-```
+```clj
 (def ^:private meths
   {:get "GET"
    :put "PUT"
