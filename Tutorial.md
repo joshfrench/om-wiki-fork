@@ -994,4 +994,4 @@ get it working notice how editing the class titles from deep within
 the `register-view` "just works". This is the modularity that Om
 cursors provide.
 
-Next we'll cover loading application state asynchronously.
+In the [[Intermediate Tutorials]].
