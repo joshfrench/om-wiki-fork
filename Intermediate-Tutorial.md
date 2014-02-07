@@ -83,4 +83,60 @@ for the EDN middleware we'll be using:
    :body (pr-str data)})
 ```
 
+Now let's take a look at classes:
+
+```clj
+(defn classes []
+  (let [db (d/db conn)
+        classes
+        (vec (map #(d/touch (d/entity db (first %)))
+               (d/q '[:find ?class
+                      :where
+                      [?class :class/id]]
+                 db)))]
+    (generate-response classes)))
+```
+
+This just finds all the classes and returns an EDN response.
+
+Now we have `update-class`. It finds a class by id and modifies the
+title:
+
+```clj
+(defn update-class [id params]
+  (let [db    (d/db conn)
+        title (:class/title params)
+        eid   (ffirst
+                (d/q '[:find ?class
+                       :in $ ?id
+                       :where 
+                       [?class :class/id ?id]]
+                  db id))]
+    (d/transact conn [[:db/add eid :class/title title]])
+    (generate-response {:status :ok})))
+```
+
+We then have our routes:
+
+```clj
+(defroutes routes
+  (GET "/" [] (index))
+  (GET "/classes" [] (classes))
+  (PUT "/class/:id/update"
+    {params :params edn-params :edn-params}
+    (update-class (:id params) edn-params))
+  (route/files "/" {:root "resources/public"}))
+```
+
+Finally we add our EDN middleware and start our server:
+
+```clj
+(def app
+  (-> routes
+      wrap-edn-params))
+
+(defonce server
+  (run-jetty #'app {:port 8080 :join? false}))
+```
+
 ## Speculative UI Programming
