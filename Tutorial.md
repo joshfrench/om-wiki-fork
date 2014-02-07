@@ -336,8 +336,8 @@ Let's try deleting contacts. Change `contact-view` to the following:
 Evaluate this and the `om/root` expression. You should see delete
 buttons now, however clicking on them won't do anything.
 
-Contacts don't need to be able delete themselves, however they should
-be able to communicate to some entity does have that power.
+Contacts don't need to be able to delete themselves, however they should
+be able to communicate to some entity that does have that power.
 
 ## Intercomponent communication
 
