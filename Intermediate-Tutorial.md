@@ -1,5 +1,5 @@
-For this next tutorial we're going to get more
-ambitious. We're going to build an Om front end to a simple
+For this next tutorial we're going to get a bit more
+ambitious. We're going to build an Om frontend to a simple
 [Ring](http://github.com/ring-clojure) application that talks to
 [Datomic](http://datomic.com) for persistence. You can of course swap
 in another database, but Datomic is particularly easy to use from
@@ -16,7 +16,8 @@ bin/transactor config/samples/free-transactor-template.properties
 
 This will start up the Datomic transactor.
 
-Now in some other directory run the following:
+Now in some other directory run the following to generate the tutorial
+from the `om-async-tut` Lein template:
 
 ```
 lein new om-async-tut om-async
@@ -32,7 +33,7 @@ user=> (init-db)
 :done
 ```
 
-The tutorial database is now exists and is populated. Quit the
+The tutorial database now exists and is populated. Quit the
 REPL. Let's start the auto building process:
 
 ```
@@ -45,14 +46,13 @@ I highly recommend Jonas Enlund's
 [tutorial](http://www.learndatalogtoday.org) and the
 [Day of Datomic](http://github.com/Datomic/day-of-datomic) tutorial.
 
-Ok that was a bit of work, let's read some code. Open
-`src/clj/om-async/core.clj` in Light Table. Typed
-"Shift-Command-Enter" to evaluate the entire file. This will start up
-the web server. You should be able to point your browser at
-`http://localhost:8080`. If you open the JavaScript console you should
-see `"Hello world!"` printed.
+Let's read some code. Open `src/clj/om-async/core.clj` in Light
+Table. Type "Shift-Command-Enter" to evaluate the entire file. This
+will start up the web server. You should be able to point your browser
+at `http://localhost:8080`. If you open the JavaScript console you
+should see `"Hello world!"` printed.
 
-We have the usual namespace stuff:
+At the top of the file we have the usual namespace stuff:
 
 ```clj
 (ns tut-test.core
@@ -73,7 +73,7 @@ Then we establish a connection to Datomic:
 ```
 
 Instead of [JSON](http://www.json.org) as a data format we'll instead
-use [EDN](http://github.com/edn-format/edn). So we write a little helper
+use [EDN](http://github.com/edn-format/edn). We write a little helper
 for the EDN middleware we'll be using:
 
 ```clj
@@ -83,7 +83,7 @@ for the EDN middleware we'll be using:
    :body (pr-str data)})
 ```
 
-Now let's take a look at classes:
+Now let's take a look at `classes`:
 
 ```clj
 (defn classes []
@@ -116,7 +116,7 @@ title:
     (generate-response {:status :ok})))
 ```
 
-We then have our routes:
+We then have our `routes`:
 
 ```clj
 (defroutes routes
@@ -141,7 +141,7 @@ Finally we add our EDN middleware and start our server:
 
 Let's look at the client side portion now, open
 `src/cljs/om-async/core.cljs` in Light Table. The `ns` form should
-look familiar, and we enable `console.log` printing.
+look familiar, and we enable `console.log` printing:
 
 ```clj
 (ns om-ring.core
@@ -160,8 +160,9 @@ look familiar, and we enable `console.log` printing.
 We're going to use simple callbacks in this tutorial instead of
 relying on core.async.
 
-Now we write simple utility for making async requests to the server
-with EDN. We rely on Google Closure to deal with cross browser issues:
+First we write a simple utility for making async requests to the
+server with EDN. We rely on Google Closure to deal with cross browser
+issues:
 
 ```clj
 (def ^:private meths
@@ -189,7 +190,7 @@ to provide the basic structure:
   {:classes []})
 ```
 
-Next we need the `display` style helper from previous tutorial:
+Next we need the `display` style helper from the previous tutorial:
 
 ```clj
 (defn display [show]
@@ -200,8 +201,8 @@ Next we need the `display` style helper from previous tutorial:
 
 We are now going to write a version of the `editable` component that
 does not require hacking around the differences between JavaScript
-primitive string and JavaScript String objects. Something like the
-following is recommended over extending native types to `ICloneable`.
+primitive strings and JavaScript String objects. Thhe following is
+strongly recommended over extending native types to `ICloneable`.
 
 Instead of `editable` taking a string cursor from the application state,
 instead it will take some larger piece of data and a key to locate the
@@ -212,8 +213,8 @@ string to edit. `handle-change` now looks like this:
   (om/transact! data edit-key (fn [_] (.. e -target -value))))
 ```
 
-Instead of using channels because `editable` is so simple, as well to
-demonstrate alternative approaches, `editable` will notify it's parent
+Instead of using channels because `editable` is so simple and to
+demonstrate alternative approaches, `editable` will notify its parent
 component with a callback when editing is complete:
 
 ```clj
@@ -250,15 +251,15 @@ This is `editable`:
             "Edit"))))))
 ```
 
-Take the time to read through and understand this code. Again it's
-almost identical to the previous with the except that we take `data`
-which is a map cursor. We also take an `edit-key` and the `on-edit`
-callback via `opts`.
+Take the time to read through and understand this code. It's almost
+identical to the previous version with the exception that we take
+`data` which is a map cursor. We also take an `edit-key` and the
+`on-edit` callback via `opts`.
 
-We now have generic editable component that doesn't require us to hack
+We now have a generic editable component that doesn't require us to hack
 JavaScript strings.
 
-When the user commit a change we want to communicate this back to the
+When the user commits a change we want to communicate this back to the
 server:
 
 ```clj
@@ -305,8 +306,7 @@ classes loaded from the server. You should be able to edit a class
 title. Press enter to commit the title change. Refresh your browser
 and you should see that the change persisted.
 
-Note that Datomic is an immutable database. Both your backend and
-frontend can support sophisticated operations on application state
-history without incurring incidental complexity.
+Both your backend and frontend can support sophisticated operations on
+application state history without incurring incidental complexity.
 
 ## Speculative UI Programming
