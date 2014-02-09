@@ -272,7 +272,7 @@ key or sequence of keys to access in the cursor. `om.core/transact!`
 can be given additional args to pass to `f`.
 
 ```clj
-(transact! cursor :text "Changed this!")
+(transact! cursor :text (fn [_] "Changed this!"))
 ```
 
 ### update!
