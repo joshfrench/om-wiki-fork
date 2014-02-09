@@ -413,14 +413,15 @@ momentarily.
 
 Evaluate the new code and try it out. As you'll see, clicking on the
 delete button won't do anything. In fact if you look at the JavaScript
-console you'll see an error about trying to manipulate a cursor
-outside of the render phase.
+console you'll see an error about trying to manipulate a
+[cursor](Conceptual-overview#wiki-cursors) outside of the render phase.
 
 What went wrong?
 
 ## Debugging Om Components
 
-The problem is that we put a cursor directly onto a core.async
+The problem is that we put a [cursor](Conceptual-overview#wiki-cursors)
+directly onto a core.async
 channel. Cursors are only consistent during the application render
 phase - that is inside the life cycle methods. Callbacks on events
 handlers and core.async loops are not really a part of the Om/React
