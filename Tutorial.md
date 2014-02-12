@@ -817,6 +817,8 @@ multiple locations on the screen.
 
 ## Interactivity & Higher Order Components
 
+> Make sure your project is up to date, this section requires om v0.3.6
+
 Let's change `index.html` to the following, again don't forget to
 include the LT connection script tag:
 
