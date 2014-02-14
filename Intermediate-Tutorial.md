@@ -323,7 +323,8 @@ Our `classes-view` will load the data from server on
                           :on-edit #(on-edit id %)}})))
             (:classes app)))))))
 
-(om/root app-state classes-view (gdom/getElement "classes"))
+(om/root classes-view app-state
+  {:target (gdom/getElement "classes")})
 ```
 
 That's it. Save your file and refresh. You should see the list of
