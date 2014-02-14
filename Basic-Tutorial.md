@@ -499,7 +499,7 @@ should look like the following:
                         .-value
                         parse-contact)]
     (when new-contact
-      (om/transact! app :contacts conj new-contact))))
+      (om/transact! app :contacts #(conj % new-contact)))))
 ```
 
 We need to use `om.core/get-node` so that we can extract the value
@@ -557,7 +557,7 @@ the following:
   (let [input (om/get-node owner "new-contact")
         new-contact (-> input .-value parse-contact)]
     (when new-contact
-      (om/transact! app :contacts conj new-contact)
+      (om/transact! app :contacts #(conj % new-contact))
       (set! (.-value input) ""))))
 ```
 
