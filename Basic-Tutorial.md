@@ -82,10 +82,10 @@ expression in the tutorial at this point looks like this:
 
 ```clj
 (om/root
-  app-state
   (fn [app owner]
     (dom/h2 nil (:text app)))
-  (. js/document (getElementById "app")))
+  app-state
+  {:target (. js/document (getElementById "app"))})
 ```
 
 `om.core/root` is idempotent, that is, it's safe to evaluate it
@@ -110,10 +110,10 @@ with the following:
 
 ```clj
 (om/root
-  app-state
   (fn [app owner]
     (dom/h2 nil (:text app)))
-  (. js/document (getElementById "app0")))
+  app-state
+  {:target (. js/document (getElementById "app0"))})
 ```
 
 Refresh your browser. You should see just one `h2` tag on the
@@ -122,10 +122,10 @@ one to look like the following:
 
 ```clj
 (om/root
-  app-state
   (fn [app owner]
     (dom/h2 nil (:text app)))
-  (. js/document (getElementById "app1"))) ;; <-- "app0" to "app1"
+  app-state
+  {:target (. js/document (getElementById "app1"))}) ;; <-- "app0" to "app1"
 ```
 
 Place your cursor at the end of this expression and evaluate it. You
@@ -161,11 +161,11 @@ should see a list of animals now.
 
 ```clj
 (om/root
-  app-state
   (fn [app owner]
     (apply dom/ul nil
       (map (fn [text] (dom/li nil text)) (:list app))))
-  (. js/document (getElementById "app0")))
+  app-state
+  {:target (. js/document (getElementById "app0"))})
 ```
 
 You might have noticed that the first argument to `dom/ul` and
@@ -174,11 +174,11 @@ the `om/root` expression to the following and evaluate it:
 
 ```clj
 (om/root
-  app-state
   (fn [app owner]
     (apply dom/ul #js {:className "animals"}
       (map (fn [text] (dom/li nil text)) (:list app))))
-  (. js/document (getElementById "app0")))
+  app-state
+  {:target (. js/document (getElementById "app0")))
 ```
 
 If you right click on the list in Google Chrome and select **Inspect
@@ -228,11 +228,11 @@ Then change the `om/root` expression to the following and evaluate it:
 
 ```clj
 (om/root
-  app-state
   (fn [app owner]
     (apply dom/ul #js {:className "animals"}
       (map stripe (:list app) (cycle ["#ff0" "#fff"]))))
-  (. js/document (getElementById "app0")))
+  app-state
+  {:target (. js/document (getElementById "app0"))})
 ```
 
 As we can see ClojureScript offers powerful functional tools that put
@@ -247,7 +247,8 @@ Change the `om/root` expression to the following, don't evaluate it
 yet since we haven't defined `contacts-view`.
 
 ```clj
-(om/root app-state contacts-view (. js/document (getElementById "contacts")))
+(om/root contacts-view app-state
+  {:target (. js/document (getElementById "contacts"))})
 ```
 
 Let's edit `app-state` so it look like this:
@@ -734,7 +735,8 @@ Your source file should look like the following:
       (dom/div nil
         (dom/h2 nil "Registry")))))
 
-(om/root app-state registry-view (. js/document (getElementById "registry")))
+(om/root registry-view app-state
+  {:target (. js/document (getElementById "registry"))})
 ```
 
 Now what we want is for `registry-view` to render different views for
@@ -861,7 +863,8 @@ Let's use it by adding a new `om/root` expression after the existing
 one:
 
 ```clj
-(om/root app-state classes-view (. js/document (getElementById "classes")))
+(om/root classes-view app-state
+  {:target (. js/document (getElementById "classes"))})
 ```
 
 Evaluate the new forms and both `om/root` expressions, you should see
