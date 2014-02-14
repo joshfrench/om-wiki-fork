@@ -189,18 +189,20 @@ You can set global shared data with `om.core/root`.
 
 ```clj
 (defn root
-  ([value f target] ...)
-  ([value shared f target] ...))
+  ([f value options] ...))
 ```
 
-`value` is either a tree of associative ClojureScript data structures
-or an atom wrapping a tree of associative ClojureScript data
-structures. `f` is a function returning an instance of `IRender`,
-`IRenderState`, a React component, or some value that React knows how
-to render. `f` takes two arguments, a root cursor on the application
-state and the backing Om component for the root. `shared` is an
-optional map of values shared across the entire render tree. `target`
-is the DOM node to install the Om render loop on.
+`f` is a function returning an instance of `IRender`, `IRenderState`,
+a React component, or some value that React knows how to render. `f`
+takes two arguments, a root cursor on the application state and the
+backing Om component for the root. `value` is either a tree of
+associative ClojureScript data structures or an atom wrapping a tree
+of associative ClojureScript data structures.
+
+`options` is a map contain any key allowed to `om.core/build`. Only
+the `:target` is required. `options` also allows `:shared` in order
+to provide global services and `:tx-listen` in order to subscribe to
+all transactions in the application.
 
 `om.core/root` is idempotent. You may safely call it multiple
 times. Only one Om render loop is ever allowed on a particular DOM
@@ -262,14 +264,17 @@ cursors. `f` and `m` are the same as `om.core/build`.
 ```clj
 (defn transact!
   ([cursor f] ...)
-  ([cursor korks f & args]))
+  ([cursor korks f])
+  ([cursor korks f tag]))
 ```
 
 The primary way to transition application state. `cursor` is an Om
 cursor into the application state. `f` is a function that will receive
 the specified piece of application state. `korks` is an optional
 key or sequence of keys to access in the cursor. `om.core/transact!`
-can be given additional args to pass to `f`.
+can be given additional args to pass to `f`. `tag` is optional
+information to tag the transaction. `tag` should be either a keyword
+or a vector whose first element is a `keyword`.
 
 ```clj
 (transact! cursor :text (fn [_] "Changed this!"))
@@ -279,11 +284,13 @@ can be given additional args to pass to `f`.
 
 ```clj
 (defn update!
-  ([cursor f & args] ...))
+  ([cursor v] ...)
+  ([cursor korks v] ...)
+  ([cursor korks v tag] ...))
 ```
 
-Similar to `om.core/transact!` but allows a more natural order if you
-are used to `update-in` and related functions.
+Similar to `om.core/transact!` but just sets a cursor to a new value,
+analagous to `reset!` for atoms.
 
 ```clj
 (update! cursor assoc-in [:text] "Changed this!")
