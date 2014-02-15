@@ -378,4 +378,6 @@ it to our application with changing any code we have already written.
 
 This is effectively the goal of
 [om-sync](http://github.com/swannodette/om-sync), a reusable
-synchronization component for Om.
+synchronization component for Om. You can take your existing
+component, put together an application and impose a synchronization
+policy without changing your own code.
