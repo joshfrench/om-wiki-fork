@@ -38,7 +38,7 @@ Outside the render phase you can use `om.core/read` to get a consistent
 snapshot about a particular piece of data in the application
 state. `om.core/transact!` is used to transition the application
 state. The transition function should not rely on information not
-obtained by `om.core/read`, `om.core/get-state`, `om.core/transact!`,
+obtained by `deref`-ing a cursor, `om.core/get-state`, `om.core/transact!`,
 or `om.core/update!`.
 
 ## Cursors
