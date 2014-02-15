@@ -72,6 +72,13 @@ Then we establish a connection to Datomic:
 (def conn (d/connect uri))
 ```
 
+We then define our main route handler `index`:
+
+```clj
+(defn index []
+  (file-response "public/html/index.html" {:root "resources"}))
+```
+
 Next, we'll define some schema for our database:
 
 ```clj
@@ -383,6 +390,54 @@ component, put together an application and impose a synchronization
 policy without changing your own code.
 
 Let's modify the previous tutorial so that we can demonstrate this now.
+
+### om-sync
+
+First we need to change our `project.clj` to include a dependency on
+`om-sync`.
+
+```clj
+:dependencies [[org.clojure/clojure "1.5.1"]
+               [org.clojure/clojurescript "0.0-2156"]
+               [ring/ring "1.2.1"]
+               [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
+               [om "0.4.0-SNAPSHOT"]
+               [om-sync "0.1.0-SNAPSHOT"] ;; <=== ADD THIS
+               [compojure "1.1.6"]
+               [fogus/ring-edn "0.2.0"]
+               [com.datomic/datomic-free "0.9.4532"]]
+```
+
+If you have a `lein cljsbuild auto <build-id>` process running, kill
+it and restart it.
+
+Lets up the server side code to uniformly handle EDN requests.
+
+```clj
+
+```
+
+In order for `om-sync` to work you need modify how you call
+`om.core/root`. `om-sync` needs to be able to subscribe to the
+application's transactions so that it can observe transactions that
+are relevant to it.
+
+```clj
+(let [tx-chan (chan)
+      tx-pub-chan (async/pub tx-chan (fn [_] :txs))]
+  (edn-xhr
+    {:method :get
+     :url "/init"
+     :on-complete
+     (fn [res]
+       (reset! app-state res)
+       (om/root app-view app-state
+         {:target (gdom/getElement "classes")
+          :shared {:tx-chan tx-pub-chan}
+          :tx-listen
+          (fn [tx-data root-cursor]
+            (put! tx-chan [tx-data root-cursor]))}))}))
+```
 
 Having made it this far you can probably read through the `om-sync`
 source yourself and hopefully be inspired to send a pull request to
