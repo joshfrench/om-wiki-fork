@@ -364,10 +364,10 @@ the white flag.
 
 However an immutable UI approach like Om and immutable databases like
 Datomic provide the infrastructure to make these problems very
-approachable again even in a distributed context.
+approachable even in a distributed context.
 
 We'll come back to this but first let's explore modularity in the
-context of sychronizing application state.
+context of synchronizing application state.
 
 ### Modularity
 
