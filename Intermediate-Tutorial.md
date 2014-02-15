@@ -472,6 +472,8 @@ And let's provide the new routes:
 Evaluate everything with Control-Shift-ENTER, that's it for our server
 side code. Let's update the client code.
 
+#### Updating the Client
+
 If you have a `lein cljsbuild auto <build-id>` process running, kill
 it and restart it. First we need to modify the namespace form. Since
 we'll be using `om-sync` we clean up some things:
