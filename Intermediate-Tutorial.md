@@ -381,3 +381,9 @@ This is effectively the goal of
 synchronization component for Om. You can take your existing
 component, put together an application and impose a synchronization
 policy without changing your own code.
+
+Let's modify the previous tutorial so that we can demonstrate this now.
+
+Having made it this far you can probably read through the `om-sync`
+source yourself and hopefully be inspired to send a pull request to
+improve so it can be leverage in wider contexts.
