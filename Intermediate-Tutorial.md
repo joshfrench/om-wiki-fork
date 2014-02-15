@@ -401,9 +401,6 @@ First we need to change our `project.clj` to include a dependency on
                [com.datomic/datomic-free "0.9.4532"]]
 ```
 
-If you have a `lein cljsbuild auto <build-id>` process running, kill
-it and restart it.
-
 Lets update the server side code to uniformly handle EDN requests.
 
 After `generate-response` let's add `get-classes`:
@@ -475,6 +472,22 @@ And let's provide the new routes:
 Evaluate everything with Control-Shift-ENTER, that's it for our server
 side code. Let's update the client code.
 
+If you have a `lein cljsbuild auto <build-id>` process running, kill
+it and restart it. First we need to modify the namespace form. Since
+we'll be using `om-sync` we clean up some things:
+
+```clj
+(ns om-async.core
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [cljs.core.async :as async :refer [put! chan alts!]]
+            [goog.dom :as gdom]
+            [om.core :as om :include-macros true]
+            [om.dom :as dom :include-macros true]
+            [om-sync.core :refer [om-sync]]
+            [om-sync.util :refer [tx-tag edn-xhr]]
+            [clojure.data :as data]))
+```
+
 In order for `om-sync` to work you need modify how you call
 `om.core/root`. `om-sync` needs to be able to subscribe to the
 application's transactions so that it can observe transactions that
@@ -502,6 +515,163 @@ the new `init` route we wrote on the backend.
             (put! tx-chan [tx-data root-cursor]))}))}))
 ```
 
+We create a channel `tx-chan`. We then we make a subscribeable channel
+`tx-pub-chan` so that `om-sync` instances call call
+`cljs.core.asyn/sub` on it. We request the initial state of the
+application from the server. Here use some `om.core/root` options we
+have not seen before. `:shared` allows us to provide a global service
+to any components in our application. `:tx-listen` is a callback that
+will be invoked anytime the application state transitions. We simply
+put this information into `tx-chan`.
+
+While technically we don't need to change `editable` to make this work
+we're going to so that `editable` is a better citizen:
+
+First modify `end-edit`:
+
+```clj
+(defn end-edit [data edit-key text owner cb]
+  (om/set-state! owner :editing false)
+  (om/transact! data edit-key (fn [_] text) :update)
+  (cb text))
+```
+
+The changes here are most around the fact that we now invoke
+`om/transact!`. The interesting part is that this `om/transact!`
+supplies a tag, `:update`. `om-sync` specifically listens for
+`:create`, `:update`, and `:delete` tags. We could make this work
+without the transaction tag, but not as simply.
+
+`editable` need to change to accommodate the new `end-edit` signature:
+
+```clj
+(defn editable [data owner {:keys [edit-key] :as opts}]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:editing false})
+    om/IRenderState
+    (render-state [_ {:keys [edit-text editing on-edit]}]
+      (let [text (get data edit-key)]
+        (dom/li nil
+          (dom/span #js {:style (display (not editing))} text)
+          (dom/input
+            #js {:style (display editing)
+                 :value text
+                 :onChange #(handle-change % data edit-key owner)
+                 :onKeyPress #(when (and (om/get-state owner :editing)
+                                         (== (.-keyCode %) 13))
+                                (end-edit data edit-key text owner on-edit))
+                 :onBlur (fn [e]
+                           (when (om/get-state owner :editing)
+                             (end-edit data edit-key text owner on-edit)))})
+          (dom/button
+            #js {:style (display (not editing))
+                 :onClick #(om/set-state! owner :editing true)}
+            "Edit"))))))
+```
+
+We also want to allow people to add classes. We know that the backend
+doesn't support this but we'll try it on the front end anyway to
+demonstrate the capabilities of `om-sync`.
+
+```clj
+(defn create-class [classes owner]
+  (let [class-id-el   (om/get-node owner "class-id")
+        class-id      (.-value class-id-el)
+        class-name-el (om/get-node owner "class-name")
+        class-name    (.-value class-name-el)
+        new-class     {:class/id class-id :class/title class-name}]
+    (om/transact! classes [] #(conj % new-class)
+      [:create new-class])
+    (set! (.-value class-id-el) "")
+    (set! (.-value class-name-el) "")))
+```
+
+We update `classes-view` to include some new input fields:
+
+```clj
+(defn classes-view [classes owner]
+  (reify
+    om/IRender
+    (render [_]
+      (dom/div #js {:id "classes"}
+        (dom/h2 nil "Classes")
+        (apply dom/ul nil
+          (map
+            (fn [class]
+              (let [id (:class/id class)]
+                (om/build editable class
+                  {:opts {:edit-key :class/title}})))
+            classes))
+        (dom/div nil
+          (dom/label nil "ID:")
+          (dom/input #js {:ref "class-id"})
+          (dom/label nil "Name:")
+          (dom/input #js {:ref "class-name"})
+          (dom/button
+            #js {:onClick (fn [e] (create-class classes owner))}
+           "Add"))))))
+```
+
+All this should look pretty straightforward by now.
+
+Finally we write `app-view` add this right before the `om/root`
+expression:
+
+```clj
+(defn app-view [app owner]
+  (reify
+    om/IWillUpdate
+    (will-update [_ next-props next-state]
+      (when (:err-msg next-state)
+        (js/setTimeout #(om/set-state! owner :err-msg nil) 5000)))
+    om/IRenderState
+    (render-state [_ {:keys [err-msg]}]
+      (dom/div nil
+        (om/build om-sync (:classes app)
+          {:opts {:view classes-view
+                  :filter (comp #{:create :update :delete} tx-tag)
+                  :id-key :class/id
+                  :on-success (fn [res tx-data] (println res))
+                  :on-error
+                  (fn [err tx-data]
+                    (reset! app-state (:old-state tx-data))
+                    (om/set-state! owner :err-msg
+                      "Ooops! Sorry something went wrong try again later."))}})
+         (when err-msg
+           (dom/div nil err-msg))))))
+```
+
+We render `classes-view` via `om-sync`, this is specified by the
+`:view` option. We supply a `:filter` so that individual key presses
+don't get synchronized - this is why we tagged the `end-edit`
+`om/transact!` above with `:update`. `om-sync` needs to know which
+property represents an identifier the server understands in order to
+send incremental updates. Finally we establish `:on-success` and
+`:on-error` updates.
+
+`:on-error` is the most interesting here - if there's a server error
+we just roll back the application state and present an error message.
+
+This is speculative UI programming, we can optimistically update the
+client yet trivially roll back if something goes wrong. And all of
+this can be done without polluting your actual components with
+synchronization or undo logic.
+
+Refresh your browser and make sure your JavaScript Console is
+open. Edit a class. You should see `{:status ok}` if it
+worked. Refresh the browser, you will see that the state persisted.
+
+Now put some random data into the new input fields and press
+"Add". You should see the data briefly appear in the list and then
+disappear when we roll back the state because we could not succeed. An
+error message appears.
+
+Hopefully this tutorial demonstrates how Om allows application
+developers to focus on their problem domain and remove sources of
+incidental complexity.
+
 Having made it this far you can probably read through the `om-sync`
 source yourself and hopefully be inspired to send a pull request to
-improve so it can be leverage in wider contexts.
+improve so it can be leveraged in more contexts.
