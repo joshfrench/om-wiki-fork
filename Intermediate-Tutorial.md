@@ -355,12 +355,11 @@ because of a backend bug, undefined behavior in the API
 , or commonly the complete lack of network connectivity. In this
 distributed setting UI programming becomes a speculative endeavor.
 
-In traditional UI programming this style of UI programming is most
-prevalent in interfaces that benefit from multi-level undo. It's
-telling that many single page user interfaces on the web do not
-support this kind of undo - it's hard enough to implement in a desktop
-application. Add the distributed component and most developers raise
-the white flag.
+One well known form of speculative UI programming is multi-level
+undo. It's telling that many single page user interfaces on the web do
+not support this kind of undo - it's hard enough to implement in a
+desktop application. Add the distributed component and most developers
+raise the white flag.
 
 However an immutable UI approach like Om and immutable databases like
 Datomic provide the infrastructure to make these problems very
@@ -482,7 +481,7 @@ application's transactions so that it can observe transactions that
 are relevant to it.
 
 We use core.async to publish a channel that components like `om-sync`
-can suscribe to. This is done by make the channel a global service via
+can subscribe to. This is done by make the channel a global service via
 `:shared`. We also make an EDN request to get our initial state using
 the new `init` route we wrote on the backend.
 
