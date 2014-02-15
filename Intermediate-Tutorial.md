@@ -344,7 +344,7 @@ application state history without incurring incidental complexity.
 
 ## Speculative UI Programming
 
-Many difficulties in mordern UI programming arise from the fact that
+Many difficulties in modern UI programming arise from the fact that
 we're often building distributed systems - clients and servers. Not
 only do we have to keep clients and servers in sync but we have to
 gracefully handle those cases where sync is not possible.

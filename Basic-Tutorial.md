@@ -387,7 +387,7 @@ worry we'll walk through all of it.
         (go (loop []
           (let [contact (<! delete)]
             (om/transact! app :contacts
-              (fn [xs] (into [] (remove #(= contact %) xs))))
+              (fn [xs] (vec (remove #(= contact %) xs))))
             (recur))))))
     om/IRenderState
     (render-state [this {:keys [delete]}]
