@@ -368,8 +368,14 @@ In many MVC systems it's an open question where to put UI
 synchronization logic. Server-side MVCs have encouraged developers to
 put the synchronization logic in the model - effectively making those
 models less reusable. Putting the logic in a controller makes the
-controller monolithic - it needs to now coordination the view, the model
-and sychronization. Putting synchronization logic in the views is
+controller monolithic - it needs to now coordinate the view, the model
+and synchronization. Putting synchronization logic in the views is
 probably something most people can agree makes little sense.
 
+Ideally we can build our UIs without considering synchronization. And
+when we come to the problem of sychronization we should be able to add
+it to our application with changing any code we have already written.
 
+This is effectively the goal of
+[om-sync](http://github.com/swannodette/om-sync), a reusable
+synchronization component for Om.
