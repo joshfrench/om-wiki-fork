@@ -520,7 +520,7 @@ the new `init` route we wrote on the backend.
 ```
 
 We create a channel `tx-chan`. We then we make a subscribeable channel
-`tx-pub-chan` so that `om-sync` instances call call
+`tx-pub-chan` so that `om-sync` instances can call
 `cljs.core.asyn/sub` on it. We request the initial state of the
 application from the server. Here use some `om.core/root` options we
 have not seen before. `:shared` allows us to provide a global service
@@ -528,8 +528,9 @@ to any components in our application. `:tx-listen` is a callback that
 will be invoked anytime the application state transitions. We simply
 put this information into `tx-chan`.
 
-While technically we don't need to change `editable` to make this work
-we're going to so that `editable` is a better citizen:
+While technically we don't need to change `editable` to make this work,
+but we're going to make `editable` a better citizen in order to
+explain how `om-sync` works.
 
 First modify `end-edit`:
 
@@ -620,7 +621,7 @@ We update `classes-view` to include some new input fields:
 
 All this should look pretty straightforward by now.
 
-Finally we write `app-view` add this right before the `om/root`
+Finally we write `app-view`, add this right before the `om/root`
 expression:
 
 ```clj
@@ -655,7 +656,7 @@ property represents an identifier the server understands in order to
 send incremental updates. Finally we establish `:on-success` and
 `:on-error` updates.
 
-`:on-error` is the most interesting here - if there's a server error
+`:on-error` is the most interesting bit here - if there's a server error
 we just roll back the application state and present an error message.
 
 This is speculative UI programming, we can optimistically update the
