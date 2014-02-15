@@ -371,17 +371,9 @@ context of synchronizing application state.
 
 ### Modularity
 
-In many MVC systems it's an open question where to put UI
-synchronization logic. Server-side MVCs have encouraged developers to
-put the synchronization logic in the model - effectively making those
-models less reusable. Putting the logic in a controller makes the
-controller monolithic - it needs to now coordinate the view, the model
-and synchronization. Putting synchronization logic in the views is
-probably something most people can agree makes little sense.
-
 Ideally we can build our UIs without considering synchronization. And
-when we come to the problem of sychronization we should be able to add
-it to our application with changing any code we have already written.
+when we come to the problem of synchronization we should be able to add
+it to our application without changing any code we have already written.
 
 This is effectively the goal of
 [om-sync](http://github.com/swannodette/om-sync), a reusable
@@ -391,7 +383,9 @@ policy without changing your own code.
 
 Let's modify the previous tutorial so that we can demonstrate this now.
 
-### om-sync
+#### Updating the Server
+
+Make sure the Datomic transactor is running as before.
 
 First we need to change our `project.clj` to include a dependency on
 `om-sync`.
@@ -411,16 +405,86 @@ First we need to change our `project.clj` to include a dependency on
 If you have a `lein cljsbuild auto <build-id>` process running, kill
 it and restart it.
 
-Lets up the server side code to uniformly handle EDN requests.
+Lets update the server side code to uniformly handle EDN requests.
+
+After `generate-response` let's add `get-classes`:
 
 ```clj
-
+(defn get-classes [db]
+  (->> (d/q '[:find ?class
+              :where
+              [?class :class/id]]
+          db)
+       (map #(d/touch (d/entity db (first %))))
+       vec))
 ```
+
+We want to be able to properly initialize the client state as well as
+give it information so that it can communicate back with the server:
+
+Let's make a request handler called `init`:
+
+```clj
+(defn init []
+  (generate-response
+     {:classes {:url "/classes" :coll (get-classes (d/db conn))}}))
+```
+
+We're also going to add a handler for creating classes but we're going
+to return a 500 for now to demonstrate some neat properties of Om:
+
+```clj
+(defn create-class [params]
+  {:status 500})
+```
+
+Let's refactor `update-class` a bit:
+
+```clj
+(defn update-class [params]
+  (let [id    (:class/id params)
+        db    (d/db conn)
+        title (:class/title params)
+        eid   (ffirst
+                (d/q '[:find ?class
+                       :in $ ?id
+                       :where
+                       [?class :class/id ?id]]
+                  db id))]
+    (d/transact conn [[:db/add eid :class/title title]])
+    (generate-response {:status :ok})))
+```
+
+Let's also refactor the `classes` request handler:
+
+```clj
+(defn classes []
+  (generate-response (get-classes (d/db conn))))
+```
+
+And let's provide the new routes:
+
+```clj
+(defroutes routes
+  (GET "/" [] (index))
+  (GET "/init" [] (init))
+  (POST "/classes" {params :edn-params} (create-class params))
+  (PUT "/classes" {params :edn-params} (update-class params))
+  (route/files "/" {:root "resources/public"}))
+```
+
+Evaluate everything with Control-Shift-ENTER, that's it for our server
+side code. Let's update the client code.
 
 In order for `om-sync` to work you need modify how you call
 `om.core/root`. `om-sync` needs to be able to subscribe to the
 application's transactions so that it can observe transactions that
 are relevant to it.
+
+We use core.async to publish a channel that components like `om-sync`
+can suscribe to. This is done by make the channel a global service via
+`:shared`. We also make an EDN request to get our initial state using
+the new `init` route we wrote on the backend.
 
 ```clj
 (let [tx-chan (chan)
