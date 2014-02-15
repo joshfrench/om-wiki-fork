@@ -90,12 +90,12 @@ expression in the tutorial at this point looks like this:
 
 `om.core/root` is idempotent, that is, it's safe to evaluate it
 multiple times. It takes up to four arguments, but we're only
-interested in the three argument case. The first argument is the
-application state atom. The second argument is a function that takes
-the application state data and the backing React component, here
+interested in the three argument case. The first argument is a function 
+that takes the application state data and the backing React component, here
 called `owner`. This function must return an Om component, a React
 component, or some other value that React itself knows how to
-render. The third argument is the target DOM node.
+render. The second argument is the application state atom. The third argument 
+is the target DOM node.
 
 There can be multiple roots. Edit the `index.html`, replace `<div
 id="app"></div>` with the following:
