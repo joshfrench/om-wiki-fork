@@ -336,3 +336,27 @@ Both your backend and frontend can support sophisticated operations on
 application state history without incurring incidental complexity.
 
 ## Speculative UI Programming
+
+Many difficulties in mordern UI programming arise from the fact that
+we're often building distributed systems - clients and servers. Not
+only do we have to keep clients and servers in sync but we have to
+gracefully handle those cases where sync is not possible.
+
+It's quite common in modern applications to make an optimistic commit,
+and then discover than synchronization could not happen perhaps
+because of an bug in the backend, undefined behavior with exitsing
+apis, or the complete lack of network connectivity. In this
+distributed setting UI programming becomes a speculative endeavor in
+which we attempt some operations and we must recover should these
+operations fail.
+
+In traditional UI programming this style of UI
+programming is most prevalent in interfaces that benefit from
+sophisticated undo. It's telling that most user interfaces on the web
+don't support sophisticated forms of undo - it's hard enough to
+implement in a desktop applications - add the distributed component
+and most developers raise the white flag.
+
+However immutable UI approach like Om and immutable databases like
+Datomic provide the infrastructure to make these problems approachable
+again - even in a distributed context.
