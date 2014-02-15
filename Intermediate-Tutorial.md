@@ -343,20 +343,33 @@ only do we have to keep clients and servers in sync but we have to
 gracefully handle those cases where sync is not possible.
 
 It's quite common in modern applications to make an optimistic commit,
-and then discover than synchronization could not happen perhaps
-because of an bug in the backend, undefined behavior with exitsing
-apis, or the complete lack of network connectivity. In this
-distributed setting UI programming becomes a speculative endeavor in
-which we attempt some operations and we must recover should these
-operations fail.
+and then discover that synchronization cannot happen - perhaps
+because of a backend bug, undefined behavior in the API
+, or commonly the complete lack of network connectivity. In this
+distributed setting UI programming becomes a speculative endeavor.
 
-In traditional UI programming this style of UI
-programming is most prevalent in interfaces that benefit from
-sophisticated undo. It's telling that most user interfaces on the web
-don't support sophisticated forms of undo - it's hard enough to
-implement in a desktop applications - add the distributed component
-and most developers raise the white flag.
+In traditional UI programming this style of UI programming is most
+prevalent in interfaces that benefit from multi-level undo. It's
+telling that many single page user interfaces on the web do not
+support this kind of undo - it's hard enough to implement in a desktop
+application. Add the distributed component and most developers raise
+the white flag.
 
-However immutable UI approach like Om and immutable databases like
-Datomic provide the infrastructure to make these problems approachable
-again - even in a distributed context.
+However an immutable UI approach like Om and immutable databases like
+Datomic provide the infrastructure to make these problems very
+approachable again even in a distributed context.
+
+We'll come back to this but first let's explore modularity in the
+context of sychronizing application state.
+
+### Modularity
+
+In many MVC systems it's an open question where to put UI
+synchronization logic. Server-side MVCs have encouraged developers to
+put the synchronization logic in the model - effectively making those
+models less reusable. Putting the logic in a controller makes the
+controller monolithic - it needs to now coordination the view, the model
+and sychronization. Putting synchronization logic in the views is
+probably something most people can agree makes little sense.
+
+
