@@ -1,5 +1,6 @@
 * [[Conceptual Overview]]
 * [[Basic Tutorial]]
 * [[Intermediate Tutorial]]
+* [[Advanced Tutorial]]
 * [[Documentation]]
 * [[Design]]
