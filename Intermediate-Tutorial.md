@@ -79,31 +79,6 @@ We then define our main route handler `index`:
   (file-response "public/html/index.html" {:root "resources"}))
 ```
 
-Next, we'll define some schema for our database:
-
-```clj
-(def schema
-  [{:db/doc                "Class ID"
-    :db/ident              :class/id
-    :db/valueType          :db.type/long
-    :db/cardinality        :db.cardinality/one
-    :db/id                 #db/id[:db/part/db]
-    :db.install/_attribute :db.part/db}
-
-   {:db/doc                "Class name"
-    :db/ident              :class/name
-    :db/valueType          :db.type/string
-    :db/cardinality        :db.cardinality/one
-    :db/id                 #db/id[:db/part/db]
-    :db.install/_attribute :db.part/db}])
-```
-
-And transact it, so that it's available for use in our transactions and queries:
-
-```clj
-(d/transact conn schema)
-```
-
 Instead of [JSON](http://www.json.org) as a data format we'll instead
 use [EDN](http://github.com/edn-format/edn). We write a little helper
 for the EDN middleware we'll be using:
