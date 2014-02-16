@@ -538,7 +538,8 @@ First modify `end-edit`:
 (defn end-edit [data edit-key text owner cb]
   (om/set-state! owner :editing false)
   (om/transact! data edit-key (fn [_] text) :update)
-  (cb text))
+  (when cb
+    (cb text)))
 ```
 
 The changes here are most around the fact that we now invoke
