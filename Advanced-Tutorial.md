@@ -1,0 +1,1 @@
+This tutorial assumes familiarity with core.async.
