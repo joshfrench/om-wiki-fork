@@ -111,13 +111,13 @@ constructor function is called with the updated props.
 
 ```clj
 (defprotocol IDidUpdate
-  (did-update [this prev-props prev-state root-node]))
+  (did-update [this prev-props prev-state]))
 ```
 
 Called when React has rendered the component into the
 DOM. `prev-props` is the previous application state associated with
 this component. `prev-state` is the previous component local state, it
-is always a map. `root-node` is the DOM node associated with this component.
+is always a map.
 
 ### IRender
 
