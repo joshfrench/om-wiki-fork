@@ -199,10 +199,13 @@ backing Om component for the root. `value` is either a tree of
 associative ClojureScript data structures or an atom wrapping a tree
 of associative ClojureScript data structures.
 
-`options` is a map containing any key allowed to `om.core/build`. Additionally,
-`:target` is required. `options` also allows `:shared` in order
-to provide global services and `:tx-listen` in order to subscribe to
-all transactions in the application.
+`options` is a map containing any key allowed to `om.core/build`.
+Additionally the following keys are allowed/required:
+
+* `:target` (required)
+* `:shared` (optional) in order to provide global services
+* `:tx-listen` in order to subscribe to all transactions in the application.
+* `:path` to specify the path of the cursor into app-state (see [#72](https://github.com/swannodette/om/issues/72))
 
 `om.core/root` is idempotent. You may safely call it multiple
 times. Only one Om render loop is ever allowed on a particular DOM
