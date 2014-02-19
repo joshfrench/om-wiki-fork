@@ -80,11 +80,10 @@ core.async channels and go loops.
 
 ```clj
 (defprotocol IDidMount
-  (did-mount [this node]))
+  (did-mount [this]))
 ```
 
-Called once when the component has been mounted into the DOM. `node`
-is the DOM node associated with this component.
+Called once when the component has been mounted into the DOM. The DOM node associated with this component can be retrieved by using `om.core/get-node`.
 
 This is a good place to initialize persistent information and control
 that needs the DOM to be present.
