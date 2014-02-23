@@ -178,7 +178,7 @@ the `om/root` expression to the following and evaluate it:
     (apply dom/ul #js {:className "animals"}
       (map (fn [text] (dom/li nil text)) (:list app))))
   app-state
-  {:target (. js/document (getElementById "app0")))
+  {:target (. js/document (getElementById "app0"))})
 ```
 
 If you right click on the list in Google Chrome and select **Inspect
