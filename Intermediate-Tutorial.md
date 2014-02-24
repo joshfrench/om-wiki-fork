@@ -194,7 +194,7 @@ to provide the basic structure:
 
 ```clj
 (def app-state
-  {:classes []})
+  (atom {:classes []}))
 ```
 
 Next we need the `display` style helper from the previous tutorial:
