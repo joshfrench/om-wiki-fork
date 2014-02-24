@@ -178,7 +178,7 @@ the `om/root` expression to the following and evaluate it:
     (apply dom/ul #js {:className "animals"}
       (map (fn [text] (dom/li nil text)) (:list app))))
   app-state
-  {:target (. js/document (getElementById "app0")))
+  {:target (. js/document (getElementById "app0"))})
 ```
 
 If you right click on the list in Google Chrome and select **Inspect
@@ -473,7 +473,7 @@ Let's add a new function called `parse-contact`. Evaluate it.
         [first last middle] (if (nil? last) [first middle] [first last middle])
         middle (when middle (string/replace middle "." ""))
         c (if middle (count middle) 0)]
-    (when (>= (reduce + (map #(if % 1 0) parts)) 2)
+    (when (>= (count parts) 2)
       (cond-> {:first first :last last}
         (== c 1) (assoc :middle-initial middle)
         (>= c 2) (assoc :middle middle)))))
