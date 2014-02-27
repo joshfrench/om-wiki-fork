@@ -236,9 +236,9 @@ state. `m` is an optional map of options.
 Only the following keys are allowed in `m`.
 
 `:key` - a keyword that will be used to lookup a value in `cursor` to
-be used a React key.
+be used a [React key](http://facebook.github.io/react/docs/multiple-components.html#dynamic-children).
 
-`:react-key` - a value to use as a React key.
+`:react-key` - a value to use as a [React key](http://facebook.github.io/react/docs/multiple-components.html#dynamic-children).
 
 `:fn` - a function to apply to `cursor` before invoking `f`.
 
