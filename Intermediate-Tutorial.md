@@ -458,7 +458,7 @@ And let's provide the new routes:
   (route/files "/" {:root "resources/public"}))
 ```
 
-Evaluate everything with Control-Shift-ENTER, that's it for our server
+Evaluate everything with Shift-Command-Enter, that's it for our server
 side code. Let's update the client code.
 
 #### Updating the Client
