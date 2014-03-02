@@ -433,6 +433,20 @@ Let's also refactor the `classes` request handler:
   (generate-response (get-classes (d/db conn))))
 ```
 
+We are introducing the `POST` HTTP method so need to make sure it is imported.
+Add `POST` to the `compojure.core` import at the top of the file:
+
+```clj
+(ns tut-test.core
+  (:require [ring.util.response :refer [file-response]]
+            [ring.adapter.jetty :refer [run-jetty]]
+            [ring.middleware.edn :refer [wrap-edn-params]]
+            [compojure.core :refer [defroutes GET PUT POST]] ;; <=== ADD POST
+            [compojure.route :as route]
+            [compojure.handler :as handler]
+            [datomic.api :as d]))
+```
+
 And let's provide the new routes:
 
 ```clj
