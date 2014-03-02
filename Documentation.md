@@ -39,7 +39,7 @@ of initial state.
     (init-state [_]
       {:text "Hello world!"})
     om/IRenderState
-    (render [_ state]
+    (render-state [_ state]
       (dom/h1 nil (:text state)))))
 ```
 
