@@ -302,7 +302,8 @@ analagous to `reset!` for atoms.
 
 ```clj
 (defn get-node
-  ([owner ref] ...))
+  ([owner ref] ...)
+  ([owner] ...))
 ```
 
 `owner` is the backing Om component. `ref` is a JavaScript String that
