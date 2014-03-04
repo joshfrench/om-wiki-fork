@@ -464,7 +464,7 @@ side code. Let's update the client code.
 #### Updating the Client
 
 If you have a `lein cljsbuild auto dev` process running, kill it and
-restart. This is because our dependencies.
+restart. This is because our dependencies have changed.
 
 First we need to modify the namespace form. Since we'll be using
 `om-sync` we clean up some things:
