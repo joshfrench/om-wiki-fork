@@ -6,7 +6,8 @@ The Om life cycle protocols map more or less directly to the life
 cycle API present in Facebook's React.
 
 Om component functions return `reify` instances that implement the Om
-life cycle protocols.
+life cycle protocols. When `this` is used in a lifecycle protocol it refers
+to the reify instance. As a rule of thumb it is not needed and can be discarded.
 
 ```clj
 (defn my-widget [data owner]
