@@ -296,7 +296,7 @@ Similar to `om.core/transact!` but just sets a cursor to a new value,
 analagous to `reset!` for atoms.
 
 ```clj
-(update! cursor assoc-in [:text] "Changed this!")
+(update! cursor [:text] "Changed this!")
 ```
 
 ### get-node
