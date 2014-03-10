@@ -930,7 +930,7 @@ want to ignore it but in this case we'll make an exception in order to
 keep the `editable` component as simple as possible. We'll explain
 `IValue` in a moment.
 
-This is the editable component, this might look like a lot but take a
+This is the editable component; this might look like a lot but take a
 moment to read it and you'll see that it's quite simple.
 
 ```clj
