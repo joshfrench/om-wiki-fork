@@ -94,7 +94,7 @@ that takes the application state data and the backing React component, here
 called `owner`. This function must return an Om component, a React
 component, or some other value that React itself knows how to
 render. The second argument is the application state atom. The third argument 
-is a map, it must contain a `:target` DOM node key value pair. It also
+is a map; it must contain a `:target` DOM node key value pair. It also
 takes other interesting options which will be covered later.
 
 There can be multiple roots. Edit the `index.html`, replace `<div
