@@ -366,14 +366,14 @@ First we need to change our `project.clj` to include a dependency on
 
 ```clj
 :dependencies [[org.clojure/clojure "1.5.1"]
-               [org.clojure/clojurescript "0.0-2156"]
+               [org.clojure/clojurescript "0.0-2173"]
                [ring/ring "1.2.1"]
                [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
-               [om "0.4.0-SNAPSHOT"]
-               [om-sync "0.1.0-SNAPSHOT"] ;; <=== ADD THIS
+               [om "0.5.2"]
+               [om-sync "0.1.1"] ;; <=== ADD THIS
                [compojure "1.1.6"]
                [fogus/ring-edn "0.2.0"]
-               [com.datomic/datomic-free "0.9.4532"]]
+               [com.datomic/datomic-free "0.9.4578"]]
 ```
 
 Lets update the server side code to uniformly handle EDN requests.
@@ -477,8 +477,7 @@ First we need to modify the namespace form. Since we'll be using
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [om-sync.core :refer [om-sync]]
-            [om-sync.util :refer [tx-tag edn-xhr]]
-            [clojure.data :as data]))
+            [om-sync.util :refer [tx-tag edn-xhr]]))
 ```
 
 In order for `om-sync` to work you need modify how you call
