@@ -88,7 +88,7 @@ expression in the tutorial at this point looks like this:
   {:target (. js/document (getElementById "app"))})
 ```
 
-`om.core/root` is idempotent, that is, it's safe to evaluate it
+`om.core/root` is idempotent; that is, it's safe to evaluate it
 multiple times. It takes three arguments. The first argument is a function 
 that takes the application state data and the backing React component, here
 called `owner`. This function must return an Om component, a React
