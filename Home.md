@@ -3,5 +3,4 @@
 * [[Intermediate Tutorial]]
 * [[Advanced Tutorial]]
 * [[Documentation]]
-* [[Design]]
 * [[Testing]]
