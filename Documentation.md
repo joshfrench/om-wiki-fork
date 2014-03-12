@@ -205,7 +205,11 @@ Additionally the following keys are allowed/required:
 * `:target` (required)
 * `:shared` (optional) in order to provide global services
 * `:tx-listen` in order to subscribe to all transactions in the application.
-* `:path` to specify the path of the cursor into app-state (see [#72](https://github.com/swannodette/om/issues/72))
+* `:path` to specify the path of the cursor into app-state (see
+  [#72](https://github.com/swannodette/om/issues/72))
+* `:instrument` a function of three arguments that if provided will
+  intercept all calls to `om.core/build`. The function arguments
+  correspond exactly to the three argument arity of `om.core/build`
 
 `om.core/root` is idempotent. You may safely call it multiple
 times. Only one Om render loop is ever allowed on a particular DOM
@@ -249,6 +253,18 @@ be used a [React key](http://facebook.github.io/react/docs/multiple-components.h
 
 `:opts` - a map of side information that is neither a cursor onto the
 application state nor component local state.
+
+### build*
+
+```clj
+(defn build*
+  ([f cursor] ...)
+  ([f cursor m] ...))
+```
+
+Identical to `om.core/build` except cannot be intercepted by the
+`:instrument` argument provided to `om.core/root`. Needed to avoid
+infinite loops in components constructed via `:instrument`.
 
 ### build-all
 
