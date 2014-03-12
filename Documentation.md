@@ -359,7 +359,7 @@ for detecting state transitions.
 ```
 
 Sometimes it's useful to create stateful Om components that do not
-manipulate or correspond to application state. However these component
+manipulate or correspond to application state. However these components
 still need to be a part of the render tree, `om.core/graft` supports
 this. Given any `value` and a `cursor` `om.core/graft` will return a
 new cursor that can be used to construct an Om component that is
