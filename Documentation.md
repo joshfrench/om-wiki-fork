@@ -338,6 +338,25 @@ Sets component local state. `owner` is the backing Om
 component. `korks` is a key or sequences of keys. `v` is the value to
 set. Will trigger a Om re-render.
 
+### update-state!
+
+```clj
+(defn update-state! 
+  ([owner f] ...)
+  ([owner f korks] ...))
+```
+
+Takes a pure owning component, an optional sequential list of keys and a function to transition the state of the component. Conceptually analogous to React `setState`. Will schedule an Om re-render.
+
+### refresh!
+
+```clj
+(defn refresh! [owner]
+  ...)
+```
+
+Utility to re-render an owner. Delegates to `update-state!`.
+
 ### get-render-state
 
 ```clj
@@ -368,6 +387,8 @@ attached to the render tree.
 ```clj
 (build my-widget (graft {:text "I'm not in the app state!"} cursor))
 ```
+
+### update-state!
 
 # om.dom
 
