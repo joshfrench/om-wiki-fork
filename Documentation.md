@@ -343,7 +343,7 @@ set. Will trigger a Om re-render.
 ```clj
 (defn update-state! 
   ([owner f] ...)
-  ([owner f korks] ...))
+  ([owner korks f] ...))
 ```
 
 Takes a pure owning component, an optional sequential list of keys and a function to transition the state of the component. Conceptually analogous to React `setState`. Will schedule an Om re-render.
