@@ -480,6 +480,9 @@ First we need to modify the namespace form. Since we'll be using
             [om-sync.util :refer [tx-tag edn-xhr]]))
 ```
 
+Remove the edn-xhr function created earlier. We now use the version
+defined in om-sync.util.
+
 In order for `om-sync` to work you need modify how you call
 `om.core/root`. `om-sync` needs to be able to subscribe to the
 application's transactions so that it can observe transactions that
