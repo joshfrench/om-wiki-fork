@@ -404,4 +404,4 @@ subsequent arguments are `children`.
   ...)
 ```
 
-Equivalent to React.renderComponentToString.
+Equivalent to `React.renderComponentToString`.
