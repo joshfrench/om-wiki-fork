@@ -404,4 +404,8 @@ subsequent arguments are `children`.
   ...)
 ```
 
-Equivalent to `React.renderComponentToString`.
+Equivalent to `React.renderComponentToString`. For example:
+
+```clj
+(dom/render-to-str (om/build some-widget data))
+```
