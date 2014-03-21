@@ -55,7 +55,7 @@ should see `"Hello world!"` printed.
 At the top of the file we have the usual namespace stuff:
 
 ```clj
-(ns tut-test.core
+(ns om-async.core
   (:require [ring.util.response :refer [file-response]]
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.edn :refer [wrap-edn-params]]
@@ -68,7 +68,7 @@ At the top of the file we have the usual namespace stuff:
 Then we establish a connection to Datomic:
 
 ```clj
-(def uri "datomic:free://localhost:4334/tut_test")
+(def uri "datomic:free://localhost:4334/om_async")
 (def conn (d/connect uri))
 ```
 
@@ -151,7 +151,7 @@ Let's look at the client side portion now, open
 look familiar, and we enable `console.log` printing:
 
 ```clj
-(ns om-ring.core
+(ns om-async.core
   (:require [cljs.reader :as reader]
             [goog.events :as events]
             [goog.dom :as gdom]
@@ -437,7 +437,7 @@ We are introducing the `POST` HTTP method so need to make sure it is imported.
 Add `POST` to the `compojure.core` import at the top of the file:
 
 ```clj
-(ns tut-test.core
+(ns om-async.core
   (:require [ring.util.response :refer [file-response]]
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.edn :refer [wrap-edn-params]]
@@ -479,6 +479,9 @@ First we need to modify the namespace form. Since we'll be using
             [om-sync.core :refer [om-sync]]
             [om-sync.util :refer [tx-tag edn-xhr]]))
 ```
+
+Remove the edn-xhr function created earlier. We now use the version
+defined in om-sync.util.
 
 In order for `om-sync` to work you need modify how you call
 `om.core/root`. `om-sync` needs to be able to subscribe to the
