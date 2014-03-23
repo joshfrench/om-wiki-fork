@@ -212,7 +212,7 @@ primitive strings and JavaScript String objects. The following is
 strongly recommended over extending native types to `ICloneable`.
 
 Instead of `editable` taking a string cursor from the application state,
-instead it will take some larger piece of data and a key to locate the
+it will take some larger piece of data and a key to locate the
 string to edit. `handle-change` now looks like this:
 
 ```clj
