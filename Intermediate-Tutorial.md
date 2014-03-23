@@ -519,7 +519,7 @@ to any components in our application. `:tx-listen` is a callback that
 will be invoked anytime the application state transitions. We simply
 put this information into `tx-chan`.
 
-While technically we don't need to change `editable` to make this work,
+Technically we don't need to change `editable` to make this work,
 but we're going to make `editable` a better citizen in order to
 explain how `om-sync` works.
 
