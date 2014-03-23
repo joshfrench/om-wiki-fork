@@ -489,7 +489,7 @@ application's transactions so that it can observe transactions that
 are relevant to it.
 
 We use core.async to publish a channel that components like `om-sync`
-can subscribe to. This is done by make the channel a global service via
+can subscribe to. This is done by making the channel a global service via
 `:shared`. We also make an EDN request to get our initial state using
 the new `init` route we wrote on the backend.
 
