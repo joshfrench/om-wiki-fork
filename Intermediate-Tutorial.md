@@ -513,7 +513,7 @@ the new `init` route we wrote on the backend.
 We create a channel `tx-chan`. We then we make a subscribeable channel
 `tx-pub-chan` so that `om-sync` instances can call
 `cljs.core.asyn/sub` on it. We request the initial state of the
-application from the server. Here use some `om.core/root` options we
+application from the server. Here we use some `om.core/root` options we
 have not seen before. `:shared` allows us to provide a global service
 to any components in our application. `:tx-listen` is a callback that
 will be invoked anytime the application state transitions. We simply
