@@ -905,8 +905,12 @@ component. `editable` takes a JavaScript string and presents it while
 also making it editable. In order for this to work the JavaScript
 string needs to support the Om cursor interface. We don't need to
 implement this ourselves but we do need make sure that JavaScript
-strings implement `ICloneable` so that Om can do the hard work for
-us.
+strings implement `ICloneable` so that Om can do the hard work for us
+(*Note the following is for demonstration purposes only, it is not
+recommended in most real applications*. Please refer to the
+[Intermediate Tutorial](http://github.com/swannodette/om/wiki/Intermediate-Tutorial)
+for a better approach that does not require extending JavaScript
+native strings to ICloneable*).
 
 ```clj
 (extend-type string
