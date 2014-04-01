@@ -212,7 +212,7 @@ primitive strings and JavaScript String objects. The following is
 strongly recommended over extending native types to `ICloneable`.
 
 Instead of `editable` taking a string cursor from the application state,
-instead it will take some larger piece of data and a key to locate the
+it will take some larger piece of data and a key to locate the
 string to edit. `handle-change` now looks like this:
 
 ```clj
@@ -489,7 +489,7 @@ application's transactions so that it can observe transactions that
 are relevant to it.
 
 We use core.async to publish a channel that components like `om-sync`
-can subscribe to. This is done by make the channel a global service via
+can subscribe to. This is done by making the channel a global service via
 `:shared`. We also make an EDN request to get our initial state using
 the new `init` route we wrote on the backend.
 
@@ -513,13 +513,13 @@ the new `init` route we wrote on the backend.
 We create a channel `tx-chan`. We then we make a subscribeable channel
 `tx-pub-chan` so that `om-sync` instances can call
 `cljs.core.asyn/sub` on it. We request the initial state of the
-application from the server. Here use some `om.core/root` options we
+application from the server. Here we use some `om.core/root` options we
 have not seen before. `:shared` allows us to provide a global service
 to any components in our application. `:tx-listen` is a callback that
 will be invoked anytime the application state transitions. We simply
 put this information into `tx-chan`.
 
-While technically we don't need to change `editable` to make this work,
+Technically we don't need to change `editable` to make this work,
 but we're going to make `editable` a better citizen in order to
 explain how `om-sync` works.
 
