@@ -373,7 +373,7 @@ First we need to change our `project.clj` to include a dependency on
                [om-sync "0.1.1"] ;; <=== ADD THIS
                [compojure "1.1.6"]
                [fogus/ring-edn "0.2.0"]
-               [com.datomic/datomic-free "0.9.4578"]]
+               [com.datomic/datomic-free "0.9.4699"]]
 ```
 
 Lets update the server side code to uniformly handle EDN requests.
