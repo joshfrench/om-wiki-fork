@@ -192,10 +192,9 @@ You can set global shared data with `om.core/root`.
   ([f value options] ...))
 ```
 
-`f` is a function returning an instance of `IRender`, `IRenderState`,
-a React component, or some value that React knows how to render. `f`
-takes two arguments, a root cursor on the application state and the
-backing Om component for the root. `value` is either a tree of
+`f` is a function returning an instance of `IRender` or `IRenderState`.
+`f` takes two arguments, a root cursor on the application state and
+the backing Om component for the root. `value` is either a tree of
 associative ClojureScript data structures or an atom wrapping a tree
 of associative ClojureScript data structures.
 
