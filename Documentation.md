@@ -392,9 +392,19 @@ attached to the render tree.
 # om.dom
 
 The dom functions map directly to the DOM api presented by React. For
-example `React.DOM.div` becomes `om.dom/div`. The arguments are
-exactly the same as React, the first argument is `props`, all
-subsequent arguments are `children`.
+example `React.DOM.div` becomes `om.dom/div`. The arguments are exactly
+the same as React, the first argument is `props`, all subsequent
+arguments are `children`.
+
+### Props
+
+For a list of supported `props` see [React's supported DOM attributes](http://facebook.github.io/react/docs/tags-and-attributes.html#html-attributes) and [React's special attributes](http://facebook.github.io/react/docs/special-non-dom-attributes.html). As an example of the special attributes, the following code will create a `div` component that contains raw HTML:
+
+```clojurescript
+(om.dom/div (clj->js {:dangerouslySetInnerHTML {:__html "<b>Bold!</b>"}})
+            nil)
+```
+Be careful! The attribute is well-named: this is potentially dangerous and should be used with caution.
 
 ### render-to-str
 
