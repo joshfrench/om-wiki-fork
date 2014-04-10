@@ -1,26 +1,26 @@
 ## Overview
 
-Cursors are Om’s way to manage components’ mutable state. Cursors split one big mutable atom into small, mutable, in-sync with the original atom parts.
+Cursors are Oms way to manage a components mutable state. Cursors split one big mutable atom into small, mutable, in-sync with the original atom parts.
 
-In Om, you keep all your application state in a single atom. Components, however, do not care about whole atom, they work with parts of it. Imagine text input component: it operates on a single string, renders it and communicates value back once user changed it.
+In Om, you keep all your application state in a single atom. Components, however, do not care about the whole state, they work with parts of it. Imagine a text input component: it operates on a single string, renders it and communicates a value back once the user changed it.
 
-Cursors also specify component’s dependencies on a state. Each component get cursors at construction time and will automatically re-render when value underneath its cursor changes.
+Cursors also specify a components dependencies on the state. Each component gets cursors at construction time and will automatically re-render when the value underneath its cursor changes.
 
-At their core, cursors just keep link to the root atom and path to the part of data they point to. Sub-cursors are produced by just refining the path part.
+At their core, cursors just keep a link to the root atom and a path to the part of data they point to. Sub-cursors are produced by refining the path.
 
 ## Accessing cursors
 
 Cursors behave differently during render phase and outside of it.
 
-During render phase, you treat cursor as a value, as a regular map or vector. Cursors support all the same interfaces PersistentMap and PersistentVector support, so you can get-in, check for keys, etc. 
+During render phase, you treat a cursor as a value, as a regular map or vector. Cursors support all the same interfaces `PersistentMap` and `PersistentVector` support, so you can `get-in`, check for keys, etc. 
 
-Outside render phase, you cannot treat cursor as a value anymore. Deref it (@) and work with the value returned. Deref returns actual value beneath cursor: real map or vector.
+Outside of the render phase, you cannot treat cursors as values. Deref it (@) and work with the value returned. Deref returns the actual value beneath the cursor: a map or a vector.
 
 ## Creating sub-cursors
 
-Root component gets cursor created from atom itself. This atom and all cursors derived from root cursor stay in sync during all modifications.
+Root components get cursors created from the atom itself. The atom and all cursors derived from the root cursor stay in sync during all modifications.
 
-You can create sub-cursor from cursor by just calling `get` or `get-in` on it (works only during render phase). There’s a gotcha: if the value returned by `get` is map or vector, you’ll get a sub-cursor pointing at it. If it’s a primitive value, you’ll get primitive value, not a cursor.
+You can create sub-cursors from cursors by just calling `get` or `get-in` on them (works only during render phase). There's a gotcha: if the value returned by `get` is a map or a vector, you’ll get a sub-cursor pointing to it. If it's a primitive value, you'll get a primitive value, not a cursor.
 
 In short:
 
@@ -53,7 +53,7 @@ This means that you cannot create a component that depends on a single string (l
 
 ## Making changes via cursors
 
-Cursors can propagate changes back to the original atom. For that purpose, `transact!` call is used:
+Cursors can propagate changes back to the original atom. For that purpose, `transact!` calls are used:
 
 ```clj
 (def state (atom {:click-counter [0]}))
@@ -70,15 +70,15 @@ Cursors can propagate changes back to the original atom. For that purpose, `tran
 
 ## Consistency and observability
 
-`transact!` is allowed during both inside and outside of render phase. But when inside render, all transact!-ed changes will not be visible until next frame (next render). That’s to keep each rendered frame consistent app-wise.
+`transact!` is allowed during and outside of the render phase. When called during the render phase, no `transact!`-ed changes will be visible until the next frame is rendered (next render). That's to keep each rendered frame consistent app-wise.
 
-When rendering, we want to see on screen consistent view built on top of one consistent snapshot of application state. That’s why changes made in the middle of the render phase are not immediately visible for not-yet-rendered components.
+When rendering, we want to show a consistent view built from one consistent snapshot of the application state. That's why changes made in the middle of the render phase are not immediately visible for not-yet-rendered components.
 
-Outside the render phase, deref returns actual value, and call to `om.core/value` will return last rendered value.
+Outside the render phase, `deref` returns the current value, while calls to `om.core/value` will return the last rendered value.
 
 ## Using multiple cursors
 
-Component might depend on a several cursors. Just collect them into a map or a vector and pass it instead of a single cursor:
+Components might depend on several cursors. Just collect them into a map or a vector and pass it instead of a single cursor:
 
 ```clj
 (def state (atom {:courses [...], :classes [...], ...}))
