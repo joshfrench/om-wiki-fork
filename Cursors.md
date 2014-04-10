@@ -24,43 +24,49 @@ You can create sub-cursor from cursor by just calling `get` or `get-in` on it (w
 
 In short:
 
-    (def state (atom {:x 1, :y [:a :b [:c]]}))
+```clj
+(def state (atom {:x 1, :y [:a :b [:c]]}))
 
-    (defn root-view [cursor _]
-      ...
-      (render [_]
-        (get cursor :x) // 1, value
-        (get cursor :y) // [:a :b [:c]], cursor with path [:y]
-        (get-in cursor [:y 0]) // :a, value
-        (get-in cursor [:y 2]) // [:c], cursor with path [:y 2]
+(defn root-view [cursor _]
+  ...
+  (render [_]
+     (get cursor :x) ;; 1, value
+     (get cursor :y) ;; [:a :b [:c]], cursor with path [:y]
+     (get-in cursor [:y 0]) ;; :a, value
+     (get-in cursor [:y 2]) ;; [:c], cursor with path [:y 2]
+```
 
 This means that you cannot create a component that depends on a single string (like text-input). But you can write a component that depends on a vector of one string:
 
-    (def state (atom {:name ["Igor"]}))
+```clj
+(def state (atom {:name ["Igor"]}))
 
-    (defn text-input [cursor _]
-      ...
-      (render [_]
-        (dom/input #js {:value (first cursor)}))) 
+(defn text-input [cursor _]
+  ...
+  (render [_]
+    (dom/input #js {:value (first cursor)}))) 
 
-    ...
-    (render [_]
-      (om/build text-input (:name app-cursor)))
-         
+...
+(render [_]
+  (om/build text-input (:name app-cursor)))
+```
+
 ## Making changes via cursors
 
 Cursors can propagate changes back to the original atom. For that purpose, `transact!` call is used:
 
-    (def state (atom {:click-counter [0]}))
+```clj
+(def state (atom {:click-counter [0]}))
 
-    (defn btn-view [cursor _]
-      (reify om/IRender
-        (render [_]
-          (om/div nil
-            (om/span nil (str "Clicked " (get cursor 0) " times"))
-            (om/button
-              #js {:onClick (fn [_]
-                              (om/transact! cursor [0] inc))})))))
+(defn btn-view [cursor _]
+  (reify om/IRender
+    (render [_]
+      (om/div nil
+        (om/span nil (str "Clicked " (get cursor 0) " times"))
+        (om/button
+          #js {:onClick (fn [_]
+                          (om/transact! cursor [0] inc))})))))
+```
 
 ## Consistency and observability
 
@@ -74,8 +80,10 @@ Outside the render phase, deref returns actual value, and call to `om.core/value
 
 Component might depend on a several cursors. Just collect them into a map or a vector and pass it instead of a single cursor:
 
-    (def state (atom {:courses [...], :classes [...], ...}))
+```clj
+(def state (atom {:courses [...], :classes [...], ...}))
 
-    (render [_]
-      (om/build table-view {:rows (:courses cursor),
-                            :cols (:classes cursor)})) 
+(render [_]
+  (om/build table-view {:rows (:courses cursor),
+                        :cols (:classes cursor)})) 
+```
