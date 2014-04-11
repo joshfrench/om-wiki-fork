@@ -2,5 +2,6 @@
 * [[Basic Tutorial]]
 * [[Intermediate Tutorial]]
 * [[Advanced Tutorial]]
+* [[Cursors]]
 * [[Documentation]]
 * [[Testing]]
