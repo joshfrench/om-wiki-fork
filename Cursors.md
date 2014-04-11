@@ -6,7 +6,7 @@ Cursors are Om's way to manage a component's focus on just the data that it need
 
 Imagine a text input component: it operates on a single string (within the overall application state), renders it and can return a value back into the application state if the user changes it.
 
-Cursor paths also specify a component's dependencies within the state's atom. Each component gets cursors at construction time and will automatically re-render when the value underneath its cursor changes. Therefore the binding is two-way, so in the example above, changing the string value in the application state will trigger the component to re-render itself.
+Cursor paths also specify a component's dependencies within the state's atom. Each component gets cursors at construction time and will automatically re-render when the value underneath its cursor changes. Therefore the binding is two-way, so in the example above, changing the string value in the application state will trigger the text input component to re-render itself.
 
 ## Accessing cursors
 
