@@ -2,7 +2,7 @@
 
 In Om, you keep all your application state in a single atom (the root atom). Components, however, generally do not care about the entire scope of the application state, but focus on specific parts of it.
 
-Cursors are Om's way to manage a component's focus on just the state data that it needs to operate. Cursors split one big mutable atom into smaller, sub-atoms that remain in-sync with the state held in the root atom. Cursors keep a path to the data within the root atom that the component needs to deal with. Sub-cursors are produced by refining the path.
+Cursors are Om's way to manage a component's focus on just the state data that it needs to operate. Cursors split one big mutable atom into smaller sub-atoms that remain in-sync with the state held in the root atom. Cursors keep a path to the data within the root atom that the component needs to deal with. Sub-cursors are produced by refining the path.
 
 Imagine a text input component: it operates on a single string (within the overall application state), renders it and can return a value back into the application state if the user changes it.
 
