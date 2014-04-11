@@ -12,15 +12,15 @@ Cursor paths also specify a component's dependencies within the state's atom. Ea
 
 Cursors behave differently during render phase and outside of it.
 
-During render phase, you treat a cursor as a value, as a regular map or vector. Cursors support all the same interfaces `PersistentMap` and `PersistentVector` support, so you can `get-in`, check for keys, etc. 
+During the render phase, you treat a cursor as a value, as a regular map or vector. Cursors support all the same interfaces `PersistentMap` and `PersistentVector` support, so you can `get-in`, check for keys, etc. 
 
-Outside of the render phase, you cannot treat cursors as values. Deref it (@) and work with the value returned. Deref returns the actual value beneath the cursor: a map or a vector.
+Outside of the render phase, you cannot treat cursors as values. Instead, you need to deref it (@) and work with the value returned. Deref returns the actual value beneath the cursor: a map or a vector.
 
 ## Creating sub-cursors
 
 Root components get cursors created from the atom itself. The atom and all cursors derived from the root cursor stay in sync during all modifications.
 
-You can create sub-cursors from cursors by just calling `get` or `get-in` on them (works only during render phase). There's a gotcha: if the value returned by `get` is a map or a vector, you’ll get a sub-cursor pointing to it. If it's a primitive value, you'll get a primitive value, not a cursor.
+You can create sub-cursors from cursors by just calling `get` or `get-in` on them (works only during the render phase). There's a gotcha: if the value returned by `get` is a map or a vector, you’ll get a sub-cursor pointing to it. If it's a primitive value, you'll get a primitive value, not a cursor.
 
 In short:
 
