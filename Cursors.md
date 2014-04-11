@@ -1,12 +1,12 @@
 ## Overview
 
-Cursors are Oms way to manage a components mutable state. Cursors split one big mutable atom into small, mutable, in-sync with the original atom parts.
+In Om, you keep all your application state in a single atom (the root atom). Components, however, generally do not care about the entire scope of the application state, but focus on specific parts of it.
 
-In Om, you keep all your application state in a single atom. Components, however, do not care about the whole state, they work with parts of it. Imagine a text input component: it operates on a single string, renders it and communicates a value back once the user changed it.
+Cursors are Om's way to manage a component's focus on just the data that it needs to operate. Cursors split one big mutable atom into smaller, mutable sub-atom parts that remain in-sync with the state held in the root atom. Essentially, cursors just keep a path to the part of data in the root atom that they need to deal with. Sub-cursors are produced by refining the path.
 
-Cursors also specify a components dependencies on the state. Each component gets cursors at construction time and will automatically re-render when the value underneath its cursor changes.
+Imagine a text input component: it operates on a single string (within the overall application state), renders it and can return a value back into the application state if the user changes it.
 
-At their core, cursors just keep a link to the root atom and a path to the part of data they point to. Sub-cursors are produced by refining the path.
+Cursor paths also specify a component's dependencies within the state's atom. Each component gets cursors at construction time and will automatically re-render when the value underneath its cursor changes. Therefore the binding is two-way, so in the example above, changing the string value in the application state will trigger the component to re-render itself.
 
 ## Accessing cursors
 
@@ -72,7 +72,7 @@ Cursors can propagate changes back to the original atom. For that purpose, `tran
 
 `transact!` is allowed during and outside of the render phase. When called during the render phase, no `transact!`-ed changes will be visible until the next frame is rendered (next render). That's to keep each rendered frame consistent app-wise.
 
-When rendering, we want to show a consistent view built from one consistent snapshot of the application state. That's why changes made in the middle of the render phase are not immediately visible for not-yet-rendered components.
+When rendering, we want to show a consistent view built from a single snapshot of the application state. That's why changes made in the middle of the render phase are not immediately visible for not-yet-rendered components.
 
 Outside the render phase, `deref` returns the current value, while calls to `om.core/value` will return the last rendered value.
 
