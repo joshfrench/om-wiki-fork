@@ -387,8 +387,6 @@ attached to the render tree.
 (build my-widget (graft {:text "I'm not in the app state!"} cursor))
 ```
 
-### update-state!
-
 # om.dom
 
 The dom functions map directly to the DOM api presented by React. For
