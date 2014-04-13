@@ -7,7 +7,7 @@ Clojure and also provides time travel capabilities making it quite
 nice to pair with Om.
 
 First download a copy of
-[Datomic Free](http://my.datomic.com/downloads/free). Unzip it and run
+[Datomic Free](http://my.datomic.com/downloads/free). You might get an error with versions of Datomic later than `0.9.4609`, so try that one first. Unzip it and run
 the following inside the directory:
 
 ```
@@ -34,7 +34,11 @@ user=> (init-db)
 ```
 
 The tutorial database now exists and is populated. Quit the
-REPL. Let's start the auto building process:
+REPL.
+
+If you got an error, try an earlier version of Datomic Free.
+
+Let's start the auto building process:
 
 ```
 lein cljsbuild auto dev
