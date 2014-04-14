@@ -3,5 +3,6 @@
 * [[Intermediate Tutorial]]
 * [[Advanced Tutorial]]
 * [[Cursors]]
+* [[Troubleshooting]]
 * [[Documentation]]
 * [[Testing]]
