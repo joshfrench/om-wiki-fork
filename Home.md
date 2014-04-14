@@ -1,8 +1,8 @@
 * [[Conceptual Overview]]
-* [[Basic Tutorial]]
-* [[Intermediate Tutorial]]
+* [[Basic Tutorial]], Om basic
+* [[Intermediate Tutorial]], full stack integration
 * [[Advanced Tutorial]]
-* [[Cursors]]
-* [[Troubleshooting]]
+* [[Cursors]], detailed explanation of the role and behavior of cursors
+* [[Troubleshooting]], common mistakes
 * [[Documentation]]
 * [[Testing]]
