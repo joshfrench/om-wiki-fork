@@ -285,7 +285,7 @@ this case we want to display a contact list so we want to use
 `ul` tag in it. We want to render several `li` element so we call
 `apply` on `dom/ul`.
 
-Let's write `contact-view` now. Add it before `contacts-view`.
+Let's write `contact-view` now and add it after `contacts-view`.
 
 ```clj
 (defn contact-view [contact owner]
@@ -295,7 +295,19 @@ Let's write `contact-view` now. Add it before `contacts-view`.
       (dom/li nil (display-name contact)))))
 ```
 
-Pretty simple. Now for `display-name`. Add it before `contact-view`.
+Now save the file and reload the browser. You'll see a blank page. Let's check the results in the `lein cljsbuild auto` terminal window to see what happened:
+
+```
+Compiling "om_tut.js" from ["src"]...
+WARNING: Use of undeclared Var om-tut.core/contact-view at line 37 src/om_tut/core.cljs
+Successfully compiled "om_tut.js" in 0.195 seconds.
+```
+
+It warns that `contact-view` is undefined, because it's defined *after* `contacts-view`. 
+
+So let's move it before and save it again to check that the warning is gone and we only have the warning about the actually missing `display-name` function.
+
+So now for `display-name`. Let's add it *before* `contact-view`.
 
 ```clj
 (defn display-name [{:keys [first last] :as contact}]
