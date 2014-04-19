@@ -369,6 +369,17 @@ component. `korks` is an optional key or sequences of keys. Similar to
 `om.core/get-state` except always returns the rendered state. Useful
 for detecting state transitions.
 
+### rendering?
+
+```clj
+(defn rendering? []
+  ...)
+```
+
+Return true if in the React rendering phase. Useful in `IWillMount`
+when establishing code that may run sync with render the first time
+and async thereafter.
+
 # om.dom
 
 The dom functions map directly to the DOM api presented by React. For
