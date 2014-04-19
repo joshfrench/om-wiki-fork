@@ -369,24 +369,6 @@ component. `korks` is an optional key or sequences of keys. Similar to
 `om.core/get-state` except always returns the rendered state. Useful
 for detecting state transitions.
 
-### graft
-
-```clj
-(defn graft [value cursor]
-  ...)
-```
-
-Sometimes it's useful to create stateful Om components that do not
-manipulate or correspond to application state. However these components
-still need to be a part of the render tree, `om.core/graft` supports
-this. Given any `value` and a `cursor` `om.core/graft` will return a
-new cursor that can be used to construct an Om component that is
-attached to the render tree.
-
-```clj
-(build my-widget (graft {:text "I'm not in the app state!"} cursor))
-```
-
 # om.dom
 
 The dom functions map directly to the DOM api presented by React. For
