@@ -217,7 +217,10 @@ target.
 ```clj
 (om.core/root
   (fn [app-state owner]
-    (dom/h1 nil (:text app-state)))
+    (reify
+      om.core/IRender
+      (render [_]
+        (dom/h1 nil (:text app-state)))))
   {:text "Hello world!"}
   {:target (. js/document getElementById "my-app")})   
 ```
