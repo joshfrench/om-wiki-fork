@@ -1,3 +1,38 @@
+### Table of Contents
+
+#### om.core
+
+* [Life Cycle Protocols](#life-cycle-protocols)
+  * [IInitState](#iinitstate)
+  * [IShouldUpdate](#ishouldupdate)
+  * [IWillMount](#iwillmount)
+  * [IDidMount](#ididmount)
+  * [IWillUpdate](#iwillmount)
+  * [IDidUpdate](#ididupdate)
+  * [IRender](#irender)
+  * [IRenderState](#irenderstate)
+* [Functions](#functions)
+  * [get-props](#get-props)
+  * [get-state](#get-state)
+  * [get-shared](#get-shared)
+  * [root](#root)
+  * [build](#build)
+  * [build*](#build-1)
+  * [build-all](#build-all)
+  * [transact!](#transact)
+  * [update!](#update)
+  * [get-node](#get-node)
+  * [set-state!](#set-state)
+  * [update-state!](#update-state)
+  * [refresh!](#refresh)
+  * [get-render-state](#get-render-state)
+  * [rendering?](#rendering)
+
+#### om.dom
+
+* [Props](#props)
+* [render-to-str](#render-to-str)
+
 # om.core
 
 ## Life Cycle Protocols
