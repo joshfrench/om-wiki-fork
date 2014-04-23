@@ -7,7 +7,7 @@ Clojure and also provides time travel capabilities making it quite
 nice to pair with Om.
 
 First download a copy of
-[Datomic Free](http://my.datomic.com/downloads/free). You might get an error with versions of Datomic later than `0.9.4609`, so try that one first. Unzip it and run
+[Datomic Free](http://my.datomic.com/downloads/free). You might get an error with versions of Datomic later than `0.9.4609`, so try that one first (seems to be working as of `0.9.4699`). Unzip it and run
 the following inside the directory:
 
 ```
