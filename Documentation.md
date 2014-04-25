@@ -7,7 +7,7 @@
   * [IShouldUpdate](#ishouldupdate)
   * [IWillMount](#iwillmount)
   * [IDidMount](#ididmount)
-  * [IWillUpdate](#iwillmount)
+  * [IWillUpdate](#iwillupdate)
   * [IDidUpdate](#ididupdate)
   * [IRender](#irender)
   * [IRenderState](#irenderstate)
