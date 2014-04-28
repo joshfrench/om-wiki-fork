@@ -24,7 +24,7 @@ This will start auto building so that recompiles will occur when you
 save a file. The first build will take a few seconds. Once the build
 has succeeded open `index.html` in your favorite browser (we recommend
 Google Chrome as it has excellent support for source maps). You should
-see an `h2` tag with the text content `Hello World!` in it.
+see an `h1` tag with the text content `Hello World!` in it.
 
 Open `src/om_tut/core.cljs` in Light Table. Change `:text` value of
 `app-state` to be something else other than `Hello World!`. Save the
@@ -83,7 +83,7 @@ expression in the tutorial at this point looks like this:
 ```clj
 (om/root
   (fn [app owner]
-    (dom/h2 nil (:text app)))
+    (dom/h1 nil (:text app)))
   app-state
   {:target (. js/document (getElementById "app"))})
 ```
@@ -111,25 +111,25 @@ with the following:
 ```clj
 (om/root
   (fn [app owner]
-    (dom/h2 nil (:text app)))
+    (dom/h1 nil (:text app)))
   app-state
   {:target (. js/document (getElementById "app0"))})
 ```
 
-Refresh your browser. You should see just one `h2` tag on the
+Refresh your browser. You should see just one `h1` tag on the
 page. Copy and paste the `om/root` expression and edit the second
 one to look like the following:
 
 ```clj
 (om/root
   (fn [app owner]
-    (dom/h2 nil (:text app)))
+    (dom/h1 nil (:text app)))
   app-state
   {:target (. js/document (getElementById "app1"))}) ;; <-- "app0" to "app1"
 ```
 
 Place your cursor at the end of this expression and evaluate it. You
-should see the second `h2` tag magically appear.
+should see the second `h1` tag magically appear.
 
 At the end of the file type the following and evaluate it.
 
@@ -137,7 +137,7 @@ At the end of the file type the following and evaluate it.
 (swap! app-state assoc :text "Multiple roots!")
 ```
 
-You should see both `h2` tags update on the fly. Multiple roots are
+You should see both `h1` tags update on the fly. Multiple roots are
 fully supported and synchronized to render on the same
 `requestAnimationFrame`.
 
