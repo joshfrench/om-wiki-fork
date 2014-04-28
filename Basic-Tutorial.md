@@ -251,7 +251,7 @@ yet since we haven't defined `contacts-view`.
   {:target (. js/document (getElementById "contacts"))})
 ```
 
-Let's edit `app-state` so it look like this:
+Let's edit `app-state` so it looks like this:
 
 ```clj
 (def app-state
