@@ -278,7 +278,7 @@ After `app-state` lets add the following code:
           (om/build-all contact-view (:contacts app)))))))
 ```
 
-In order to build a Om component we must use `om.core/build` for a
+In order to build an Om component we must use `om.core/build` for a
 single component and `om.core/build-all` to build many components. In
 this case we want to display a contact list so we want to use
 `om.core/build-all`. `contacts-view` returns a `div` with a `h2` and
