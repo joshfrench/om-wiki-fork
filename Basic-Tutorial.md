@@ -684,7 +684,7 @@ optimization of always rendering on requestAnimationFrame.
 
 ## Higher Order Components
 
-The most powerful components are those who sub-components can be
+The most powerful components are those whose sub-components can be
 parameterized. In order to focus on this concept let's leave aside user
 input and other complications for now. As a challenge you should try
 to re-add these facilities yourself after you've worked through this
