@@ -117,14 +117,18 @@ doing. Even then you probably shouldn't.
 
 Implementations should return a boolean value. If true then the
 component's `om.core/IRender` or `om.core/IRenderState` implementation
-will be called.
+will be called. This provides the opportunity to prevent components
+from re-rendering in response to certain changes in app (props) or local
+state. Please note that preventing components from re-rendering
+in response to props or state change could result in the DOM being out
+of sync with application or local state. 
 
 `next-props` is the next application state that the component is
 associated with. `next-state` is the next component local state, it is
 always a map.
 
 In your implementation if you wish to detect prop transitions you
-must use `om.core/get-props`. This is because your component
+must use `om.core/get-props` to get the previous props. This is because your component
 constructor function is called with the updated props.
 
 ### IWillReceiveProps
