@@ -7,6 +7,7 @@
   * [IShouldUpdate](#ishouldupdate)
   * [IWillMount](#iwillmount)
   * [IDidMount](#ididmount)
+  * [IWillReceiveProps](#iwillreceiveprops)
   * [IWillUpdate](#iwillupdate)
   * [IDidUpdate](#ididupdate)
   * [IRender](#irender)
@@ -126,6 +127,26 @@ Called once when the component has been mounted into the DOM. The DOM node assoc
 This is a good place to initialize persistent information and control
 that needs the DOM to be present.
 
+### IWillReceiveProps
+
+```clj
+(defprotocol IWillReceiveProps
+  (will-update [this next-props]))
+```
+
+Not called on the first render, will be called on all subsequent
+renders. This is a good place to detect app state changes and make 
+updates to local component state using om/set-state! or 
+om/update-state!.
+
+`next-props` is the next application state associated with this
+component.
+
+In your implementation if you wish to detect prop transitions you
+must use `om.core/get-props` to get the previous props. This is 
+because your component constructor function is called with the 
+updated props.
+
 ### IWillUpdate
 
 ```clj
@@ -141,8 +162,13 @@ component. `next-state` is the next component local state, it is
 always a map.
 
 In your implementation if you wish to detect prop transitions you
-must use `om.core/get-props`. This is because your component
-constructor function is called with the updated props.
+must use `om.core/get-props` to get the previous props. This is 
+because your component constructor function is called with the 
+updated props.
+
+Note:: You cannot update local component state in this method. 
+If you wish to change local state in response to prop changes use
+IWillReceiveProps. 
 
 ### IDidUpdate
 
