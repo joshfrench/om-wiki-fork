@@ -4,9 +4,9 @@
 
 * [Life Cycle Protocols](#life-cycle-protocols)
   * [IInitState](#iinitstate)
-  * [IShouldUpdate](#ishouldupdate)
   * [IWillMount](#iwillmount)
   * [IDidMount](#ididmount)
+  * [IShouldUpdate](#ishouldupdate)
   * [IWillReceiveProps](#iwillreceiveprops)
   * [IWillUpdate](#iwillupdate)
   * [IDidUpdate](#ididupdate)
@@ -82,28 +82,6 @@ of initial state.
       (dom/h1 nil (:text state)))))
 ```
 
-### IShouldUpdate
-
-```clj
-(defprotocol IShouldUpdate
-  (should-update [this next-props next-state]))
-```
-
-You should only implement this if you really know what you're
-doing. Even then you probably shouldn't.
-
-Implementations should return a boolean value. If true then the
-component's `om.core/IRender` or `om.core/IRenderState` implementation
-will be called.
-
-`next-props` is the next application state that the component is
-associated with. `next-state` is the next component local state, it is
-always a map.
-
-In your implementation if you wish to detect prop transitions you
-must use `om.core/get-props`. This is because your component
-constructor function is called with the updated props.
-
 ### IWillMount
 
 ```clj
@@ -126,6 +104,28 @@ Called once when the component has been mounted into the DOM. The DOM node assoc
 
 This is a good place to initialize persistent information and control
 that needs the DOM to be present.
+
+### IShouldUpdate
+
+```clj
+(defprotocol IShouldUpdate
+  (should-update [this next-props next-state]))
+```
+
+You should only implement this if you really know what you're
+doing. Even then you probably shouldn't.
+
+Implementations should return a boolean value. If true then the
+component's `om.core/IRender` or `om.core/IRenderState` implementation
+will be called.
+
+`next-props` is the next application state that the component is
+associated with. `next-state` is the next component local state, it is
+always a map.
+
+In your implementation if you wish to detect prop transitions you
+must use `om.core/get-props`. This is because your component
+constructor function is called with the updated props.
 
 ### IWillReceiveProps
 
