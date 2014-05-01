@@ -11,6 +11,8 @@
   * [IDidUpdate](#ididupdate)
   * [IRender](#irender)
   * [IRenderState](#irenderstate)
+  * [IDisplayName](#idisplayname)
+  * [IWillUnmount](#iwillunmount)
 * [Functions](#functions)
   * [get-props](#get-props)
   * [get-state](#get-state)
@@ -181,6 +183,26 @@ state as an argument. `state` is always a map, you can use destructuring.
 
 If you implement `om.core/IRenderState` you should not implement
 `omc.core/IRender`.
+
+### IDisplayName
+
+```clj
+(defprotocol IDisplayName
+  (display-name [this]))
+```
+
+Return a string name to be used for debugging. The Chrome [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) extension uses this to name the components.
+
+### IWillUnmount
+
+```clj
+(defprotocol IWillUnmount
+  (will-unmount [this]))
+```
+
+Called immediately before a component is unmounted from the DOM.
+
+Perform any necessary cleanup in this method, such as invalidating timers or cleaning up any DOM elements that were created in `om.core/IDidMount`.
 
 ## Functions
 
