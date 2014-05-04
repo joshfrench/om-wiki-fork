@@ -135,7 +135,7 @@ constructor function is called with the updated props.
 
 ```clj
 (defprotocol IWillReceiveProps
-  (will-update [this next-props]))
+  (will-receive-props [this next-props]))
 ```
 
 Not called on the first render, will be called on all subsequent
