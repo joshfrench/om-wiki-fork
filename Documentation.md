@@ -212,7 +212,7 @@ The only difference between `om.core/IRender` and
 state as an argument. `state` is always a map, you can use destructuring.
 
 If you implement `om.core/IRenderState` you should not implement
-`omc.core/IRender`.
+`om.core/IRender`.
 
 ### IDisplayName
 
