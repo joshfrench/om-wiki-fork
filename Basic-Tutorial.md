@@ -76,7 +76,7 @@ this when updating indexed sequences in the application state.
 
 ### om.core/root
 
-`om.core/root` (which is aliased to `om/root` here), establishes a
+`om.core/root` (which is aliased to `om/root` here), establishes an
 Om rendering loop on a specific element in the DOM. The `om.root`
 expression in the tutorial at this point looks like this:
 
