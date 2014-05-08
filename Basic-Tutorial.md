@@ -156,7 +156,7 @@ would be pissed!
 (def app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
 ```
 
-Change the `om/root` expression to the following and evaluate it, you
+Change the `om/root` expression to the following and evaluate it. You
 should see a list of animals now.
 
 ```clj
