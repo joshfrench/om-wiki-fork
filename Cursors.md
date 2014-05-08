@@ -84,6 +84,6 @@ Components might depend on several cursors. Just collect them into a map or a ve
 (def state (atom {:courses [...], :classes [...], ...}))
 
 (render [_]
-  (om/build table-view {:rows (:courses state),
-                        :cols (:classes state)})) 
+  (om/build table-view {:rows (:courses cursor),
+                        :cols (:classes cursor)})) 
 ```
