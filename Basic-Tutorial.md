@@ -965,7 +965,7 @@ moment to read it and you'll see that it's quite simple.
                :onChange #(handle-change % text owner)
                :onKeyPress #(when (== (.-keyCode %) 13)
                               (commit-change text owner))
-               :onBlur (fn [e] (commit-change text owner))})
+               :onBlur (commit-change text owner)})
         (dom/button
           #js {:style (display (not editing))
                :onClick #(om/set-state! owner :editing true)}
