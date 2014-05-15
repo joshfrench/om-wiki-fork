@@ -659,6 +659,18 @@ Before evaluating that let's add `handle-change` before `contacts-view`:
 Now evaluate `handle-change`, `contacts-view` and `om/root`. You
 should now be able to type in the text field again.
 
+Let's finally add the piece of code that clears the text field. As you see it looks like our first "easy" attempt, except that we're no longer directly manipulating a ref but we're changing the state of the app:
+
+```clj
+(defn add-contact [app owner]
+  (let [new-contact (-> (om/get-node owner "new-contact")
+                        .-value
+                        parse-contact)]
+    (when new-contact
+      (om/transact! app :contacts #(conj % new-contact))
+      (om/set-state! owner :text ""))))
+```
+
 That seemed like a lot of work for little gain ... except we just saw
 we have really fine grained control over user input entry. For example
 a name can't have a number in it, let's prevent that now by modifying
