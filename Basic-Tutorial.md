@@ -928,7 +928,7 @@ These are all helpers for our soon to be written `editable`
 component. `editable` takes a JavaScript string and presents it while
 also making it editable. In order for this to work the JavaScript
 string needs to support the Om cursor interface. We don't need to
-implement this ourselves but we do need make sure that JavaScript
+implement this ourselves but we do need to make sure that JavaScript
 strings implement `ICloneable` so that Om can do the hard work for us
 (*Note the following is for demonstration purposes only, it is not
 recommended in most real applications*. Please refer to the
@@ -1023,5 +1023,5 @@ class titles in `registry-view` stay perfectly in sync.
 As a challenge render the classes in `professor-view` with `editable`
 instead of just rendering strings. It's just a one line change. If you
 get it working notice how editing the class titles from deep within
-the `register-view` "just works". This is the modularity that Om
+the `registry-view` "just works". This is the modularity that Om
 cursors provide.
