@@ -321,8 +321,11 @@ Constructs an Om component. `f` must be a function that returns an
 instance of `om.core/IRender` or `om.core/IRenderState`. `f` must take
 two arguments - a cursor and the backing Om component usually referred
 to as the owner. `f` can take a third argument if `:opts` is
-specified in `m`. `cursor` should be an Om cursor onto the application
-state. `m` is an optional map of options.
+specified in `m`. The component is identified by the function `f`. Changing
+`f` to a different function will construct a new component, while changing
+the return value will not change component.
+`cursor` should be an Om cursor onto the application state. `m` is an
+optional map of options.
 
 Only the following keys are allowed in `m`.
 
