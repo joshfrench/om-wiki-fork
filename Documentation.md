@@ -290,7 +290,7 @@ Additionally the following keys are allowed/required:
 
 * `:target` (required)
 * `:shared` (optional) in order to provide global services
-* `:tx-listen` in order to subscribe to all transactions in the application.
+* `:tx-listen` a function that will listen in on transactions, should take 2 arguments - the first a map containing the path, old and new state at path, old and new global state, and transaction tag if provided.
 * `:path` to specify the path of the cursor into app-state (see
   [#72](https://github.com/swannodette/om/issues/72))
 * `:instrument` a function of three arguments that if provided will
