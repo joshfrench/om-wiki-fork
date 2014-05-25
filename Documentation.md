@@ -494,7 +494,7 @@ Be careful! The attribute is well-named: this is potentially dangerous and shoul
   ...)
 ```
 
-Equivalent to `React.renderComponentToString`. For example:
+Equivalent to [`React.renderComponentToString`](http://facebook.github.io/react/docs/top-level-api.html#react.rendercomponenttostring). For example:
 
 ```clj
 (dom/render-to-str (om/build some-widget data))
