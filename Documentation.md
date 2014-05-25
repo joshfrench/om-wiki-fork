@@ -414,7 +414,7 @@ analagous to `reset!` for atoms.
 
 `owner` is the backing Om component. `ref` is a JavaScript String that
 references a DOM node. This functionality is identical to the
-`ReactComponent.getDOMNode` in React.
+[`ReactComponent.getDOMNode`](http://facebook.github.io/react/docs/component-api.html#getdomnode) in React.
 
 ### set-state!
 
