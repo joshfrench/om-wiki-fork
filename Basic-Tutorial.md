@@ -76,14 +76,14 @@ this when updating indexed sequences in the application state.
 
 ### om.core/root
 
-`om.core/root` (which is aliased to `om/root` here), establishes a
+`om.core/root` (which is aliased to `om/root` here), establishes an
 Om rendering loop on a specific element in the DOM. The `om.root`
 expression in the tutorial at this point looks like this:
 
 ```clj
 (om/root
   (fn [app owner]
-    (dom/h2 nil (:text app)))
+    (om/component (dom/h2 nil (:text app))))
   app-state
   {:target (. js/document (getElementById "app"))})
 ```
@@ -91,9 +91,8 @@ expression in the tutorial at this point looks like this:
 `om.core/root` is idempotent; that is, it's safe to evaluate it
 multiple times. It takes three arguments. The first argument is a function 
 that takes the application state data and the backing React component, here
-called `owner`. This function must return an Om component, a React
-component, or some other value that React itself knows how to
-render. The second argument is the application state atom. The third argument 
+called `owner`. This function must return an Om component - i.e. a model of the `om/IRender` interface, like `om.core/component` macro generates. The second argument 
+is the application state atom. The third argument 
 is a map; it must contain a `:target` DOM node key value pair. It also
 takes other interesting options which will be covered later.
 
@@ -111,7 +110,7 @@ with the following:
 ```clj
 (om/root
   (fn [app owner]
-    (dom/h2 nil (:text app)))
+    (om/component (dom/h2 nil (:text app))))
   app-state
   {:target (. js/document (getElementById "app0"))})
 ```
@@ -123,7 +122,7 @@ one to look like the following:
 ```clj
 (om/root
   (fn [app owner]
-    (dom/h2 nil (:text app)))
+    (om/component (dom/h2 nil (:text app))))
   app-state
   {:target (. js/document (getElementById "app1"))}) ;; <-- "app0" to "app1"
 ```
@@ -156,7 +155,7 @@ would be pissed!
 (def app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
 ```
 
-Change the `om/root` expression to the following and evaluate it, you
+Change the `om/root` expression to the following and evaluate it. You
 should see a list of animals now.
 
 ```clj
@@ -229,8 +228,9 @@ Then change the `om/root` expression to the following and evaluate it:
 ```clj
 (om/root
   (fn [app owner]
-    (apply dom/ul #js {:className "animals"}
-      (map stripe (:list app) (cycle ["#ff0" "#fff"]))))
+    (om/component 
+      (apply dom/ul #js {:className "animals"}
+        (map stripe (:list app) (cycle ["#ff0" "#fff"])))))
   app-state
   {:target (. js/document (getElementById "app0"))})
 ```
@@ -251,7 +251,7 @@ yet since we haven't defined `contacts-view`.
   {:target (. js/document (getElementById "contacts"))})
 ```
 
-Let's edit `app-state` so it look like this:
+Let's edit `app-state` so it looks like this:
 
 ```clj
 (def app-state
@@ -278,7 +278,7 @@ After `app-state` lets add the following code:
           (om/build-all contact-view (:contacts app)))))))
 ```
 
-In order to build a Om component we must use `om.core/build` for a
+In order to build an Om component we must use `om.core/build` for a
 single component and `om.core/build-all` to build many components. In
 this case we want to display a contact list so we want to use
 `om.core/build-all`. `contacts-view` returns a `div` with a `h2` and
@@ -659,6 +659,18 @@ Before evaluating that let's add `handle-change` before `contacts-view`:
 Now evaluate `handle-change`, `contacts-view` and `om/root`. You
 should now be able to type in the text field again.
 
+Let's finally add the piece of code that clears the text field. As you see it looks like our first "easy" attempt, except that we're no longer directly manipulating a ref but we're changing the state of the app:
+
+```clj
+(defn add-contact [app owner]
+  (let [new-contact (-> (om/get-node owner "new-contact")
+                        .-value
+                        parse-contact)]
+    (when new-contact
+      (om/transact! app :contacts #(conj % new-contact))
+      (om/set-state! owner :text ""))))
+```
+
 That seemed like a lot of work for little gain ... except we just saw
 we have really fine grained control over user input entry. For example
 a name can't have a number in it, let's prevent that now by modifying
@@ -684,7 +696,7 @@ optimization of always rendering on requestAnimationFrame.
 
 ## Higher Order Components
 
-The most powerful components are those who sub-components can be
+The most powerful components are those whose sub-components can be
 parameterized. In order to focus on this concept let's leave aside user
 input and other complications for now. As a challenge you should try
 to re-add these facilities yourself after you've worked through this
@@ -916,7 +928,7 @@ These are all helpers for our soon to be written `editable`
 component. `editable` takes a JavaScript string and presents it while
 also making it editable. In order for this to work the JavaScript
 string needs to support the Om cursor interface. We don't need to
-implement this ourselves but we do need make sure that JavaScript
+implement this ourselves but we do need to make sure that JavaScript
 strings implement `ICloneable` so that Om can do the hard work for us
 (*Note the following is for demonstration purposes only, it is not
 recommended in most real applications*. Please refer to the
@@ -1011,5 +1023,5 @@ class titles in `registry-view` stay perfectly in sync.
 As a challenge render the classes in `professor-view` with `editable`
 instead of just rendering strings. It's just a one line change. If you
 get it working notice how editing the class titles from deep within
-the `register-view` "just works". This is the modularity that Om
+the `registry-view` "just works". This is the modularity that Om
 cursors provide.

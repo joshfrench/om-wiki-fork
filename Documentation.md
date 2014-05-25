@@ -1,3 +1,41 @@
+### Table of Contents
+
+#### om.core
+
+* [Life Cycle Protocols](#life-cycle-protocols)
+  * [IInitState](#iinitstate)
+  * [IWillMount](#iwillmount)
+  * [IDidMount](#ididmount)
+  * [IShouldUpdate](#ishouldupdate)
+  * [IWillReceiveProps](#iwillreceiveprops)
+  * [IWillUpdate](#iwillupdate)
+  * [IDidUpdate](#ididupdate)
+  * [IRender](#irender)
+  * [IRenderState](#irenderstate)
+  * [IDisplayName](#idisplayname)
+  * [IWillUnmount](#iwillunmount)
+* [Functions](#functions)
+  * [get-props](#get-props)
+  * [get-state](#get-state)
+  * [get-shared](#get-shared)
+  * [root](#root)
+  * [build](#build)
+  * [build*](#build-1)
+  * [build-all](#build-all)
+  * [transact!](#transact)
+  * [update!](#update)
+  * [get-node](#get-node)
+  * [set-state!](#set-state)
+  * [update-state!](#update-state)
+  * [refresh!](#refresh)
+  * [get-render-state](#get-render-state)
+  * [rendering?](#rendering)
+
+#### om.dom
+
+* [Props](#props)
+* [render-to-str](#render-to-str)
+
 # om.core
 
 ## Life Cycle Protocols
@@ -44,28 +82,6 @@ of initial state.
       (dom/h1 nil (:text state)))))
 ```
 
-### IShouldUpdate
-
-```clj
-(defprotocol IShouldUpdate
-  (should-update [this next-props next-state]))
-```
-
-You should only implement this if you really know what you're
-doing. Even then you probably shouldn't.
-
-Implementations should return a boolean value. If true then the
-component's `om.core/IRender` or `om.core/IRenderState` implementation
-will be called.
-
-`next-props` is the next application state that the component is
-associated with. `next-state` is the next component local state, it is
-always a map.
-
-In your implementation if you wish to detect prop transitions you
-must use `om.core/get-props`. This is because your component
-constructor function is called with the updated props.
-
 ### IWillMount
 
 ```clj
@@ -89,6 +105,52 @@ Called once when the component has been mounted into the DOM. The DOM node assoc
 This is a good place to initialize persistent information and control
 that needs the DOM to be present.
 
+### IShouldUpdate
+
+```clj
+(defprotocol IShouldUpdate
+  (should-update [this next-props next-state]))
+```
+
+You should only implement this if you really know what you're
+doing. Even then you probably shouldn't.
+
+Implementations should return a boolean value. If true then the
+component's `om.core/IRender` or `om.core/IRenderState` implementation
+will be called. This provides the opportunity to prevent components
+from re-rendering in response to certain changes in app (props) or local
+state. Please note that preventing components from re-rendering
+in response to props or state change could result in the DOM being out
+of sync with application or local state. 
+
+`next-props` is the next application state that the component is
+associated with. `next-state` is the next component local state, it is
+always a map.
+
+In your implementation if you wish to detect prop transitions you
+must use `om.core/get-props` to get the previous props. This is because your component
+constructor function is called with the updated props.
+
+### IWillReceiveProps
+
+```clj
+(defprotocol IWillReceiveProps
+  (will-receive-props [this next-props]))
+```
+
+Not called on the first render, will be called on all subsequent
+renders. This is a good place to detect app state changes and make 
+updates to local component state using om/set-state! or 
+om/update-state!.
+
+`next-props` is the next application state associated with this
+component.
+
+In your implementation if you wish to detect prop transitions you
+must use `om.core/get-props` to get the previous props. This is 
+because your component constructor function is called with the 
+updated props.
+
 ### IWillUpdate
 
 ```clj
@@ -104,8 +166,13 @@ component. `next-state` is the next component local state, it is
 always a map.
 
 In your implementation if you wish to detect prop transitions you
-must use `om.core/get-props`. This is because your component
-constructor function is called with the updated props.
+must use `om.core/get-props` to get the previous props. This is 
+because your component constructor function is called with the 
+updated props.
+
+Note:: You cannot update local component state in this method. 
+If you wish to change local state in response to prop changes use
+IWillReceiveProps. 
 
 ### IDidUpdate
 
@@ -145,7 +212,27 @@ The only difference between `om.core/IRender` and
 state as an argument. `state` is always a map, you can use destructuring.
 
 If you implement `om.core/IRenderState` you should not implement
-`omc.core/IRender`.
+`om.core/IRender`.
+
+### IDisplayName
+
+```clj
+(defprotocol IDisplayName
+  (display-name [this]))
+```
+
+Return a string name to be used for debugging. The Chrome [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) extension uses this to name the components.
+
+### IWillUnmount
+
+```clj
+(defprotocol IWillUnmount
+  (will-unmount [this]))
+```
+
+Called immediately before a component is unmounted from the DOM.
+
+Perform any necessary cleanup in this method, such as invalidating timers or cleaning up any DOM elements that were created in `om.core/IDidMount`.
 
 ## Functions
 
@@ -203,7 +290,7 @@ Additionally the following keys are allowed/required:
 
 * `:target` (required)
 * `:shared` (optional) in order to provide global services
-* `:tx-listen` in order to subscribe to all transactions in the application.
+* `:tx-listen` a function that will listen in on transactions, should take 2 arguments - the first a map containing the path, old and new state at path, old and new global state, and transaction tag if provided.
 * `:path` to specify the path of the cursor into app-state (see
   [#72](https://github.com/swannodette/om/issues/72))
 * `:instrument` a function of three arguments that if provided will
@@ -237,8 +324,11 @@ Constructs an Om component. `f` must be a function that returns an
 instance of `om.core/IRender` or `om.core/IRenderState`. `f` must take
 two arguments - a cursor and the backing Om component usually referred
 to as the owner. `f` can take a third argument if `:opts` is
-specified in `m`. `cursor` should be an Om cursor onto the application
-state. `m` is an optional map of options.
+specified in `m`. The component is identified by the function `f`. Changing
+`f` to a different function will construct a new component, while changing
+the return value will not change component.
+`cursor` should be an Om cursor onto the application state. `m` is an
+optional map of options.
 
 Only the following keys are allowed in `m`.
 
@@ -327,7 +417,7 @@ analagous to `reset!` for atoms.
 
 `owner` is the backing Om component. `ref` is a JavaScript String that
 references a DOM node. This functionality is identical to the
-`ReactComponent.getDOMNode` in React.
+[`ReactComponent.getDOMNode`](http://facebook.github.io/react/docs/component-api.html#getdomnode) in React.
 
 ### set-state!
 
@@ -407,7 +497,7 @@ Be careful! The attribute is well-named: this is potentially dangerous and shoul
   ...)
 ```
 
-Equivalent to `React.renderComponentToString`. For example:
+Equivalent to [`React.renderComponentToString`](http://facebook.github.io/react/docs/top-level-api.html#react.rendercomponenttostring). For example:
 
 ```clj
 (dom/render-to-str (om/build some-widget data))

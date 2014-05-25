@@ -7,7 +7,7 @@ Clojure and also provides time travel capabilities making it quite
 nice to pair with Om.
 
 First download a copy of
-[Datomic Free](http://my.datomic.com/downloads/free). You might get an error with versions of Datomic later than `0.9.4609`, so try that one first. Unzip it and run
+[Datomic Free](http://my.datomic.com/downloads/free). You might get an error with versions of Datomic later than `0.9.4609`, so try that one first (seems to be working as of `0.9.4699`). Unzip it and run
 the following inside the directory:
 
 ```
@@ -242,7 +242,7 @@ This is `editable`:
     (init-state [_]
       {:editing false})
     om/IRenderState
-    (render-state [_ {:keys [edit-text editing]}]
+    (render-state [_ {:keys [editing]}]
       (let [text (get data edit-key)]
         (dom/li nil
           (dom/span #js {:style (display (not editing))} text)
@@ -250,8 +250,7 @@ This is `editable`:
             #js {:style (display editing)
                  :value text
                  :onChange #(handle-change % data edit-key owner)
-                 :onKeyPress #(when (and (om/get-state owner :editing)
-                                         (== (.-keyCode %) 13))
+                 :onKeyPress #(when (== (.-keyCode %) 13)
                                 (end-edit text owner on-edit))
                  :onBlur (fn [e]
                            (when (om/get-state owner :editing)
@@ -457,6 +456,7 @@ And let's provide the new routes:
 (defroutes routes
   (GET "/" [] (index))
   (GET "/init" [] (init))
+  (GET "/classes" [] (classes))
   (POST "/classes" {params :edn-params} (create-class params))
   (PUT "/classes" {params :edn-params} (update-class params))
   (route/files "/" {:root "resources/public"}))
@@ -552,7 +552,7 @@ without the transaction tag, but not as simply.
     (init-state [_]
       {:editing false})
     om/IRenderState
-    (render-state [_ {:keys [edit-text editing on-edit]}]
+    (render-state [_ {:keys [editing on-edit]}]
       (let [text (get data edit-key)]
         (dom/li nil
           (dom/span #js {:style (display (not editing))} text)
@@ -560,8 +560,7 @@ without the transaction tag, but not as simply.
             #js {:style (display editing)
                  :value text
                  :onChange #(handle-change % data edit-key owner)
-                 :onKeyPress #(when (and (om/get-state owner :editing)
-                                         (== (.-keyCode %) 13))
+                 :onKeyPress #(when (== (.-keyCode %) 13)
                                 (end-edit data edit-key text owner on-edit))
                  :onBlur (fn [e]
                            (when (om/get-state owner :editing)
