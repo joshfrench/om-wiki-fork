@@ -428,7 +428,7 @@ references a DOM node. This functionality is identical to the
 
 Sets component local state. `owner` is the backing Om
 component. `korks` is a key or sequences of keys. `v` is the value to
-set. Will trigger a Om re-render.
+set. Will trigger an Om re-render.
 
 ### update-state!
 
