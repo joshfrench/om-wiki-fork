@@ -643,6 +643,8 @@ expression:
            (dom/div nil err-msg))))))
 ```
 
+You can remove the `on-edit` function too.  `om-sync` will handle the PUT.
+
 We render `classes-view` via `om-sync`, this is specified by the
 `:view` option. We supply a `:filter` so that individual key presses
 don't get synchronized - this is why we tagged the `end-edit`
