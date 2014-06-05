@@ -484,8 +484,8 @@ arguments are `children`.
 
 For a list of supported `props` see [React's supported DOM attributes](http://facebook.github.io/react/docs/tags-and-attributes.html#html-attributes) and [React's special attributes](http://facebook.github.io/react/docs/special-non-dom-attributes.html). As an example of the special attributes, the following code will create a `div` component that contains raw HTML:
 
-```clojurescript
-(om.dom/div (clj->js {:dangerouslySetInnerHTML {:__html "<b>Bold!</b>"}})
+```clj
+(om.dom/div #js {:dangerouslySetInnerHTML #js {:__html "<b>Bold!</b>"}}
             nil)
 ```
 Be careful! The attribute is well-named: this is potentially dangerous and should be used with caution.
