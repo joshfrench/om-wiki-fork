@@ -282,7 +282,7 @@ In order to build an Om component we must use `om.core/build` for a
 single component and `om.core/build-all` to build many components. In
 this case we want to display a contact list so we want to use
 `om.core/build-all`. `contacts-view` returns a `div` with a `h2` and
-`ul` tag in it. We want to render several `li` element so we call
+`ul` tag in it. We want to render several `li` elements so we call
 `apply` on `dom/ul`.
 
 Let's write `contact-view` now and add it after `contacts-view`.
