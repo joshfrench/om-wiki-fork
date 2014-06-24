@@ -32,6 +32,7 @@
   * [rendering?](#rendering)
 * [Macros](#macros)
   * [component](#component)
+
 #### om.dom
 
 * [Props](#props)
