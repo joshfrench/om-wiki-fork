@@ -30,7 +30,8 @@
   * [refresh!](#refresh)
   * [get-render-state](#get-render-state)
   * [rendering?](#rendering)
-
+* [Macros](#macros)
+  * [component](#component)
 #### om.dom
 
 * [Props](#props)
@@ -472,6 +473,14 @@ for detecting state transitions.
 Return true if in the React rendering phase. Useful in `IWillMount`
 when establishing code that may run sync with render the first time
 and async thereafter.
+
+## Macros
+
+### component
+
+Sugar over `reify` for quickly putting together components that
+only need to implement `om.core/IRender` and don't need access to
+the owner argument.
 
 # om.dom
 
