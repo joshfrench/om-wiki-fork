@@ -514,7 +514,7 @@ the new `init` route we wrote on the backend.
             (put! tx-chan [tx-data root-cursor]))}))}))
 ```
 
-We create a channel `tx-chan`. We then we make a subscribeable channel
+We create a channel `tx-chan`. We then make a subscribeable channel
 `tx-pub-chan` so that `om-sync` instances can call
 `cljs.core.async/sub` on it. We request the initial state of the
 application from the server. Here we use some `om.core/root` options we
