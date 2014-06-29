@@ -24,7 +24,7 @@ This will start auto building so that recompiles will occur when you
 save a file. The first build will take a few seconds. Once the build
 has succeeded open `index.html` in your favorite browser (we recommend
 Google Chrome as it has excellent support for source maps). You should
-see an `h2` tag with the text content `Hello World!` in it.
+see an `h1` tag with the text content `Hello World!` in it.
 
 Open `src/om_tut/core.cljs` in Light Table. Change `:text` value of
 `app-state` to be something else other than `Hello World!`. Save the
