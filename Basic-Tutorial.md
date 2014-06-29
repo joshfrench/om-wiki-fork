@@ -186,7 +186,9 @@ its CSS class attribute set to "animals".
 
 `#js {...}` and `#js [...]` is what is referred to as a reader
 literal. ClojureScript supports data literals for JavaScript via
-`#js`. `#js {...}` is for JavaScript objects:
+`#js`. 
+
+`#js {...}` is for JavaScript objects:
 
 ```clj
 #js {:foo "bar"}  ;; is equivalent to
