@@ -1015,7 +1015,7 @@ Let's use `editable` in `classes-view`:
       (dom/div #js {:id "classes"}
         (dom/h2 nil "Classes")
         (apply dom/ul nil
-          (map #(om/build editable %) (vals (:classes app))))))))
+          (om/build-all editable (vals (:classes app))))))))
 ```
 
 That's it, evaluate everything or refresh the browser. You should now
