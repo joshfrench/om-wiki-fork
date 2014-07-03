@@ -6,4 +6,4 @@ Om batches updates and executes them asynchronously on requestAnimationFrame. On
 ### Why do events lose all data when put on a core.async channel?
 
 ### React's SyntheticEvents 
-React's [SyntheticEvent documentation](facebook.github.io/react/docs/events.html) describes SyntheticEvents as "a cross-browser wrapper around the browser's native event". The implementation of SyntheticEvent uses the object pool pattern to reduce the frequency of garbage collection. After each event loop the objects backing these events are released back to the object pool to be used again. A SyntheticEvent can be made to persist across event loops by calling persist(e.g. event.persist()).
+React's [SyntheticEvent documentation](facebook.github.io/react/docs/events.html) describes SyntheticEvents as "a cross-browser wrapper around the browser's native event". The implementation of SyntheticEvent uses the object pool pattern to reduce the frequency of garbage collection. After each event loop the objects backing these events are released back to the React's object pool to be used again. A SyntheticEvent can be made to persist across event loops by calling persist(e.g. event.persist()).
