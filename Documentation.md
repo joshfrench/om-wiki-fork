@@ -341,7 +341,7 @@ be used as a [React key](http://facebook.github.io/react/docs/multiple-component
 
 `:fn` - a function to apply to `cursor` before invoking `f`.
 
-`:init-state` - a map of initial state to set on the component (ignored if it reifies `IInitState`).
+`:init-state` - a map of initial state to set on the component (state from `IInitState` is merged onto it).
 
 `:state` - a map of state to merge into the component.
 
