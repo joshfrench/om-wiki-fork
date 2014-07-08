@@ -384,8 +384,7 @@ cursors. `f` and `m` are the same as `om.core/build`.
 The primary way to transition application state. `cursor` is an Om
 cursor into the application state. `f` is a function that will receive
 the specified piece of application state. `korks` is an optional
-key or sequence of keys to access in the cursor. `om.core/transact!`
-can be given additional args to pass to `f`. `tag` is optional
+key or sequence of keys to access in the cursor. `tag` is optional
 information to tag the transaction. `tag` should be either a keyword
 or a vector whose first element is a `keyword`.
 
