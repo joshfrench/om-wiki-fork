@@ -83,7 +83,7 @@ expression in the tutorial at this point looks like this:
 ```clj
 (om/root
   (fn [app owner]
-    (om/component (dom/h2 nil (:text app))))
+    (dom/h1 nil (:text app)))
   app-state
   {:target (. js/document (getElementById "app"))})
 ```
