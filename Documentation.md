@@ -102,7 +102,7 @@ core.async channels and go loops.
   (did-mount [this]))
 ```
 
-Called once when the component has been mounted into the DOM. The DOM node associated with this component can be retrieved by using `(om.core/get-node owner this)`.
+Called once when the component has been mounted into the DOM. The DOM node associated with this component can be retrieved by using `(om.core/get-node owner)`.
 
 This is a good place to initialize persistent information and control
 that needs the DOM to be present.
