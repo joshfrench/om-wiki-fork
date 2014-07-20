@@ -301,8 +301,9 @@ Now save the file and reload the browser. You'll see a blank page. Let's check t
 
 ```
 Compiling "om_tut.js" from ["src"]...
-WARNING: Use of undeclared Var om-tut.core/contact-view at line 37 src/om_tut/core.cljs
-Successfully compiled "om_tut.js" in 0.195 seconds.
+WARNING: Use of undeclared Var om-tut.core/contact-view at line 24 src/om_tut/core.cljs
+WARNING: Use of undeclared Var om-tut.core/display-name at line 30 src/om_tut/core.cljs
+Successfully compiled "om_tut.js" in 0.072 seconds.
 ```
 
 It warns that `contact-view` is undefined, because it's defined *after* `contacts-view`. 
