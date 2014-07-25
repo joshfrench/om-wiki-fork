@@ -825,7 +825,7 @@ clean of conditionals.
       (dom/div #js {:id "registry"}
         (dom/h2 nil "Registry")
         (apply dom/ul nil
-          (om/build-all entry-view (people app)))))))
+          (om/build-all entry-view (:people app)))))))
 ```
 
 The only missing bit now is the `people` function. We want to make
