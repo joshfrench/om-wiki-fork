@@ -946,6 +946,8 @@ recommended in most real applications*. Please refer to the
 for a better approach that does not require extending JavaScript
 native strings to ICloneable*).
 
+**Be sure to put these `extend-type` forms *before* the `om/root` forms.** Putting them near the top of the file will do nicely.
+
 ```clj
 (extend-type string
   ICloneable
