@@ -370,7 +370,7 @@ channels. Change your namespace form to the following:
 ```
 
 Save your file and refresh the browser. (Note: as we have changed
-the namespace form you will not to stop/restart the 
+the namespace form you will need to stop/restart the 
 ```lein cljsbuild auto om-tut``` process). Change `contact-view` to the
 following:
 
