@@ -12,6 +12,7 @@ run the following where you like on the command line:
 ```
 lein new mies-om om-tut
 ```
+*Note for om 0.7.0* in ```index.html``` replace React version ```react-0.9.0``` with ```react-0.11.1```.
 
 This will create a folder called `om-tut`. `cd` into it and run the
 following command:
@@ -368,7 +369,9 @@ channels. Change your namespace form to the following:
             [cljs.core.async :refer [put! chan <!]]))
 ```
 
-Save your file and refresh the browser. Change `contact-view` to the
+Save your file and refresh the browser. (Note: as we have changed
+the namespace form you will not to stop/restart the 
+```lein cljsbuild auto om-tut``` process). Change `contact-view` to the
 following:
 
 ```clj
@@ -987,7 +990,7 @@ moment to read it and you'll see that it's quite simple.
           #js {:style (display editing)
                :value (om/value text)
                :onChange #(handle-change % text owner)
-               :onKeyPress #(when (== (.-keyCode %) 13)
+               :onKeyDown #(when (= (.-key %) "Enter")
                               (commit-change text owner))
                :onBlur (fn [e] (commit-change text owner))})
         (dom/button
