@@ -723,7 +723,7 @@ forget to include Light Table's connection script tag:
 <html>
     <body>
         <div id="registry"></div>
-        <script src="http://fb.me/react-0.9.0.js"></script>
+        <script src="http://fb.me/react-0.11.1.js"></script>
         <script src="out/goog/base.js" type="text/javascript"></script>
         <script src="om_tut.js" type="text/javascript"></script>
         <script type="text/javascript">goog.require("om_tut.core");</script>
@@ -876,7 +876,7 @@ include the LT connection script tag:
     <body>
         <div id="registry"></div>
         <div id="classes"></div>
-        <script src="http://fb.me/react-0.9.0.js"></script>
+        <script src="http://fb.me/react-0.11.1.js"></script>
         <script src="out/goog/base.js" type="text/javascript"></script>
         <script src="om_tut.js" type="text/javascript"></script>
         <script type="text/javascript">goog.require("om_tut.core");</script>
