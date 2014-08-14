@@ -372,7 +372,7 @@ First we need to change our `project.clj` to include a dependency on
                [org.clojure/clojurescript "0.0-2173"]
                [ring/ring "1.2.1"]
                [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
-               [om "0.5.2"]
+               [om "0.5.3"]
                [om-sync "0.1.1"] ;; <=== ADD THIS
                [compojure "1.1.6"]
                [fogus/ring-edn "0.2.0"]
