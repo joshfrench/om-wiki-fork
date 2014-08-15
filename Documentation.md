@@ -30,6 +30,7 @@
   * [refresh!](#refresh)
   * [get-render-state](#get-render-state)
   * [rendering?](#rendering)
+  * [detach-root](#detach-root)
 * [Macros](#macros)
   * [component](#component)
 
@@ -474,6 +475,15 @@ Return true if in the React rendering phase. Useful in `IWillMount`
 when establishing code that may run sync with render the first time
 and async thereafter.
 
+### detach-root
+
+```clj
+(defn detach-root [target]
+  ...)
+```
+
+Given a DOM target remove its render loop if one exists.
+  
 ## Macros
 
 ### component
