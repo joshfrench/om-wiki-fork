@@ -163,8 +163,9 @@ should see a list of animals now.
 ```clj
 (om/root
   (fn [app owner]
-    (apply dom/ul nil
-      (map (fn [text] (dom/li nil text)) (:list app))))
+    (om/component 
+      (apply dom/ul nil
+        (map (fn [text] (dom/li nil text)) (:list app)))))
   app-state
   {:target (. js/document (getElementById "app0"))})
 ```
@@ -176,8 +177,9 @@ the `om/root` expression to the following and evaluate it:
 ```clj
 (om/root
   (fn [app owner]
-    (apply dom/ul #js {:className "animals"}
-      (map (fn [text] (dom/li nil text)) (:list app))))
+    (om/component 
+      (apply dom/ul #js {:className "animals"}
+        (map (fn [text] (dom/li nil text)) (:list app)))))
   app-state
   {:target (. js/document (getElementById "app0"))})
 ```
