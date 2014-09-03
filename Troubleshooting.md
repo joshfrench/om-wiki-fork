@@ -17,4 +17,4 @@ SyntheticEvents that are logged to the console or put into core.async channels w
 If you try to call `om/transact!` or `om/update!` on a cursor, but this cursor is not storing a map or a vector (for example, a primitive, set, list or seq), then you will see this error. There are two common cases where this happens:
 
 1. When you have a cursor like `{:foo "foo"}` and pass `(:foo cursor)` to a component, if that component then tries to transact the cursor, it will be operating on a string and not a cursor and this error will occur.
-1. When you set a part of a cursor to a seq (rather than a map or vector). A common mistake is forgetting to call vec after manipulating a vector: `(om/update! my-cursor [:path] (map some-fn [1 2 3]))` should instead be `(om/update! my-cursor [:path] (vec (map some-fn [1 2 3])))`
+1. When you set a part of a cursor to a seq (rather than a map or vector). A common mistake is forgetting to call vec after manipulating a vector: `(om/update! my-cursor [:path] (map some-fn [1 2 3]))` should instead be `(om/update! my-cursor [:path] (mapv some-fn [1 2 3]))`
