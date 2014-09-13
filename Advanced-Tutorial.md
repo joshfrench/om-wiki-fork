@@ -1,1 +1,1 @@
-This tutorial assumes familiarity with core.async. .
+This tutorial assumes familiarity with core.async.
