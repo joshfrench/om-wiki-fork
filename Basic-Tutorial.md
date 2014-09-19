@@ -419,6 +419,8 @@ worry we'll walk through all of it.
             {:init-state {:delete delete}}))))))
 ```
 
+**Reminder:** Notice that we're using `vec` to transform the result of `remove` (a lazy sequence) back into a vector, consistent with our aforementioned rule that state should only consist of associative data structures like maps and vectors. 
+
 First we set the initial state by implementing `om/IInitState`. We
 just allocate a core.async channel. It's extremely important we don't
 do this in a `let` binding around `reify`. This is a common
