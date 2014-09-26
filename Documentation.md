@@ -130,8 +130,8 @@ of sync with application or local state.
 associated with. `next-state` is the next component local state, it is
 always a map.
 
-In your implementation if you wish to detect prop transitions you
-must use `om.core/get-props` to get the previous props. This is because your component
+In your implementation if you wish to detect prop transitions **you
+must use `om.core/get-props`** to get the previous props. This is because your component
 constructor function is called with the updated props.
 
 ### IWillReceiveProps
@@ -168,8 +168,8 @@ renders. This is a good place to detect and act on state transitions.
 component. `next-state` is the next component local state, it is
 always a map.
 
-In your implementation if you wish to detect prop transitions you
-must use `om.core/get-props` to get the previous props. This is 
+In your implementation if you wish to detect prop transitions **you
+must use `om.core/get-props`** to get the previous props. This is 
 because your component constructor function is called with the 
 updated props.
 
