@@ -6,7 +6,7 @@ you are not familiar, we recommend going through the
 [ClojureScript tutorial for Light Table](http://github.com/swannodette/lt-cljs-tutorial)
 first.
 
-Install [Leiningen](http://leiningen.org). Then at the command line
+Install [Leiningen](http://leiningen.org). Then
 run the following where you like on the command line:
 
 ```
