@@ -293,7 +293,9 @@ Additionally the following keys are allowed/required:
 
 * `:target` (required)
 * `:shared` (optional) in order to provide global services
-* `:tx-listen` a function that will listen in on transactions, should take 2 arguments - the first a map containing the path, old and new state at path, old and new global state, and transaction tag if provided.
+* `:tx-listen` a function that will listen in on transactions, should take 2 arguments:
+    1. a map containing the path, old and new state at path, old and new global state, and transaction tag if provided (`:path`, `:old-value`, `:new-value`, `:old-state`, `:new-state` and `:tag`).
+    2. the root cursor.
 * `:path` to specify the path of the cursor into app-state (see
   [#72](https://github.com/swannodette/om/issues/72))
 * `:instrument` a function of three arguments that if provided will
