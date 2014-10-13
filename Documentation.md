@@ -321,42 +321,40 @@ target.
 
 ```clj
 (defn build
-  ([f cursor] ...)
-  ([f cursor m] ...))
+  ([f x] ...)
+  ([f x m] ...))
 ```
 
 Constructs an Om component. `f` must be a function that returns an
 instance of `om.core/IRender` or `om.core/IRenderState`. `f` must take
-two arguments - a cursor and the backing Om component usually referred
-to as the owner. `f` can take a third argument if `:opts` is
-specified in `m`. The component is identified by the function `f`. Changing
-`f` to a different function will construct a new component, while changing
-the return value will not change component.
-`cursor` should be an Om cursor onto the application state. `m` is an
-optional map of options.
+two arguments - a value and the backing Om component usually referred
+to as the owner. `f` can take a third argument if `:opts` is specified
+in `m`. The component is identified by the function `f`. Changing `f`
+to a different function will construct a new component, while changing
+the return value will not change component.  `x` can be any value. `m`
+is an optional map of options.
 
 Only the following keys are allowed in `m`.
 
-`:key` - a keyword that will be used to lookup a value in `cursor` to
+`:key` - a keyword that will be used to lookup a value in `x` to
 be used as a [React key](http://facebook.github.io/react/docs/multiple-components.html#dynamic-children).
 
 `:react-key` - a value to use as a [React key](http://facebook.github.io/react/docs/multiple-components.html#dynamic-children).
 
-`:fn` - a function to apply to `cursor` before invoking `f`.
+`:fn` - a function to apply to `x` before invoking `f`.
 
 `:init-state` - a map of initial state to set on the component (state from `IInitState` is merged onto it).
 
 `:state` - a map of state to merge into the component.
 
-`:opts` - a map of side information that is neither a cursor onto the
-application state nor component local state.
+`:opts` - a map of side information.
 
 ### build*
 
 ```clj
 (defn build*
-  ([f cursor] ...)
-  ([f cursor m] ...))
+  ([f x] ...)
+  ([f x m] ...))
 ```
 
 Identical to `om.core/build` except cannot be intercepted by the
@@ -373,7 +371,7 @@ infinite loops in components constructed via `:instrument`.
 
 Conceptually the same as `om.core/build`, the only difference is that
 it returns a sequence of Om components. `xs` is a sequence of
-cursors. `f` and `m` are the same as `om.core/build`.
+values. `f` and `m` are the same as `om.core/build`.
 
 ### transact!
 
