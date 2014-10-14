@@ -24,6 +24,9 @@
   * [build-all](#build-all)
   * [transact!](#transact)
   * [update!](#update)
+  * [path](#path)
+  * [state](#state)
+  * [value](#value)
   * [get-node](#get-node)
   * [set-state!](#set-state)
   * [update-state!](#update-state)
@@ -407,6 +410,27 @@ analagous to `reset!` for atoms.
 
 ```clj
 (update! cursor [:text] "Changed this!")
+```
+
+### path
+
+```clj
+(defn path
+  ([cursor] ...))
+```
+
+### state
+
+```clj
+(defn state
+  ([cursor] ...))
+```
+
+### value
+
+```clj
+(defn value
+  ([cursor] ...))
 ```
 
 ### get-node
