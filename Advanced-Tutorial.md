@@ -69,8 +69,8 @@ that channel:
 ```
 
 When we establish our application root we'll do something like the
-following. You can ignore `notif-chan` and `pub-chan` for now they are
-the two other patterns we'll talk about momentarily:
+following. You can ignore `notif-chan` and `pub-chan` for now, they
+form the other pattern we'll talk about momentarily:
 
 ```cljs
 (defn main []
