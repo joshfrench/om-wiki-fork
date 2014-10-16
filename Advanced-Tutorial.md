@@ -96,6 +96,29 @@ form the other pattern we'll talk about momentarily:
        :target (. js/document (getElementById "app"))})))
 ```
 
+Your table view component might look something like the following:
+
+```cljs
+(defn table-view [_ owner]
+  (reify
+    om/IInitState
+    (init-state [_]
+      {:start 0 :per-page 10 :data nil})
+    om/IDidMount
+    (did-mount [_]
+      (let [res (chan)]
+        (go
+          (>! (:req-chan (om/get-shared owner))
+              {:op :data :start start
+               :per-page per-page})
+          (om/set-state! owner :data (<! res)))))
+    om/IRenderState
+    (render-state [_ {:keys [data]}]
+      (if data
+        (apply dom/table nil (map table-row data))
+        (dom/div "Loading ...")))))
+```
+
 Now any component that needs data can get at it. No need to share
 global state all over your application.
 
