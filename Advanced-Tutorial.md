@@ -17,7 +17,7 @@ in complex applications.
 ## A Structure
 
 The following is a loose pattern, real applications may need more or
-less than is what is described. Still the following is a good starting
+less than what is described. Still the following is a good starting
 point for doing your own explorations around organizing larger Om
 programs.
 
