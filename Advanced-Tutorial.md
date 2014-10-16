@@ -96,8 +96,8 @@ form the other pattern we'll talk about momentarily:
        :target (. js/document (getElementById "app"))})))
 ```
 
-Now any component that needs data can get at it. No need to global
-state all over your appilcation.
+Now any component that needs data can get at it. No need to share
+global state all over your appilcation.
 
 ## The Publish & Notification Channels
 
