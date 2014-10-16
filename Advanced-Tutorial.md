@@ -68,7 +68,7 @@ that channel:
   (put! res (subvec remote-data start per-page)))
 ```
 
-When we estable our application root we'll do something like the
+When we establish our application root we'll do something like the
 following. You can ignore `notif-chan` and `pub-chan` for now they are
 the two other patterns we'll talk about momentarily:
 
