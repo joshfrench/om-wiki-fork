@@ -1,4 +1,4 @@
-The following assumes familiarity with core.async.
+The following assumes familiarity with [core.async](https://github.com/clojure/core.async).
 
 While the beginner and intermediate tutorials are good for getting a
 feel for the Om primitives they are not representative guides on how to
