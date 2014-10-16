@@ -39,8 +39,8 @@ application and where the component actually lives?
 
 The Request Channel pattern allows us to avoid passing data through
 components uninterested in the data. The strategy is a familiar one -
-treat a component as if it was mini-client browser. Instead of
-receiving it's data directly it will request it when it mounts. In
+treat a component as if it were a client browser. Instead of
+receiving its data directly it will request it when it mounts. In
 order for this to work we need to estable a global service channel
 that can process requests from different parts of your application.
 
