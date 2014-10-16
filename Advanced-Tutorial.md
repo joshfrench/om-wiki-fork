@@ -11,7 +11,8 @@ knowledge and direct dependence on the global state of the
 application.
 
 In order to recover modularity we must reach for something
-else - core.async channels.
+else. We'll see how core.async channels allow us to regain modularity
+in complex applications.
 
 ## A Structure
 
