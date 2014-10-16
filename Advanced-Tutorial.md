@@ -55,7 +55,7 @@ application. Again this is a familiar pattern - a routing table.
 Note that `serve` takes a map that represents the request analogous to
 how you might process form parameters or a JSON API request server
 side. In order to respond to the client one of the arguments is a
-*response channel*. We simply write out the data the client needs into
+*response channel*. We simply write out the data the client needs onto
 that channel:
 
 ```cljs
