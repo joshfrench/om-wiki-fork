@@ -46,11 +46,11 @@ that can process requests from different parts of your application.
 
 Let us assume we'll have a table view somewhere whose contents will be
 requested via an XHR request. In the following we'll just mock out the
-remote date for simplicity.
+remote data for simplicity.
 
-The global `serve` operation could look something like this. By using
-multimethods we can extensibly serve different "client" components in
-our application.
+The global `serve` will be a multimethod. By using multimethods we can
+extensibly serve different "client" components in our
+application. Again this is a familiar pattern - a routing table.
 
 Note that the serve takes a map that represents the request analogous
 to how you might process form parameters server side. In order to
