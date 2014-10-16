@@ -178,7 +178,8 @@ looks something like the following:
 
 ## Further Investigation Needed
 
-The two patterns above completely remove the need to rely application
-state for coordination. Nothing in the tutorial is conclusive, rather
-treat it as small set of guidelines to build up more expressive
-functionality suitable for the large application you are building.
+The two patterns above eliminate many cases where we may have relied
+on application state for coordination. Nothing in the tutorial is
+conclusive, rather treat it as small set of guidelines to build up
+more expressive functionality suitable for the large application you
+are building.
