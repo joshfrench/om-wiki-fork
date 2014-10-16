@@ -52,10 +52,11 @@ The global `serve` will be a multimethod. By using multimethods we can
 extensibly serve different "client" components in our
 application. Again this is a familiar pattern - a routing table.
 
-Note that the serve takes a map that represents the request analogous
-to how you might process form parameters server side. In order to
-respond to the client one the argument is a *response channel*. We
-simply write out the data the client needs into that channel:
+Note that `serve` takes a map that represents the request analogous to
+how you might process form parameters or a JSON API request server
+side. In order to respond to the client one of the arguments is a
+*response channel*. We simply write out the data the client needs into
+that channel:
 
 ```cljs
 (def remote-data (vec (map #(str "Item " %) (range 100))))
