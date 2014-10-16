@@ -32,17 +32,17 @@ The loose pattern is organized around 3 types of shared channels.
 
 In many applications you have some component several levels deep in
 the render tree. The question is, how do we get data to this component
-without have to pass data to everyone in between the root of the
+without having to pass data to everyone in between the root of the
 application and where the component actually lives?
 
 ### The Pattern
 
 The Request Channel pattern allows us to avoid passing data through
-components uninterested in the data. The idea is treat a component as
-if it was mini-client browser. Instead of receiving it's data directly
-it will request it when it mounts. In order for this to work we need
-to estable a global service channel that can process requests from
-different parts of your application.
+components uninterested in the data. The strategy is a familiar one -
+treat a component as if it was mini-client browser. Instead of
+receiving it's data directly it will request it when it mounts. In
+order for this to work we need to estable a global service channel
+that can process requests from different parts of your application.
 
 Let us assume we'll have a table view somewhere whose contents will be
 requested via an XHR request. In the following we'll just mock out the
