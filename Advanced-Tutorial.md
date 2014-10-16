@@ -97,7 +97,7 @@ form the other pattern we'll talk about momentarily:
 ```
 
 Now any component that needs data can get at it. No need to share
-global state all over your appilcation.
+global state all over your application.
 
 ## The Publish & Notification Channels
 
@@ -156,6 +156,6 @@ looks something like the following:
 ## Further Investigation Needed
 
 The two patterns above completely remove the need to rely application
-state for coordination. Nothing in tutorial is conclusive rather treat
-it as small set of guidelines to build up more expressive
+state for coordination. Nothing in the tutorial is conclusive, rather
+treat it as small set of guidelines to build up more expressive
 functionality suitable for the large application you are building.
