@@ -76,7 +76,7 @@ form the other pattern we'll talk about momentarily:
 (defn main []
   (let [req-chan   (chan)
         notif-chan (chan)
-        pub-chan   (state/mem-pub notif-chan :topic)]
+        pub-chan   (pub notif-chan :topic)]
 
     ;; server loop
     (go
@@ -165,7 +165,7 @@ looks something like the following:
       {:message nil})
     om/IDidMount
     (did-mount [_]
-      (let [events (sub (:notif-chan (get-shared owner)) :hello)]
+      (let [events (sub (:notif-chan (get-shared owner)) :hello (chan))]
         (go
           (loop [e (<! events)]
             (om/set-state! owner :message (:data e))
