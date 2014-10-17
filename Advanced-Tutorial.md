@@ -110,7 +110,8 @@ Your table view component might look something like the following:
         (go
           (>! (:req-chan (om/get-shared owner))
               {:op :data :start start
-               :per-page per-page})
+               :per-page per-page
+               :res res})
           (om/set-state! owner :data (<! res)))))
     om/IRenderState
     (render-state [_ {:keys [data]}]
