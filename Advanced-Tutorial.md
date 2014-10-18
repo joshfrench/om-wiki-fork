@@ -189,7 +189,7 @@ ceremony.
 Om 0.8.0-alpha1 now offers a new tool - reference cursors. Reference
 cursors are like cursors but they have the novel propery of
 representing an identity in the application state that you can
-*observe*. Observation is similar to event handlers - there is no need
+*observe*. Observation is similar to React event handlers - there is no need
 to worry about observing multiple nor is there any concern about
 needing to unobserve. Reference cursors fully support the Om state
 management model - time travel properties are fully preserved.
