@@ -254,7 +254,7 @@ and designing a simple API that any component can call into.
 ## Further Investigation Needed
 
 The three patterns above eliminate many cases where we may have relied
-on application state for coordination. Nothing in the tutorial is
-conclusive, rather treat it as small set of guidelines to build up
-more expressive functionality suitable for the large application you
-are building.
+on passing around too much of the application state for
+coordination. Nothing in the tutorial is conclusive, rather treat it
+as small set of guidelines to build up more expressive functionality
+suitable for the large application you are building.
