@@ -247,7 +247,7 @@ This parent is blissfully unaware that two children components also
 rely on the same logical collection. Notice that it can `transact!` on
 the reference cursor the same as any other cursor.
 
-Many existing convulted patterns around the manipulation of
+Many existing convoluted patterns around the manipulation of
 application data can be circumvented simply by using reference cursors
 and designing a simple API that any component can call into.
 
