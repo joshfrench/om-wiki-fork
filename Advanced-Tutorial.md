@@ -211,13 +211,13 @@ app state. We can now write an API for it using reference cursors:
 In a subview we can now simply write the following. 
 
 ```cljs
-(defn sub-view [{:keys [text]} owner]
+(defn sub-view [{:keys [title]} owner]
   (reify
     om/IRender
     (render [_]
       (let [xs (om/observe owner (items))]
         (dom/div nil
-          (dom/h2 nil text)
+          (dom/h2 nil title)
           (apply dom/ul nil
             (map #(dom/li nil (:text %)) xs)))))))
 ```
@@ -235,8 +235,8 @@ Now imagine we have a parent view that looks like the following:
     (render [_]
       (let [xs (items)]
         (dom/div nil
-          (om/build sub-view {:text "View A"})
-          (om/build sub-view {:text "View B"})
+          (om/build sub-view {:title "View A"})
+          (om/build sub-view {:title "View B"})
           (dom/button
             #js {:onClick
                  (fn [e] (om/transact! xs #(assoc % 1 {:text "zebra"})))}
