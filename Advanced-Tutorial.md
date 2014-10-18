@@ -202,9 +202,7 @@ app state. We can now write an API for it using reference cursors:
 
 ```cljs
 (def app-state
-  (atom {:items [{:text "cat"}
-                 {:text "dog"}
-                 {:text "bird"}]}))
+  (atom {:items [{:text "cat"} {:text "dog"} {:text "bird"}]}))
 
 (def app-history (atom [@app-state]))
 
