@@ -190,15 +190,15 @@ Om 0.8.0-alpha1 now offers a new tool - reference cursors. Reference
 cursors are like cursors but they have the novel propery of
 representing an identity in the application state that you can
 *observe*. Observation is similar to React event handlers - there is no need
-to worry about observing multiple nor is there any concern about
+to worry about observing multiple times nor is there any concern about
 needing to unobserve. Reference cursors fully support the Om state
-management model - time travel properties are fully preserved.
+management model - time travel properties are preserved.
 
-Using ref cursors is simply and natural and allows components to be
+Using reference cursors is simply and natural and allows components to be
 organized around a shared API they can simply call out to.
 
 For example suppose we want a logical collection from a vector in our
-app state we can now write an api for it using reference cursors:
+app state. We can now write an API for it using reference cursors:
 
 ```cljs
 (def app-state
