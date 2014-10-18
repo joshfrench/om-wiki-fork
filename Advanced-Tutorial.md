@@ -194,8 +194,8 @@ to worry about observing multiple times nor is there any concern about
 needing to unobserve. Reference cursors fully support the Om state
 management model - time travel properties are preserved.
 
-Using reference cursors is simply and natural and allows components to be
-organized around a shared API they can simply call out to.
+Using reference cursors is simple and natural and allows components to be
+organized around a shared API they can just call out to.
 
 For example suppose we want a logical collection from a vector in our
 app state. We can now write an API for it using reference cursors:
