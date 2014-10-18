@@ -177,9 +177,85 @@ looks something like the following:
         (dom/p nil "Waiting ... waiting ... waiting ..."))))
 ```
 
+## Reference Cursors
+
+Building truly modular and reusable components is a time consuming
+task. In most cases this level of abstraction is outside the time
+constraints of the problem at hand. Introducing channels to do
+something as simple as modifying a collection introduces manual
+resource management (of the go loops) and a considerable amount of
+ceremony.
+
+Om 0.8.0-alpha1 now offers a new tool - reference cursors. Reference
+cursors are like cursors but they have the novel propery of
+representing an identity in the application state that you can
+*observe*. Observation is similar to event handlers - there is no need
+to worry about observing multiple nor is there any concern about
+needing to unobserve. Reference cursors fully support the Om state
+management model - time travel properties are fully preserved.
+
+Using ref cursors is simply and natural and allows components to be
+organized around a shared API they can simply call out to.
+
+For example suppose we want a logical collection from a vector in our
+app state we can now write an api for it using reference cursors:
+
+```cljs
+(def app-state
+  (atom {:items [{:text "cat"}
+                 {:text "dog"}
+                 {:text "bird"}]}))
+
+(def app-history (atom [@app-state]))
+
+(defn items []
+  (om/ref-cursor (:items (om/root-cursor app-state))))
+```
+
+In a subview we can now simply write the following. 
+
+```cljs
+(defn sub-view [{:keys [text]} owner]
+  (reify
+    om/IRender
+    (render [_]
+      (let [xs (om/observe owner (items))]
+        (dom/div nil
+          (dom/h2 nil text)
+          (apply dom/ul nil
+            (map #(dom/li nil (:text %)) xs)))))))
+```
+
+This is very natural and straightforward, the component did not need to take its data from a parent nor did it need to receive it via a channel.
+
+Now imagine we have a parent view that looks like the following:
+
+```cljs
+(defn main-view [_ owner]
+  (reify
+    om/IRender
+    (render [_]
+      (let [xs (items)]
+        (dom/div nil
+          (om/build sub-view {:text "View A"})
+          (om/build sub-view {:text "View B"})
+          (dom/button
+            #js {:onClick
+                 (fn [e] (om/transact! xs #(assoc % 1 {:text "zebra"})))}
+            "Switch To Zebra!"))))))
+```
+
+This parent is blissfully unaware that two children components also
+rely on the same logical collection. Notice that it can `transact!` on
+the reference cursor the same as any other cursor.
+
+Many convulted patterns around the manipulation application data can
+circumvented simply by using reference cursors and designing a simple
+API that any component can call into.
+
 ## Further Investigation Needed
 
-The two patterns above eliminate many cases where we may have relied
+The three patterns above eliminate many cases where we may have relied
 on application state for coordination. Nothing in the tutorial is
 conclusive, rather treat it as small set of guidelines to build up
 more expressive functionality suitable for the large application you
