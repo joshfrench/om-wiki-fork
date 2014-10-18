@@ -248,7 +248,7 @@ rely on the same logical collection. Notice that it can `transact!` on
 the reference cursor the same as any other cursor.
 
 Many existing convulted patterns around the manipulation of
-application data can circumvented simply by using reference cursors
+application data can be circumvented simply by using reference cursors
 and designing a simple API that any component can call into.
 
 ## Further Investigation Needed
