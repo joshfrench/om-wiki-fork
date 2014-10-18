@@ -224,7 +224,9 @@ In a subview we can now simply write the following.
             (map #(dom/li nil (:text %)) xs)))))))
 ```
 
-This is very natural and straightforward, the component did not need to take its data from a parent nor did it need to receive it via a channel.
+This is very natural and straightforward, the component did not need
+to take its data from a parent nor did it need to receive it via a
+channel.
 
 Now imagine we have a parent view that looks like the following:
 
@@ -247,9 +249,9 @@ This parent is blissfully unaware that two children components also
 rely on the same logical collection. Notice that it can `transact!` on
 the reference cursor the same as any other cursor.
 
-Many convulted patterns around the manipulation application data can
-circumvented simply by using reference cursors and designing a simple
-API that any component can call into.
+Many existing convulted patterns around the manipulation of
+application data can circumvented simply by using reference cursors
+and designing a simple API that any component can call into.
 
 ## Further Investigation Needed
 
