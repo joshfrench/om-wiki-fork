@@ -145,7 +145,7 @@ Component B should publish a topic onto `pub-chan`.
     (render [_]
       (dom/button
         #js {:onClick
-             #(put! (:pub-chan (get-shared owner))
+             #(put! (:pub-chan (om/get-shared owner))
                     {:topic :hello :data "Hi there!"})}
         "Click me!"))))
 ```
@@ -165,7 +165,7 @@ looks something like the following:
       {:message nil})
     om/IDidMount
     (did-mount [_]
-      (let [events (sub (:notif-chan (get-shared owner)) :hello (chan))]
+      (let [events (sub (:notif-chan (om/get-shared owner)) :hello (chan))]
         (go
           (loop [e (<! events)]
             (om/set-state! owner :message (:data e))
