@@ -204,8 +204,6 @@ app state. We can now write an API for it using reference cursors:
 (def app-state
   (atom {:items [{:text "cat"} {:text "dog"} {:text "bird"}]}))
 
-(def app-history (atom [@app-state]))
-
 (defn items []
   (om/ref-cursor (:items (om/root-cursor app-state))))
 ```
