@@ -41,7 +41,7 @@ The Request Channel pattern allows us to avoid passing data through
 components uninterested in the data. The strategy is a familiar one -
 treat a component as if it were a client browser. Instead of
 receiving its data directly it will request it when it mounts. In
-order for this to work we need to estable a global service channel
+order for this to work we need to establish a global service channel
 that can process requests from different parts of your application.
 
 Let us assume we'll have a table view somewhere whose contents will be
