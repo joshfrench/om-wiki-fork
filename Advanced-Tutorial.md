@@ -38,7 +38,7 @@ The Request Channel pattern allows us to avoid passing data through
 components uninterested in the data. The strategy is a familiar one -
 treat a component as if it were a client browser. Instead of
 receiving its data directly it will request it when it mounts. In
-order for this to work we need to estable a global service channel
+order for this to work we need to establish a global service channel
 that can process requests from different parts of your application.
 
 Let us assume we'll have a table view somewhere whose contents will be
@@ -142,7 +142,7 @@ Component B should publish a topic onto `pub-chan`.
     (render [_]
       (dom/button
         #js {:onClick
-             #(put! (:pub-chan (get-shared owner))
+             #(put! (:pub-chan (om/get-shared owner))
                     {:topic :hello :data "Hi there!"})}
         "Click me!"))))
 ```
@@ -162,7 +162,7 @@ looks something like the following:
       {:message nil})
     om/IDidMount
     (did-mount [_]
-      (let [events (sub (:notif-chan (get-shared owner)) :hello (chan))]
+      (let [events (sub (:notif-chan (om/get-shared owner)) :hello (chan))]
         (go
           (loop [e (<! events)]
             (om/set-state! owner :message (:data e))
@@ -208,13 +208,13 @@ app state. We can now write an API for it using reference cursors:
 In a subview we can now simply write the following. 
 
 ```cljs
-(defn sub-view [{:keys [text]} owner]
+(defn sub-view [{:keys [title]} owner]
   (reify
     om/IRender
     (render [_]
       (let [xs (om/observe owner (items))]
         (dom/div nil
-          (dom/h2 nil text)
+          (dom/h2 nil title)
           (apply dom/ul nil
             (map #(dom/li nil (:text %)) xs)))))))
 ```
@@ -232,8 +232,8 @@ Now imagine we have a parent view that looks like the following:
     (render [_]
       (let [xs (items)]
         (dom/div nil
-          (om/build sub-view {:text "View A"})
-          (om/build sub-view {:text "View B"})
+          (om/build sub-view {:title "View A"})
+          (om/build sub-view {:title "View B"})
           (dom/button
             #js {:onClick
                  (fn [e] (om/transact! xs #(assoc % 1 {:text "zebra"})))}
@@ -244,7 +244,7 @@ This parent is blissfully unaware that two children components also
 rely on the same logical collection. Notice that it can `transact!` on
 the reference cursor the same as any other cursor.
 
-Many existing convulted patterns around the manipulation of
+Many existing convoluted patterns around the manipulation of
 application data can be circumvented simply by using reference cursors
 and designing a simple API that any component can call into.
 
