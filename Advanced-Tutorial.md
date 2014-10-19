@@ -10,21 +10,18 @@ quick trip back to non-modular programs where every component has full
 knowledge and direct dependence on the global state of the
 application.
 
-In order to recover modularity we must reach for something
-else. We'll see how core.async channels allow us to regain modularity
-in complex applications.
+In order to recover modularity we must reach for other tools. We'll
+see how core.async channels and reference cursors allow us to regain
+modularity in complex applications.
 
-## A Structure
-
-The following is a loose pattern, real applications may need more or
-less than what is described. Still the following is a good starting
-point for doing your own explorations around organizing larger Om
-programs.
-
-The loose pattern is organized around 3 types of shared channels.
+The following is a loose set of patterns, real applications may need
+more or less than what is described. Still the following is a good
+starting point for doing your own explorations around organizing
+larger Om programs.
 
 * The Request Channel
 * The Publish & Notification Channels
+* Reference Cursors
 
 ## The Request Channel
 
@@ -35,7 +32,7 @@ the render tree. The question is, how do we get data to this component
 without having to pass data to everyone in between the root of the
 application and where the component actually lives?
 
-### The Pattern
+### Solution
 
 The Request Channel pattern allows us to avoid passing data through
 components uninterested in the data. The strategy is a familiar one -
