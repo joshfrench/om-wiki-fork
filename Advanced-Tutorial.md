@@ -184,7 +184,7 @@ resource management (of the go loops) and a considerable amount of
 ceremony.
 
 Om 0.8.0-alpha1 now offers a new tool - reference cursors. Reference
-cursors are like cursors but they have the novel propery of
+cursors are like cursors but they have the novel property of
 representing an identity in the application state that you can
 *observe*. Observation is similar to React event handlers - there is no need
 to worry about observing multiple times nor is there any concern about
