@@ -72,8 +72,8 @@ form the other pattern we'll talk about momentarily:
 ```cljs
 (defn main []
   (let [req-chan   (chan)
-        notif-chan (chan)
-        pub-chan   (pub notif-chan :topic)]
+        pub-chan (chan)
+        notif-chan   (pub pub-chan :topic)]
 
     ;; server loop
     (go
