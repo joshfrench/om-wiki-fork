@@ -71,8 +71,8 @@ form the other pattern we'll talk about momentarily:
 
 ```cljs
 (defn main []
-  (let [req-chan   (chan)
-        pub-chan (chan)
+  (let [req-chan     (chan)
+        pub-chan     (chan)
         notif-chan   (pub pub-chan :topic)]
 
     ;; server loop
@@ -166,7 +166,7 @@ looks something like the following:
         (go
           (loop [e (<! events)]
             (om/set-state! owner :message (:data e))
-            (recur))))))
+            (recur (<! events)))))))
     om/IRenderState
     (render-state [_ {:keys [message]}]
       (if message
