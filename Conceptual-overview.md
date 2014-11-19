@@ -35,7 +35,7 @@ view of the application state.
 ## Application State
 
 `om.core/transact!` is used to transition the application
-state. The transition function should not rely on information not
+state. The transition function should only rely on information
 obtained by `deref`-ing a cursor, `om.core/get-state`, `om.core/transact!`,
 or `om.core/update!`.
 
