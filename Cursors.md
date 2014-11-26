@@ -61,11 +61,12 @@ Cursors can propagate changes back to the original atom. For that purpose, `tran
 (defn btn-view [cursor _]
   (reify om/IRender
     (render [_]
-      (om/div nil
-        (om/span nil (str "Clicked " (get cursor 0) " times"))
-        (om/button
+      (dom/div nil
+        (dom/span nil (str "Clicked " (get cursor 0) " times"))
+        (dom/button
           #js {:onClick (fn [_]
-                          (om/transact! cursor [0] inc))})))))
+                          (om/transact! cursor [0] inc))}
+			  "Click")))))
 ```
 
 ## Consistency and observability
