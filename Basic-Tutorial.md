@@ -513,12 +513,12 @@ Try it on some input!
 (parse-contact "Gerald J. Sussman")
 ```
 
-If Light Table throws a ReferenceError with the message `clojure is not defined` or `string is not defined`, shut down the compiler and the browser. Entering the command:
+If Light Table throws a ReferenceError with the message `clojure is not defined` or `string is not defined`, shut down the compiler. Entering the command:
 
 ```
 lein do cljsbuild clean, cljsbuild auto om-tut
 ``` 
-...and restarting the browser will clear the problem.
+...and refreshing the browser will clear the problem.
 
 Once you've seen that it basically works lets write `add-contact`, it
 should look like the following:
