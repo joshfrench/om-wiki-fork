@@ -502,7 +502,7 @@ Let's add a new function called `parse-contact`. Evaluate it.
         (>= c 2) (assoc :middle middle)))))
 ```
 
-There of course many ways to write `parse-contact` and this is not
+There are of course many ways to write `parse-contact` and this is not
 particularly the best way, however it illustrates many common
 idioms. If you're not experienced with Clojure or ClojureScript it's
 worth taking the time to understand it before proceeding.
