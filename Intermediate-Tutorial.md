@@ -547,13 +547,13 @@ without the transaction tag, but not as simply.
 `editable` need to change to accommodate the new `end-edit` signature:
 
 ```clj
-(defn editable [data owner {:keys [edit-key] :as opts}]
+(defn editable [data owner {:keys [edit-key on-edit] :as opts}]
   (reify
     om/IInitState
     (init-state [_]
       {:editing false})
     om/IRenderState
-    (render-state [_ {:keys [editing on-edit]}]
+    (render-state [_ {:keys [editing]}]
       (let [text (get data edit-key)]
         (dom/li nil
           (dom/span #js {:style (display (not editing))} text)
