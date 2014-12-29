@@ -6,3 +6,4 @@
 * [[Troubleshooting]], common mistakes
 * [[Documentation]]
 * [[Testing]]
+* [[Resources]]
