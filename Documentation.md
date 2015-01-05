@@ -34,6 +34,9 @@
   * [get-render-state](#get-render-state)
   * [rendering?](#rendering)
   * [detach-root](#detach-root)
+  * [root-cursor](#root-cursor)
+  * [ref-cursor](#ref-cursor)
+  * [observe](#observe)
 * [Macros](#macros)
   * [component](#component)
 
@@ -507,6 +510,36 @@ and async thereafter.
 ```
 
 Given a DOM target remove its render loop if one exists.
+
+### root-cursor
+
+```clj
+(defn root-cursor [atom]
+  ...)
+```
+
+Given an application state atom return a root cursor for it.
+
+### ref-cursor
+
+```clj
+(defn ref-cursor [cursor]
+  ...)
+```
+
+Given a cursor return a reference cursor that inherits all of the
+properties and methods of the cursor. Reference cursors may be
+observed via `om.core/observe`.
+
+### observe
+
+```clj
+(defn observe [owner ref]
+  ...)
+```
+
+Given a component and a reference cursor have the component observe
+the reference cursor for any data changes.  Evaluates to the given reference cursor.
   
 ## Macros
 
