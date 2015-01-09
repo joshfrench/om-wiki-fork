@@ -1,8 +1,8 @@
 This tutorial is optimized for usage with
 [Light Table](http://www.lighttable.com/).
 
-This tutorial assumes familiarity with Clojure or ClojureScript. If
-you are not familiar, we recommend going through the
+It also assumes familiarity with Clojure or ClojureScript. If
+you are not familiar with them, we recommend going through the
 [ClojureScript tutorial for Light Table](http://github.com/swannodette/lt-cljs-tutorial)
 first.
 
