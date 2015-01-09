@@ -70,7 +70,7 @@ roots attached to it (we'll explain this in a second). You can think
 of this atom as the database of your client side
 application. Everything in the atom should be an associative data
 structure - either a ClojureScript map or indexed sequential data
-structure such as a vector. This means you should never put lists or lazy
+structure such as a vector (but not a set). This means you should never put lists or lazy
 sequences into the application state. It's particularly easy to forget
 this when updating indexed sequences in the application state.
 
