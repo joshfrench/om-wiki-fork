@@ -32,7 +32,6 @@
   * [update-state!](#update-state)
   * [refresh!](#refresh)
   * [get-render-state](#get-render-state)
-  * [rendering?](#rendering)
   * [detach-root](#detach-root)
   * [root-cursor](#root-cursor)
   * [ref-cursor](#ref-cursor)
@@ -490,17 +489,6 @@ Returns rendered component local state. `owner` is the backing Om
 component. `korks` is an optional key or sequences of keys. Similar to
 `om.core/get-state` except always returns the rendered state. Useful
 for detecting state transitions.
-
-### rendering?
-
-```clj
-(defn rendering? []
-  ...)
-```
-
-Return true if in the React rendering phase. Useful in `IWillMount`
-when establishing code that may run sync with render the first time
-and async thereafter.
 
 ### detach-root
 
