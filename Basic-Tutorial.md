@@ -431,47 +431,9 @@ it down.
 
 We then implement `om/IWillMount` so that we can establish a go loop
 that will listen for events from the children contact views. If we get
-a delete event we remove that from the application state with
-`om.core/transact!`. This code contains a bug which we will explain
-momentarily.
-
-Evaluate the new code and try it out. As you'll see, clicking on the
-delete button won't do anything. In fact if you look at the JavaScript
-console you'll see an error about trying to manipulate a
-[cursor](Conceptual-overview#wiki-cursors) outside of the render phase.
-
-What went wrong?
-
-## Debugging Om Components
-
-The problem is that we put a [cursor](Conceptual-overview#wiki-cursors)
-directly onto a core.async
-channel. Cursors are only consistent during the application render
-phase - that is inside the life cycle methods. Callbacks on events
-handlers and core.async loops are not really a part of the Om/React
-render loop. Thus you are not allowed to use cursors outside of the
-render phase as this is almost certainly a concurrency bug!
-
-Outside of the render phase you are only allowed to do two kinds of
-operations on cursors. You may use them to transition the application
-state or you can dereference them to get at their current value.
-
-The current value is fine as that's all we need to get rid of a
-contact anyhow. You can fix `contact-view` to the following:
-
-```clj
-(defn contact-view [contact owner]
-  (reify
-    om/IRenderState
-    (render-state [this {:keys [delete]}]
-      (dom/li nil
-        (dom/span nil (display-name contact))
-        (dom/button #js {:onClick (fn [e] (put! delete @contact))} "Delete")))))
-```
-
-The only thing that changed was `contact` to `@contact`. Evaluate this
-code and the `om/root` expression. You should now be able to delete
-people from the list contacts.
+a delete event, we remove the associated contact from the application state
+with `om.core/transact!`. You should now be able to delete people from the
+contact list.
 
 ## Adding Contacts
 
