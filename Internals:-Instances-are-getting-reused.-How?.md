@@ -35,7 +35,7 @@ In the React model, you specify "what comes next" rather than manipulating "what
 
 Think of it like this. We have:
 * a tree of instances  
-  * `instancesByReactRootID` or one of its subtrees
+  * an `instancesByReactRootID` entry or one of its subtrees
 * a specification of what comes next  
   * via `render`  
   
