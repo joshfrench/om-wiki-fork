@@ -1,5 +1,5 @@
 This tutorial is optimized for usage with
-[Light Table](http://www.lighttable.com/).
+[Light Table](http://www.lighttable.com/). The current version of om that this tutorial depends on is listed in the [mies-om](https://github.com/swannodette/mies-om/blob/master/src/leiningen/new/mies_om/project.clj) template project.clj.
 
 It also assumes familiarity with Clojure or ClojureScript. If
 you are not familiar with them, we recommend going through the
