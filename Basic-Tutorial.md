@@ -751,6 +751,11 @@ Your source file should look like the following:
 
 (om/root registry-view app-state
   {:target (. js/document (getElementById "registry"))})
+
+(fw/start {
+  :on-jsload (fn []
+               ;; (stop-and-start-my app)
+               )})
 ```
 
 Now what we want is for `registry-view` to render different views for
