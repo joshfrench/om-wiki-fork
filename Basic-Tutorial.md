@@ -749,9 +749,8 @@ Your source file should look like the following:
       (dom/div nil
         (dom/h2 nil "Registry")))))
 
-(defn main []
-  (om/root registry-view app-state
-    {:target (. js/document (getElementById "registry"))}))
+(om/root registry-view app-state
+  {:target (. js/document (getElementById "registry"))})
 ```
 
 Now what we want is for `registry-view` to render different views for
