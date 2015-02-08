@@ -280,7 +280,7 @@ Let's edit `app-state` so it looks like this:
       {:first "Lem" :middle-initial "E" :last "Tweakit" :email "morebugs@mit.edu"}]}))
 ```
 
-After `app-state` lets add the following code:
+After `app-state` let's add the following code:
 
 ```clj
 (defn contacts-view [data owner]
@@ -493,7 +493,7 @@ lein clean
 
 ... restarting Figwheel and refreshing the browser will clear the problem.
 
-Once you've seen that it basically works lets write `add-contact`, it
+Once you've seen that it basically works, let's write `add-contact`. It
 should look like the following:
 
 ```clj
