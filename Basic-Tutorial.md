@@ -229,7 +229,7 @@ In Om you have the full power of the ClojureScript language when building
 your user interface. At the same time, Om leaves the door open for
 alternate syntaxes for describing the DOM if that's your cup of tea.
 
-Let's edit our code so we get zebra striping on the list. Lets add a
+Let's edit our code so we get zebra striping on the list. Let's add a
 helper function `stripe` before the `om/root` expression:
 
 ```clj
