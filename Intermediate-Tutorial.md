@@ -7,8 +7,10 @@ Clojure and also provides time travel capabilities making it quite
 nice to pair with Om.
 
 First download a copy of
-[Datomic Free](http://my.datomic.com/downloads/free). You might get an error with versions of Datomic later than `0.9.4609`, so try that one first (seems to be working as of `0.9.4699`). Unzip it and run
-the following inside the directory:
+[Datomic Free](http://my.datomic.com/downloads/free). You might get an
+error with versions of Datomic later than `0.9.5130`, so try that one
+first (seems to be working as of `0.9.5130`). Unzip it and run the
+following inside the directory:
 
 ```
 bin/transactor config/samples/free-transactor-template.properties
@@ -38,25 +40,53 @@ REPL.
 
 If you got an error, try an earlier version of Datomic Free.
 
-Let's start the auto building process:
-
-```
-lein cljsbuild auto dev
-```
-
 We don't have time to cover all the details of Ring or Datomic here
 but hopefully you get the basic idea. If you're curious about Datomic
 I highly recommend Jonas Enlund's
 [tutorial](http://www.learndatalogtoday.org) and the
 [Day of Datomic](http://github.com/Datomic/day-of-datomic) tutorial.
 
-Let's read some code. Open `src/clj/om-async/core.clj` in Light
-Table. Type "Shift-Command-Enter" to evaluate the entire file. This
-will start up the web server. You should be able to point your browser
-at `http://localhost:8080`. If you open the JavaScript console you
-should see `"Hello world!"` printed.
+We will use [Figwheel](https://github.com/bhauman/lein-figwheel) to
+reload our frontend ClojureScript while we code. Figwheel uses a
+server to auto compile our code and push it to the browser. But we
+also need a server running our backend code. For that we will use the
+`lein-ring` [plugin](https://github.com/weavejester/lein-ring). To
+tell ring what it should run, we specify it in our `project.clj`:
 
-At the top of the file we have the usual namespace stuff:
+```clj
+  :ring {:handler om-async.core/handler
+         :port 8000}
+```
+
+To understand the backend code, open `src/clj/om-async/core.clj` in
+your favorite editor. This code creates `om-async.core/handler` that
+accepts requests to read and write to Datomic. It also serves the
+static files and the compiled JavaScript files that our ClojureScript code will
+generate.
+
+To start it run:
+
+    lein ring server 
+
+When the compilation process is done, point your browser at
+[localhost:8000](http://localhost:8000). If you open the JavaScript
+console you should see that `main.js` is missing. That is because we
+have not compiled our Clojurescript code yet. Open another terminal
+and run:
+
+    lein figwheel
+    
+When it is done compiling, check if the Browser REPL is connected by typing:
+
+```
+ClojureScript:cljs.user> (js/alert "Am I connected?")
+```
+
+You should see the alert in your browser. 
+
+Now let's read the server side code located in
+`src/clj/om-async/core.clj`. At the top of the file we have the usual
+namespace stuff:
 
 ```clj
 (ns om-async.core
@@ -139,24 +169,23 @@ We then have our `routes`:
   (route/files "/" {:root "resources/public"}))
 ```
 
-Finally we add our EDN middleware and start our server:
+Finally we add our EDN middleware to get our final handler:
 
 ```clj
-(def app
+(def handler 
   (-> routes
       wrap-edn-params))
-
-(defonce server
-  (run-jetty #'app {:port 8080 :join? false}))
 ```
 
 Let's look at the client side portion now, open
-`src/cljs/om-async/core.cljs` in Light Table. The `ns` form should
-look familiar, and we enable `console.log` printing:
+`src/cljs/om-async/core.cljs` in your editor. The `ns` form should
+look familiar, and we enable `console.log` printing. The last line is
+what tells Figwheel that we want to do code reloading:
 
 ```clj
 (ns om-async.core
   (:require [cljs.reader :as reader]
+            [figwheel.client :as fw]
             [goog.events :as events]
             [goog.dom :as gdom]
             [om.core :as om :include-macros true]
@@ -166,6 +195,10 @@ look familiar, and we enable `console.log` printing:
            [goog.events EventType]))
 
 (enable-console-print!)
+
+(println "Hello world!")
+
+(fw/start {:websocket-url "ws://localhost:3449/figwheel-ws"})
 ```
 
 We're going to use simple callbacks in this tutorial instead of
@@ -312,7 +345,7 @@ Our `classes-view` will load the data from server on
   {:target (gdom/getElement "classes")})
 ```
 
-That's it. Save your file and refresh. You should see the list of
+That's it. Save your file. You should see the list of
 classes loaded from the server. You should be able to edit a class
 title. Press enter to commit the title change. Refresh your browser
 and you should see that the change persisted.
@@ -368,18 +401,19 @@ First we need to change our `project.clj` to include a dependency on
 `om-sync`.
 
 ```clj
-:dependencies [[org.clojure/clojure "1.5.1"]
-               [org.clojure/clojurescript "0.0-2173"]
-               [ring/ring "1.2.1"]
-               [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
-               [om "0.5.3"]
-               [om-sync "0.1.1"] ;; <=== ADD THIS
-               [compojure "1.1.6"]
-               [fogus/ring-edn "0.2.0"]
-               [com.datomic/datomic-free "0.9.4699"]]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/clojurescript "0.0-2727"]
+                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [org.omcljs/om "0.8.7"]
+                 [om-sync "0.1.1"] ;; <=== ADD THIS
+                 [ring "1.3.2"]
+                 [compojure "1.3.1"]
+                 [figwheel "0.2.2-SNAPSHOT"]
+                 [fogus/ring-edn "0.2.0"]
+                 [com.datomic/datomic-free "0.9.5130" :exclusions [joda-time]]]
 ```
 
-Lets update the server side code to uniformly handle EDN requests.
+Let's update the server side code to uniformly handle EDN requests.
 
 After `generate-response` let's add `get-classes`:
 
@@ -462,13 +496,13 @@ And let's provide the new routes:
   (route/files "/" {:root "resources/public"}))
 ```
 
-Evaluate everything with Shift-Command-Enter, that's it for our server
-side code. Let's update the client code.
+Since we modified our `ns` declaration you might need to restart `lein
+ring server`. That's it for our server side code. Let's update the
+client code.
 
 #### Updating the Client
 
-If you have a `lein cljsbuild auto dev` process running, kill it and
-restart. This is because our dependencies have changed.
+You should also restart `lein figwheel` since our our dependencies have changed.
 
 First we need to modify the namespace form. Since we'll be using
 `om-sync` we clean up some things:
@@ -477,6 +511,7 @@ First we need to modify the namespace form. Since we'll be using
 (ns om-async.core
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :as async :refer [put! chan alts!]]
+            [figwheel.client :as fw]
             [goog.dom :as gdom]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
@@ -678,3 +713,6 @@ incidental complexity.
 Having made it this far you can probably read through the `om-sync`
 source yourself and hopefully be inspired to send a pull request to
 improve so it can be leveraged in more contexts.
+
+In case you run intro trouble, you can find the final version of the
+code [here](https://github.com/bensu/om-intermediate-tut)
