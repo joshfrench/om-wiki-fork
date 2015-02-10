@@ -68,7 +68,7 @@ To start it run:
 
     lein ring server 
 
-When the compilation process is done, point your browser at
+When the server is up, point your browser at
 [localhost:8000](http://localhost:8000). If you open the JavaScript
 console you should see that `main.js` is missing. That is because we
 have not compiled our Clojurescript code yet. Open another terminal
