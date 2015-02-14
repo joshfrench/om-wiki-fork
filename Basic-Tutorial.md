@@ -16,7 +16,7 @@ navigate in a terminal to the directory where you would like the tutorial
 and run the following command:
 
 ```
-lein new figwheel om-tut --om
+lein new figwheel om-tut -- --om
 ```
 
 This will create a project including Om and Figwheel in a  folder
