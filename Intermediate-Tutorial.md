@@ -113,7 +113,7 @@ We then define our main route handler `index`:
   (file-response "public/html/index.html" {:root "resources"}))
 ```
 
-Instead of [JSON](http://www.json.org) as a data format we'll
+Instead of [JSON](http://www.json.org) as a data format, we'll
 use [EDN](http://github.com/edn-format/edn). We write a little helper
 for the EDN middleware we'll be using:
 
