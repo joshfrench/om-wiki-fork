@@ -805,8 +805,8 @@ clean of conditionals.
 ```clj
 (defn registry-view [data owner]
   (reify
-    om/IRenderState
-    (render-state [_ state]
+    om/IRender
+    (render [_]
       (dom/div #js {:id "registry"}
         (dom/h2 nil "Registry")
         (apply dom/ul nil
