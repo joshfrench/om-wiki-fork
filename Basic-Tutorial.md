@@ -819,7 +819,8 @@ titles. Before `registry-view` write the following:
 
 ```clj
 (defn people [data]
-  (->> (:people data)
+  (->> data
+    :people
     (mapv (fn [x]
             (if (:classes x)
               (update-in x [:classes]
