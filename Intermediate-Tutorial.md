@@ -124,7 +124,7 @@ for the EDN middleware we'll be using:
    :body (pr-str data)})
 ```
 
-Now let's take a look at `classes`:
+Skip ahead briefly and let's take a look at `classes`:
 
 ```clj
 (defn classes []
@@ -140,7 +140,7 @@ Now let's take a look at `classes`:
 
 This just finds all the classes and returns an EDN response.
 
-Now we have `update-class`. It finds a class by id and modifies the
+Back up and look at `update-class`. It finds a class by id and modifies the
 title:
 
 ```clj
