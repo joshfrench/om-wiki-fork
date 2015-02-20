@@ -16,7 +16,7 @@ During the render phase, you treat a cursor as a value, as a regular map or vect
 
 Outside of the render phase, you cannot treat cursors as values. Instead, you need to deref it (@) and work with the value returned. Deref returns the actual value beneath the cursor: a map or a vector.
 
-For many reasons, you will want to access cursor outside the root component, or access parent cursor without using a core-async channel. `ref-cursor` and `root-cursor` functions allowed you to do this:
+For many reasons, you will want to access cursors outside the root component, or access a parent cursor without using a core-async channel. `ref-cursor` and `root-cursor` functions allow you to do this:
 
 ```clj
 (def state (atom {:name {:first "John" :last "Doe" :little nil}}))
