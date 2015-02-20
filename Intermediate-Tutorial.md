@@ -284,7 +284,7 @@ This is `editable`:
             #js {:style (display editing)
                  :value text
                  :onChange #(handle-change % data edit-key owner)
-                 :onKeyPress #(when (== (.-keyCode %) 13)
+                 :onKeyDown #(when (= (.-key %) "Enter")
                                 (end-edit text owner on-edit))
                  :onBlur (fn [e]
                            (when (om/get-state owner :editing)
@@ -597,7 +597,7 @@ without the transaction tag, but not as simply.
             #js {:style (display editing)
                  :value text
                  :onChange #(handle-change % data edit-key owner)
-                 :onKeyPress #(when (== (.-keyCode %) 13)
+                 :onKeyDown #(when (= (.-key %) "Enter")
                                 (end-edit data edit-key text owner on-edit))
                  :onBlur (fn [e]
                            (when (om/get-state owner :editing)
