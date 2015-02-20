@@ -1,7 +1,9 @@
 This tutorial assumes familiarity with Clojure or ClojureScript. If
 you are not familiar with them, we recommend going through the
 [ClojureScript tutorial for Light Table](http://github.com/swannodette/lt-cljs-tutorial)
-first. We will use
+first. If you are entirely new to Om, you may also benefit from a quick look through the [Conceptual overview](https://github.com/omcljs/om/wiki/Conceptual-overview).
+
+We will use
 [Figwheel](https://github.com/bhauman/lein-figwheel) to 
 easily get an interactive environment for ClojureScript and Om.
 Figwheel does two things:
