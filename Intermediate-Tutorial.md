@@ -19,12 +19,11 @@ bin/transactor config/samples/free-transactor-template.properties
 This will start up the Datomic transactor.
 
 Now in some other directory run the following to generate the tutorial
-from the `om-async-tut` Lein template:
+from the `om-intermediate-template` Lein template:
 
 ```
-lein new om-async-tut om-async
+lein new om-intermediate-template om-async
 ```
-_Note: Currently you **must** name your project ```om-async``` because of a bug in the template. This has been fixed in master and will hopefully be pushed to clojars soon._
 
 `cd` into `om-async` and launch a Lein repl with `lein repl`. Once the
 repl is up run the following:
