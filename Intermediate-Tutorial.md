@@ -232,10 +232,7 @@ Next we need the `display` style helper from the previous tutorial:
     #js {:display "none"}))
 ```
 
-We are now going to write a version of the `editable` component that
-does not require hacking around the differences between JavaScript
-primitive strings and JavaScript String objects. The following is
-strongly recommended over extending native types to `ICloneable`.
+We are now going to write a version of the `editable` component that does not require hacking around the differences between JavaScript primitive strings and JavaScript String objects. The following is strongly recommended over extending native types to `ICloneable` as we did to get by in the [Basic Tutorial](https://github.com/omcljs/om/wiki/Basic-Tutorial).
 
 Instead of `editable` taking a string cursor from the application state,
 it will take some larger piece of data and a key to locate the
