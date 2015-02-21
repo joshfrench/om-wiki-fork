@@ -190,8 +190,8 @@ Let's look at the client side portion now; open `src/cljs/om-async/core.cljs` in
 (fw/start {})
 ```
 
-We're going to use simple callbacks in this tutorial instead of
-relying on core.async.
+We're going to use simple callbacks to begin this tutorial instead of
+diving in with core.async immediately.
 
 First we write a simple utility for making async requests to the
 server with EDN. We rely on Google Closure to deal with cross browser
