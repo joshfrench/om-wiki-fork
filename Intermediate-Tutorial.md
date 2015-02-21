@@ -170,10 +170,7 @@ Finally we add our EDN middleware to get our final handler:
       wrap-edn-params))
 ```
 
-Let's look at the client side portion now, open
-`src/cljs/om-async/core.cljs` in your editor. The `ns` form should
-look familiar, and we enable `console.log` printing. The last line is
-what tells Figwheel that we want to do code reloading:
+Let's look at the client side portion now; open `src/cljs/om-async/core.cljs` in your editor. The `ns` form should look familiar, and we enable `console.log` printing. The last line tells Figwheel that we want to do code reloading:
 
 ```clj
 (ns om-async.core
