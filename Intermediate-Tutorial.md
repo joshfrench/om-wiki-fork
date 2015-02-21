@@ -29,7 +29,7 @@ lein new om-intermediate-template om-async
 repl is up run the following:
 
 ```
-user=> (use '[om-async.util])
+user=> (use 'om-async.util)
 nil
 user=> (init-db)
 :done
