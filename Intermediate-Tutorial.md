@@ -243,9 +243,7 @@ string to edit. `handle-change` now looks like this:
   (om/transact! data edit-key (fn [_] (.. e -target -value))))
 ```
 
-Instead of using channels because `editable` is so simple and to
-demonstrate alternative approaches, `editable` will notify its parent
-component with a callback when editing is complete:
+Because `editable` is so simple and to demonstrate alternative approaches, instead of using core.async channels `editable` will notify its parent component with a callback when editing is complete:
 
 ```clj
 (defn end-edit [text owner cb]
