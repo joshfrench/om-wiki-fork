@@ -1,5 +1,5 @@
 For this next tutorial we're going to get a bit more
-ambitious. We're going to build an Om frontend to a simple
+ambitious. We're going to build an Om front end to a simple
 [Ring](http://github.com/ring-clojure) + [Compojure](https://github.com/weavejester/compojure) application that talks to
 [Datomic](http://datomic.com) for persistence. You can of course swap
 in another database, but Datomic is particularly easy to use from
@@ -47,9 +47,9 @@ I highly recommend Jonas Enlund's
 [Day of Datomic](http://github.com/Datomic/day-of-datomic) tutorial.
 
 We will use [Figwheel](https://github.com/bhauman/lein-figwheel) to
-reload our frontend ClojureScript while we code. Figwheel uses a
+reload our front end ClojureScript while we code. Figwheel uses a
 server to auto compile our code and push it to the browser. But we
-also need a server running our backend code. To simplify things, we
+also need a server running our back end code. To simplify things, we
 will configure Figwheel in our `project.clj` to also serve our
 customer handler:
 
@@ -57,7 +57,7 @@ customer handler:
   :figwheel {:ring-handler om-async.core/handler}
 ```
 
-To understand the backend code, open `src/clj/om-async/core.clj` in
+To understand the back end code, open `src/clj/om-async/core.clj` in
 your favorite editor. This code creates `om-async.core/handler` that
 accepts requests to read and write to Datomic. It also serves the
 static files and the compiled JavaScript files that our ClojureScript code will
@@ -334,7 +334,7 @@ classes loaded from the server. You should be able to edit a class
 title. Press enter to commit the title change. Refresh your browser
 and you should see that the change persisted.
 
-Both your backend and frontend can support sophisticated operations on
+Both your back end and front end can support sophisticated operations on
 application state history without incurring incidental complexity.
 
 ## Speculative UI Programming
@@ -346,7 +346,7 @@ gracefully handle those cases where sync is not possible.
 
 It's quite common in modern applications to make an optimistic commit,
 and then discover that synchronization cannot happen - perhaps
-because of a backend bug, undefined behavior in the API
+because of a back end bug, undefined behavior in the API
 , or commonly the complete lack of network connectivity. In this
 distributed setting UI programming becomes a speculative endeavor.
 
@@ -510,7 +510,7 @@ are relevant to it.
 We use core.async to publish a channel that components like `om-sync`
 can subscribe to. This is done by making the channel a global service via
 `:shared`. We also make an EDN request to get our initial state using
-the new `init` route we wrote on the backend.
+the new `init` route we wrote on the back end.
 
 Remove our old call to om/root and place the following at the very bottom of the page:
 
@@ -584,7 +584,7 @@ The changes here are mostly because of the fact that we now invoke `om/transact!
             "Edit"))))))
 ```
 
-We also want to allow people to add classes. We know that the backend
+We also want to allow people to add classes. We know that the back end
 doesn't support this but we'll try it on the front end anyway to
 demonstrate the capabilities of `om-sync`.
 
