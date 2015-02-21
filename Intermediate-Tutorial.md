@@ -360,7 +360,7 @@ However an immutable UI approach like Om and immutable databases like
 Datomic provide the infrastructure to make these problems very
 approachable even in a distributed context.
 
-We'll come back to this but first let's explore modularity in the
+We'll come back to this, but first let's explore modularity in the
 context of synchronizing application state.
 
 ### Modularity
