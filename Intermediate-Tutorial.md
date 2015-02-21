@@ -554,11 +554,7 @@ First modify `end-edit`:
     (cb text)))
 ```
 
-The changes here are most around the fact that we now invoke
-`om/transact!`. The interesting part is that this `om/transact!`
-supplies a tag, `:update`. `om-sync` specifically listens for
-`:create`, `:update`, and `:delete` tags. We could make this work
-without the transaction tag, but not as simply.
+The changes here are mostly because of the fact that we now invoke `om/transact!`. The interesting part is that this `om/transact!` supplies a tag, `:update`. `om-sync` specifically listens for `:create`, `:update`, and `:delete` tags. We could make this work without the transaction tag, but not as simply.
 
 `editable` need to change to accommodate the new `end-edit` signature:
 
