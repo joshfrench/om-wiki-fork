@@ -500,8 +500,7 @@ First we need to modify the namespace form. Since we'll be using
             [om-sync.util :refer [tx-tag edn-xhr]]))
 ```
 
-Remove the edn-xhr function created earlier. We now use the version
-defined in om-sync.util.
+Remove the edn-xhr function and private meths map created earlier. We now use edn-xhr as defined in om-sync.util.
 
 In order for `om-sync` to work you need modify how you call
 `om.core/root`. `om-sync` needs to be able to subscribe to the
