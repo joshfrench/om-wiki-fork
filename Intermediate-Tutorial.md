@@ -688,4 +688,4 @@ source yourself and hopefully be inspired to send a pull request to
 improve so it can be leveraged in more contexts.
 
 In case you run intro trouble, you can find the final version of the
-code [here](https://github.com/bensu/om-intermediate-tut)
+code [here](https://github.com/bensu/om-intermediate-tut).
