@@ -471,7 +471,6 @@ Add `POST` to the `compojure.core` import at the top of the file:
 (ns om-async.core
   (:require [ring.util.response :refer [file-response]]
             [ring.adapter.jetty :refer [run-jetty]]
-            [ring.middleware.edn :refer [wrap-edn-params]]
             [compojure.core :refer [defroutes GET PUT POST]] ;; <=== ADD POST
             [compojure.route :as route]
             [compojure.handler :as handler]
@@ -485,8 +484,8 @@ And let's provide the new routes:
   (GET "/" [] (index))
   (GET "/init" [] (init))
   (GET "/classes" [] (classes))
-  (POST "/classes" {params :edn-params} (create-class params))
-  (PUT "/classes" {params :edn-params} (update-class params))
+  (POST "/classes" {params :edn-body} (create-class params))
+  (PUT "/classes" {params :edn-body} (update-class params))
   (route/files "/" {:root "resources/public"}))
 ```
 
