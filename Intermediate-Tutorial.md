@@ -629,7 +629,7 @@ We update `classes-view` to include some new input fields:
           (dom/input #js {:ref "class-name"})
           (dom/button
             #js {:onClick (fn [e] (create-class classes owner))}
-           "Add"))))))
+           "Add")))))
 ```
 
 All this should look pretty straightforward by now.
