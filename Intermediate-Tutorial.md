@@ -620,7 +620,7 @@ We update `classes-view` to include some new input fields:
       (dom/div #js {:id "classes"}
         (dom/h2 nil "Classes")
         (apply dom/ul nil
-          (map #(om/build editable % {:opts {:edit-key :class/title}}))
+          (map #(om/build editable % {:opts {:edit-key :class/title}})
             classes))
         (dom/div nil
           (dom/label nil "ID:")
@@ -629,7 +629,7 @@ We update `classes-view` to include some new input fields:
           (dom/input #js {:ref "class-name"})
           (dom/button
             #js {:onClick (fn [e] (create-class classes owner))}
-           "Add")))))
+           "Add"))))))
 ```
 
 All this should look pretty straightforward by now.
