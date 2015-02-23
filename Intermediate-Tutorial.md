@@ -85,7 +85,6 @@ namespace stuff:
 (ns om-async.core
   (:require [ring.util.response :refer [file-response]]
             [ring.adapter.jetty :refer [run-jetty]]
-            [ring.middleware.edn :refer [wrap-edn-params]]
             [compojure.core :refer [defroutes GET PUT]]
             [compojure.route :as route]
             [compojure.handler :as handler]
@@ -157,17 +156,29 @@ We then have our `routes`:
   (GET "/" [] (index))
   (GET "/classes" [] (classes))
   (PUT "/class/:id/update"
-    {params :params edn-params :edn-params}
-    (update-class (:id params) edn-params))
+    {params :params edn-body :edn-body}
+    (update-class (:id params) edn-body))
   (route/files "/" {:root "resources/public"}))
 ```
 
-Finally we add our EDN middleware to get our final handler:
+The `PUT` handler assumes that all incoming requests will have an `edn-body`.
+This is the body of the request parsed into EDN format by our own middleware:
+
+```clj
+(defn parse-edn-body [handler]
+  (fn [request]
+    (handler (if-let [body (:body request)]
+               (assoc request
+                 :edn-body (read-inputstream-edn body))
+               request))))
+```
+
+Finally we add the EDN middleware to get our final handler:
 
 ```clj
 (def handler 
   (-> routes
-      wrap-edn-params))
+      parse-edn-body))
 ```
 
 Let's look at the client side portion now; open `src/cljs/om-async/core.cljs` in your editor. The `ns` form should look familiar, and we enable `console.log` printing. The last line tells Figwheel that we want to do code reloading:
