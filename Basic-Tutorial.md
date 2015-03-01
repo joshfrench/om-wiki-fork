@@ -640,7 +640,7 @@ event listener to watch when the input field changes:
           (dom/button #js {:onClick #(add-contact data owner)} "Add contact"))))))
 ```
 
-Before saving it that let's add `handle-change` before `contacts-view`:
+Before saving that, let's add `handle-change` before `contacts-view`:
 
 ```clj
 (defn handle-change [e owner {:keys [text]}]
