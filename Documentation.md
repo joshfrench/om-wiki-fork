@@ -383,8 +383,8 @@ values. `f` and `m` are the same as `om.core/build`.
 ```clj
 (defn transact!
   ([cursor f] ...)
-  ([cursor korks f])
-  ([cursor korks f tag]))
+  ([cursor korks f] ...)
+  ([cursor korks f tag]) ...)
 ```
 
 The primary way to transition application state. `cursor` is an Om
