@@ -93,11 +93,11 @@ expression in the tutorial at this point looks like this:
 
 ```clj
 (om/root
-  (fn [app owner]
+  (fn [data owner]
     (reify
       om/IRender
       (render [_]
-        (dom/h1 nil (:text app)))))
+        (dom/p nil (:text data)))))
   app-state
   {:target (. js/document (getElementById "app"))})
 ```
