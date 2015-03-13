@@ -483,6 +483,7 @@ worth taking the time to understand it before proceeding.
 Try it on some input!
 
 ```clj
+(in-ns 'om-tut.core)
 (parse-contact "Gerald J. Sussman")
 ```
 
