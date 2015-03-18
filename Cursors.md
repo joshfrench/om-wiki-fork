@@ -21,7 +21,7 @@ For many reasons, you will want to access cursors outside the root component or 
 ```clj
 (def state (atom {:name {:first "John" :last "Doe" :little nil}}))
 
-(let [cursor (om/ref-cursor (:name (om/root-cursor state))))]
+(let [cursor (om/ref-cursor (:name (om/root-cursor state)))]
   (om/update! cursor :little "JD"))
 ```
 
