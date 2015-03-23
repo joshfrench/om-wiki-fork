@@ -289,7 +289,9 @@ You can set global shared data with `om.core/root`.
 
 `f` is a function returning an instance of `IRender` or `IRenderState`.
 `f` takes two arguments, a root cursor on the application state and
-the backing Om component for the root. `value` is either a tree of
+the backing Om component for the root.
+
+`value` is either a tree of
 associative ClojureScript data structures or an atom wrapping a tree
 of associative ClojureScript data structures.
 
