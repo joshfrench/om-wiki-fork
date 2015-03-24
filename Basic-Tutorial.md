@@ -166,7 +166,7 @@ expression. Save and refresh the browser.
 Change the `app-state` expression to the following and refresh the browser:
 
 ```clj
-(defonce app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
+(def app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
 ```
 
 Change the `om/root` expression to the following and save. Don't bother refreshing,
