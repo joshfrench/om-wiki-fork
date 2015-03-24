@@ -166,9 +166,11 @@ expression. Save and refresh the browser.
 Change the `app-state` expression to the following and refresh the browser:
 
 ```clj
-(def app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
+(defonce app-state (atom {:list ["Lion" "Zebra" "Buffalo" "Antelope"]}))
 ```
 
+If we didn't use `defonce` the state would be restarted each time we change our code because of Figwheel's code reloading. If we wanted to try new code with the current `app-state` it would be impossible.
+ 
 Change the `om/root` expression to the following and save. Don't bother refreshing,
 [John McCarthy](http://library.stanford.edu/collections/john-mccarthy-papers-0)
 would be pissed! You should see a list of animals now.
