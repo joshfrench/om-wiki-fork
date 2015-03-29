@@ -97,3 +97,5 @@ Components might depend on several cursors. Just collect them into a map or a ve
   (om/build table-view {:rows (:courses state),
                         :cols (:classes state)})) 
 ```
+Notice that the object `{:rows (:courses state),
+                        :cols (:classes state)}` itself is not a cursor but its values are cursors.
