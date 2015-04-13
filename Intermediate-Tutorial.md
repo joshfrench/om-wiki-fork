@@ -88,6 +88,7 @@ namespace stuff:
             [compojure.core :refer [defroutes GET PUT]]
             [compojure.route :as route]
             [compojure.handler :as handler]
+            [clojure.edn :as edn]
             [datomic.api :as d]))
 ```
 
@@ -474,6 +475,7 @@ Add `POST` to the `compojure.core` import at the top of the file:
             [compojure.core :refer [defroutes GET PUT POST]] ;; <=== ADD POST
             [compojure.route :as route]
             [compojure.handler :as handler]
+            [clojure.edn :as edn]
             [datomic.api :as d]))
 ```
 
