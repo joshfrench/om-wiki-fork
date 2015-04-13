@@ -10,7 +10,7 @@ Cursor paths also specify a component's dependencies within the state's atom. Ea
 
 ## Accessing cursors
 
-Cursors behave differently during render phase and outside of it.
+Cursors behave differently during the render phase (anything that happens directly because of React is considered the render phase - everything outside, event handlers, core.async loops, etc. is not) and outside of it.
 
 During the render phase, you treat a cursor as a value, as a regular map or vector. Cursors support all the same interfaces `PersistentMap` and `PersistentVector` support, so you can `get-in`, check for keys, etc. 
 
