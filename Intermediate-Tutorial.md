@@ -67,12 +67,16 @@ To start both the server and the compilation process, run:
 
     lein figwheel 
 
+*Note:* to get a better REPL experience install/get [rlwrap](https://github.com/hanslub42/rlwrap). Most Linux systems already have it installed and OSX users can use `homebrew`. Then run:
+
+     rlwrap lein figwheel
+
 When the server is up, point your browser at
 [localhost:3449](http://localhost:3449). When it is done compiling,
 check if the Browser REPL is connected by typing:
 
 ```
-ClojureScript:cljs.user> (js/alert "Am I connected?")
+cljs.user> (js/alert "Am I connected?")
 ```
 
 You should see the alert in your browser. 
@@ -182,12 +186,11 @@ Finally we add the EDN middleware to get our final handler:
       parse-edn-body))
 ```
 
-Let's look at the client side portion now; open `src/cljs/om-async/core.cljs` in your editor. The `ns` form should look familiar, and we enable `console.log` printing. The last line tells Figwheel that we want to do code reloading:
+Let's look at the client side portion now; open `src/cljs/om-async/core.cljs` in your editor. The `ns` form should look familiar, and we enable `console.log` printing. The `ns` metadata tells Figwheel that we want to do code reloading:
 
 ```clj
-(ns om-async.core
+(ns ^:figwheel-always om-async.core
   (:require [cljs.reader :as reader]
-            [figwheel.client :as fw]
             [goog.events :as events]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true])
@@ -199,7 +202,6 @@ Let's look at the client side portion now; open `src/cljs/om-async/core.cljs` in
 
 (println "Hello world!")
 
-(fw/start {})
 ```
 
 We're going to use simple callbacks to begin this tutorial instead of
@@ -398,13 +400,12 @@ First we need to change our `project.clj` to include a dependency on
 
 ```clj
   :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.clojure/clojurescript "0.0-2850"]
+                 [org.clojure/clojurescript "0.0-3195"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [org.omcljs/om "0.8.8"]
                  [om-sync "0.1.1"] ;; <=== ADD THIS
                  [ring "1.3.2"]
                  [compojure "1.3.1"]
-                 [figwheel "0.2.4-SNAPSHOT"]
                  [com.datomic/datomic-free "0.9.5130" :exclusions [joda-time]]]
 ```
 
@@ -501,10 +502,9 @@ First we need to modify the namespace form. Since we'll be using
 `om-sync` we clean up some things:
 
 ```clj
-(ns om-async.core
+(ns ^:figwheel-always om-async.core
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :as async :refer [put! chan alts!]]
-            [figwheel.client :as fw]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [om-sync.core :refer [om-sync]]
