@@ -55,7 +55,7 @@ entered `lein figwheel` you should see a REPL. If you don't, try
 refreshing your browser window. An easy way to try the REPL is:
 
 ```clj
-ClojureScript:cljs.user> (js/alert "Am I connected?")
+cljs.user> (js/alert "Am I connected?")
 ```
 
 You should see the alert in your browser. After you click "Ok" in the
@@ -66,9 +66,9 @@ REPL before proceeding. If everything is working move from the generic
 then change the state:
 
 ```clj
-ClojureScript:cljs.user=> (in-ns 'om-tut.core)
-om-tut.core
-ClojureScript:om-tut.core=> (swap! app-state assoc :text "Do it live!")
+cljs.user=> (in-ns 'om-tut.core)
+nil
+om-tut.core=> (swap! app-state assoc :text "Do it live!")
 ```
 
 ## Om basics
@@ -150,7 +150,7 @@ You should see the second `h2` tag magically appear after saving.
 Evaluate this in the REPL:
 
 ```clj
-ClojureScript:om-tut.core=> (swap! app-state assoc :text "Multiple roots!")
+om-tut.core=> (swap! app-state assoc :text "Multiple roots!")
 ```
 
 You should see both `h2` tags update on the fly. Multiple roots are
@@ -376,10 +376,9 @@ For communication between components we will use core.async
 channels. Change your namespace form to the following:
 
 ```clj
-(ns om-tut.core
+(ns ^:figwheel-always om-tut.core
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [figwheel.client :as fw]
-    		[om.core :as om :include-macros true]
+  (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs.core.async :refer [put! chan <!]]))
 ```
@@ -453,10 +452,9 @@ Let's modify our application so we can add new contacts. Change the
 top namespace form to the following, restart `lein figwheel`, and refresh your browser:
 
 ```clj
-(ns om-tut.core
+(ns ^:figwheel-always om-tut.core
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [figwheel.client :as fw]
-  			[om.core :as om :include-macros true]
+  (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [cljs.core.async :refer [put! chan <!]]
             [clojure.data :as data]
@@ -714,9 +712,8 @@ following:
 Your source file should look like the following:
 
 ```clj
-(ns om-tut.core
-  (:require [figwheel.client :as fw]
-    		[om.core :as om :include-macros true]
+(ns ^:figwheel-always om-tut.core
+  (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [clojure.string :as string]))
 
@@ -757,10 +754,11 @@ Your source file should look like the following:
 (om/root registry-view app-state
   {:target (. js/document (getElementById "registry"))})
 
-(fw/start {
-  :on-jsload (fn []
-               ;; (stop-and-start-my app)
-               )})
+(defn on-js-reload []
+  ;; optionally touch your app-state to force rerendering depending on
+  ;; your application
+  ;; (swap! app-state update-in [:__figwheel_counter] inc)
+) 
 ```
 
 Now what we want is for `registry-view` to render different views for
@@ -960,18 +958,16 @@ We'll explain `IValue` in a moment. The ClojureScript compiler will
 emit a warning. Normally you don't want to ignore it but in this case
 we'll make an exception in order to keep the `editable` component as
 simple as possible. Since Figwheel doesn't reload code with warnings
-by default replace the call to Figwheel in `src/om_tut/core.cljs` to:
+by default add this piece of configuration to Figwheel on `project.clj`:
 
 ```clj
-(fw/start {
-           :load-warninged-code true  ;; <- Add this
-           :on-jsload (fn []
-                        ;; (stop-and-start-my app)
-                        )})
+
+              :figwheel { :load-warninged-code true  ;; <- Add this
+                          :on-jsload "om-tut-v1.core/on-js-reload" }
+
 ```
 
-Now refresh the browser. If you are still unable to load the code, do
-`lein clean` and restart `lein figwheel`.
+Run `lein clean` (just in case) and restart `lein figwheel`.
 
 This is the editable component; this might look like a lot but take a
 moment to read it and you'll see that it's quite simple.
