@@ -453,11 +453,12 @@ references a DOM node. This functionality is identical to the
 
 ```clj
 (defn set-state!
+  ([owner v] ...)
   ([owner korks v] ...))
 ```
 
 Sets component local state. `owner` is the backing Om
-component. `korks` is a key or sequences of keys. `v` is the value to
+component. `korks` is an optional key or sequence of keys. `v` is the value to
 set. Will trigger an Om re-render.
 
 ### update-state!
