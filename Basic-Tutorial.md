@@ -383,10 +383,11 @@ channels. Change your namespace form to the following:
             [cljs.core.async :refer [put! chan <!]]))
 ```
 
-Save your file and refresh the browser. (Note: as we have changed
-the namespace form and added a dependency in `project.clj` you will
-need to stop/restart the `lein figwheel` process). Change
-`contact-view` to the following:
+Save your file and refresh the browser. (Note: For this to work, there
+is already the dependency `[org.clojure/core.async "x.x.x"]`
+in your `project.clj`. When adding this manually to future projects you will
+need to stop/restart the `lein figwheel` process). Change `contact-view` 
+to the following:
 
 ```clj
 (defn contact-view [contact owner]
