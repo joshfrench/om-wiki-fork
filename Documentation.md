@@ -63,7 +63,7 @@ to the reify instance. As a rule of thumb it is not needed and can be discarded.
       (dom/h1 nil "Hello world!"))))
 ```
 
-It's important to understand the `my-widget` will be called many
+It's important to understand that `my-widget` will be called many
 times. Thus it's an anti-pattern to wrap `reify` in a `let` to
 allocate stateful entities like core.async channels. Stateful entities
 should be stored in component local state - `om.core/IInitState` or
