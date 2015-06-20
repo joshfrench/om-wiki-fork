@@ -4,14 +4,14 @@ you are not familiar with them, we recommend going through the
 first. If you are entirely new to Om, you may also benefit from a quick look through the [Conceptual overview](https://github.com/omcljs/om/wiki/Conceptual-overview).
 
 We will use
-[Figwheel](https://github.com/bhauman/lein-figwheel) to 
+[Figwheel](https://github.com/bhauman/lein-figwheel) to
 easily get an interactive environment for ClojureScript and Om.
 Figwheel does two things:
 
 - It automatically compiles and reloads your ClojureScript and CSS in
   the browser as soon as you save the file, no need to refresh.
 - It connects the browser to a REPL so you can try expressions and
-  manipulate your running app. 
+  manipulate your running app.
 
 To get started, install [Leiningen](http://leiningen.org). Then
 navigate in a terminal to the directory where you would like the tutorial
@@ -25,11 +25,11 @@ This will create a project including Om and Figwheel in a  folder
 called `om-tut`. `cd` into it and run the following command:
 
 ```
-lein figwheel 
+lein figwheel
 ```
 
 It will start auto building the ClojureScript project. The first build
-will take a few seconds. Once the build has succeeded 
+will take a few seconds. Once the build has succeeded
 open [localhost:3449](http://localhost:3449/) in your favorite
 browser (we recommend Google Chrome as it has excellent support for
 source maps). You should see an `h1` tag with the text content `Hello
@@ -40,10 +40,10 @@ Open `src/om_tut/core.cljs` in your preferred editor. Change the
 World!`. Save the file. Refresh your browser and you should see the
 new contents. The reason we need to refresh the browser is because
 `app-state` is defined with `defonce`. This is meant to prevent each
-reload from resetting the state. 
+reload from resetting the state.
 
 That's pretty boring isn't it? Let's do some live coding instead.
-Arrange your windows so that you can see both the Chrome window 
+Arrange your windows so that you can see both the Chrome window
 and your source code at the same time.
 
 Now change `dom/h1` to `dom/p` and watch the browser window. It should
@@ -77,7 +77,7 @@ In Om the application state is held in an `atom`, the one reference
 type built into ClojureScript. If you change the value of the atom via
 `swap!` or `reset!` this will always trigger a re-render of any Om
 roots attached to it (we'll explain this in a second). You can think
-of this atom as the database of your client side 
+of this atom as the database of your client side
 application. Everything in the atom should be an associative data
 structure - either a ClojureScript map or indexed sequential data
 structure such as a vector (but not a set). This means you should
@@ -108,7 +108,7 @@ arguments. The first argument is a function that takes the application
 state data and the backing React component, here called `owner`. This
 function must return an Om component - i.e. a model of the
 `om/IRender` interface, like `om.core/component` macro generates. The
-second argument  is the application state atom. The third argument 
+second argument  is the application state atom. The third argument
 is a map; it must contain a `:target` DOM node key value pair. It also
 takes other interesting options which will be covered later.
 
@@ -170,7 +170,7 @@ Change the `app-state` expression to the following and refresh the browser:
 ```
 
 If we didn't use `defonce` the state would be restarted each time we change our code because of Figwheel's code reloading. If we wanted to try new code with the current `app-state` it would be impossible.
- 
+
 Change the `om/root` expression to the following and save. Don't bother refreshing,
 [John McCarthy](http://library.stanford.edu/collections/john-mccarthy-papers-0)
 would be pissed! You should see a list of animals now.
@@ -178,7 +178,7 @@ would be pissed! You should see a list of animals now.
 ```clj
 (om/root
   (fn [data owner]
-    (om/component 
+    (om/component
       (apply dom/ul nil
         (map (fn [text] (dom/li nil text)) (:list data)))))
   app-state
@@ -192,7 +192,7 @@ the `om/root` expression to the following and save it:
 ```clj
 (om/root
   (fn [data owner]
-    (om/component 
+    (om/component
       (apply dom/ul #js {:className "animals"}
         (map (fn [text] (dom/li nil text)) (:list data)))))
   app-state
@@ -205,7 +205,7 @@ its CSS class attribute set to "animals".
 
 `#js {...}` and `#js [...]` is what is referred to as a reader
 literal. ClojureScript supports data literals for JavaScript via
-`#js`. 
+`#js`.
 
 `#js {...}` is for JavaScript objects:
 
@@ -247,7 +247,7 @@ Then change the `om/root` expression to the following and save:
 ```clj
 (om/root
   (fn [data owner]
-    (om/component 
+    (om/component
       (apply dom/ul #js {:className "animals"}
         (map stripe (:list data) (cycle ["#ff0" "#fff"])))))
   app-state
@@ -297,12 +297,15 @@ After `app-state` let's add the following code:
           (om/build-all contact-view (:contacts data)))))))
 ```
 
-In order to build an Om component we must use `om.core/build` for a
-single component and `om.core/build-all` to build many components. In
-this case we want to display a contact list so we want to use
-`om.core/build-all`. `contacts-view` returns a `div` with a `h2` and
-`ul` tag in it. We want to render several `li` elements so we call
-`apply` on `dom/ul`.
+In order to build an Om component we must use `om.core/build` for a single
+component and `om.core/build-all` to build many components. In this case
+we want to display a contact list so we use a vector of contacts as the
+cursor. `contacts-view` returns a `div` with a `h2` and `ul` tag in it. We
+want to render several `li` elements so we call `apply` on `dom/ul`. If
+you wanted to render a single component, the cursor would probably not be
+a vector and you would just `om.core/build` the component without
+`apply`ing it to a root node.
+
 
 Let's write `contact-view` now and add it after `contacts-view`.
 
@@ -317,14 +320,14 @@ Let's write `contact-view` now and add it after `contacts-view`.
 Now save the file and reload the browser. You'll see no changes and
 some errors in the the browser console or in the same screen (look for
 the yellow message in the bottom). Figwheel refuses to load code that
-has warnings. Go to the console: 
+has warnings. Go to the console:
 
 ```
 WARNING: Use of undeclared Var om-tut.core/contact-view at line 24 src/om_tut/core.cljs
 WARNING: Use of undeclared Var om-tut.core/display-name at line 30 src/om_tut/core.cljs
 ```
 
-It warns that `contact-view` is undefined, because it's defined *after* `contacts-view`. 
+It warns that `contact-view` is undefined, because it's defined *after* `contacts-view`.
 
 So let's move it before and save it again to check that the warning is gone and we only have the warning about the actually missing `display-name` function.
 
@@ -386,7 +389,7 @@ channels. Change your namespace form to the following:
 Save your file and refresh the browser. (Note: For this to work, there
 is already the dependency `[org.clojure/core.async "x.x.x"]`
 in your `project.clj`. When adding this manually to future projects you will
-need to stop/restart the `lein figwheel` process). Change `contact-view` 
+need to stop/restart the `lein figwheel` process). Change `contact-view`
 to the following:
 
 ```clj
@@ -431,7 +434,7 @@ worry we'll walk through all of it.
             {:init-state {:delete delete}}))))))
 ```
 
-**Reminder:** Notice that we're using `vec` to transform the result of `remove` (a lazy sequence) back into a vector, consistent with our aforementioned rule that state should only consist of associative data structures like maps and vectors. 
+**Reminder:** Notice that we're using `vec` to transform the result of `remove` (a lazy sequence) back into a vector, consistent with our aforementioned rule that state should only consist of associative data structures like maps and vectors.
 
 First we set the initial state by implementing `om/IInitState`. We
 just allocate a core.async channel. It's extremely important we don't
@@ -636,7 +639,7 @@ event listener to watch when the input field changes:
           (om/build-all contact-view (:contacts data)
             {:init-state state}))
         (dom/div nil
-          (dom/input 
+          (dom/input
             #js {:type "text" :ref "new-contact" :value (:text state)
                  :onChange #(handle-change % owner state)})
           (dom/button #js {:onClick #(add-contact data owner)} "Add contact"))))))
@@ -695,7 +698,7 @@ to re-add these facilities yourself after you've worked through this
 section.
 
 Let's start fresh. Your `resources/public/index.html` should look like the
-following: 
+following:
 
 ```html
 <!DOCTYPE html>
@@ -724,13 +727,13 @@ Your source file should look like the following:
   (atom
     {:people
      [{:type :student :first "Ben" :last "Bitdiddle" :email "benb@mit.edu"}
-      {:type :student :first "Alyssa" :middle-initial "P" :last "Hacker" 
+      {:type :student :first "Alyssa" :middle-initial "P" :last "Hacker"
        :email "aphacker@mit.edu"}
-      {:type :professor :first "Gerald" :middle "Jay" :last "Sussman" 
+      {:type :professor :first "Gerald" :middle "Jay" :last "Sussman"
        :email "metacirc@mit.edu" :classes [:6001 :6946]}
       {:type :student :first "Eva" :middle "Lu" :last "Ator" :email "eval@mit.edu"}
       {:type :student :first "Louis" :last "Reasoner" :email "prolog@mit.edu"}
-      {:type :professor :first "Hal" :last "Abelson" :email "evalapply@mit.edu" 
+      {:type :professor :first "Hal" :last "Abelson" :email "evalapply@mit.edu"
        :classes [:6001]}]
      :classes
      {:6001 "The Structure and Interpretation of Computer Programs"
@@ -759,7 +762,7 @@ Your source file should look like the following:
   ;; optionally touch your app-state to force rerendering depending on
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
-) 
+)
 ```
 
 Now what we want is for `registry-view` to render different views for
@@ -775,7 +778,7 @@ After `display-name` let's write the following:
   [person owner] (student-view person owner))
 
 (defmethod entry-view :professor
-  [person owner] (professor-view person owner)) 
+  [person owner] (professor-view person owner))
 ```
 
 Don't save these yet as we haven't written `student-view` or
