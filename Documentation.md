@@ -202,7 +202,7 @@ is always a map.
 ```
 
 Called on all changes to application state or component local
-state. Must return an Om component, a React component, or a some value
+state. Must return an Om component, a React component, or some value
 that React knows how to render.
 
 If you implement `om.core/IRender` you should not implement
