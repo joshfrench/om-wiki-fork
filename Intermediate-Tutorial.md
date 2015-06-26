@@ -51,7 +51,7 @@ reload our front end ClojureScript while we code. Figwheel uses a
 server to auto compile our code and push it to the browser. But we
 also need a server running our back end code. To simplify things, we
 will configure Figwheel in our `project.clj` to also serve our
-customer handler:
+custom handler:
 
 ```clj
   :figwheel {:ring-handler om-async.core/handler}
