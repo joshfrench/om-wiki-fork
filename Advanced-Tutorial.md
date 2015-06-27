@@ -157,7 +157,7 @@ looks something like the following:
 ```cljs
 (defn widget-c [data owner]
   (reify
-    om/InitState
+    om/IInitState
     (init-state [_]
       {:message nil})
     om/IDidMount
