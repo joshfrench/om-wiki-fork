@@ -166,12 +166,12 @@ looks something like the following:
         (go
           (loop [e (<! events)]
             (om/set-state! owner :message (:data e))
-            (recur (<! events)))))))
+            (recur (<! events))))))
     om/IRenderState
     (render-state [_ {:keys [message]}]
       (if message
         (dom/p nil message)
-        (dom/p nil "Waiting ... waiting ... waiting ..."))))
+        (dom/p nil "Waiting ... waiting ... waiting ...")))))
 ```
 
 ## Reference Cursors
