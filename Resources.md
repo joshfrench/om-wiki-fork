@@ -8,3 +8,7 @@
 ### Cookbooks
 
 - [Om Cookbook](https://github.com/om-cookbook/om-cookbook)
+
+### Videos
+
+- [Om Next](https://www.youtube.com/watch?v=ByNs9TG30E8)
