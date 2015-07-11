@@ -11,4 +11,4 @@
 
 ### Videos
 
-- [Om Next](https://www.youtube.com/watch?v=ByNs9TG30E8)
+- [Om Next Introduction](https://www.youtube.com/watch?v=ByNs9TG30E8)
