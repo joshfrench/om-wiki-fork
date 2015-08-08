@@ -41,7 +41,7 @@ or `om.core/update!`.
 
 ## [[Cursors]]
 
-Om components like React components take props. In Om components the
+Om components, like React components, take props. In Om components the
 props are actually a *cursor* into the app state. Cursors are
 conceptually related to functional lenses and zippers. Don't be
 afraid–it just means that Om component props *internally* maintain
