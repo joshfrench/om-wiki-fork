@@ -176,7 +176,8 @@ always a map.
 In your implementation if you wish to detect prop transitions **you
 must use `om.core/get-props`** to get the previous props. This is 
 because your component constructor function is called with the 
-updated props.
+updated props. Similarly, if you wish to detect local state transitions, you should use
+`om.core/get-render-state` to get the previous local state.
 
 Note:: You cannot update local component state in this method. 
 If you wish to change local state in response to prop changes use
