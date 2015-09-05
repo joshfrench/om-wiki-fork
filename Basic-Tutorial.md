@@ -23,7 +23,7 @@ lein new figwheel om-tut -- --om
 
 This will create a project including Om and Figwheel in a  folder
 called `om-tut`. `cd` into it and run the following command:
-
+(you will need [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/) installed)
 ```
 lein figwheel
 ```
