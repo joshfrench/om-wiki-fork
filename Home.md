@@ -12,5 +12,5 @@
 
 ## Om Next
 
-* [[om.next Quick Start]]
-* [[om.next Documentation]]
+* [[Quick Start (om.next)]]
+* [[Documentation (om.next)]]
