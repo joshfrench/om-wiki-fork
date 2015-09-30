@@ -1,3 +1,5 @@
+## Om Now
+
 * [[Conceptual Overview]]
 * [[Basic Tutorial]], Om basic
 * [[Intermediate Tutorial]], full stack integration
@@ -7,3 +9,8 @@
 * [[Documentation]]
 * [[Testing]]
 * [[Resources]]
+
+## Om Next
+
+* [[om.next Quick Start]]
+* [[om.next Documentation]]
