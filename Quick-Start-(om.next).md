@@ -229,14 +229,6 @@ component you are currently rendering.
 > may implement please refer to the
 > [React documetation](https://facebook.github.io/react/docs/component-specs.html)
 
-### Next Steps
-
-While it's entertaining that your modifications to the source file are
-reflected immediately into the browser this is not a practical path
-for application customization that isn't just modifying the
-presentation aspects. We want to be able to customize a components
-*data*. For this we must learn how to parameterize components.
-
 ## Parameterizing Your Components
 
 Like plain React components, Om components take props as their first
@@ -262,8 +254,8 @@ look like the following:
 ```
 
 This is slightly more verbose than our previous example but we've
-gained significantly in abstraction power. The `HelloWorld` component
-is no longer hard coded to a specific string.
+gained abstraction power - the `HelloWorld` component is no longer hard
+coded to a specific string.
 
 For example we can change our code to the following:
 
@@ -286,3 +278,7 @@ For example we can change our code to the following:
       (range 3)))
   (gdom/getElement "app"))
 ```
+
+We can render as many `HelloWorld` components as we please and they
+all receive custom data. Feel free to change `(range 3)` to something
+else.
