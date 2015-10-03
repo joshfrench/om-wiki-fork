@@ -155,6 +155,8 @@ page with the title "Om Tutorial!" visible on your browser tab.
 Open the Chrome developer tools with the *View > Developer >
 JavaScript Console* menu.
 
+In the JavaScript Console you should see `Hello, world!` printed out.
+
 ## Your First Component
 
 Create a file `src/om_tutorial/core.cljs` and edit it to look like the
@@ -209,11 +211,13 @@ component you are currently rendering.
 
 ### Next Steps
 
-After a while you might get the insight that you would like
-to customize (aka parameterize) your component without hard coding a
-text value.
+While it's entertaining that your modifications to the source file are
+reflected immediately into the browser this is not a practical path
+for application customization that isn't style oriented. We want to be
+able to customize a components data. For this we must learn how to
+parameterize components.
 
-## Parameterizing Components
+## Parameterizing Your Components
 
 Like plain React components Om components take props as their first
 argument and children as the remaining ones. Let's modify our file to
@@ -234,5 +238,31 @@ look like the following:
 
 (js/React.render
   (hello {:title "Hello, world!"})
+  (gdom/getElement "app"))
+```
+
+This is slightly more verbose than our previous example but we've
+gained significantly in abstraction power. The `HelloWorld` component
+is no longer hard coded to a specific string.
+
+For example we can change our code to the following:
+
+```clj
+(ns om-tutorial.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(defui HelloWorld
+  Object
+  (render [this]
+    (dom/div nil (get (om/props this) :title))))
+
+(def hello (om/create-factory HelloWorld))
+
+(js/React.render
+  (apply dom/p nil
+    (map #(hello {:title (str "Hello " %)})
+      (range 3)))
   (gdom/getElement "app"))
 ```
