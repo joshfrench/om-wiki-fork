@@ -13,19 +13,23 @@ Om Next borrows ideas liberally from
 [Netflix's Falcor](http://netflix.github.io/falcor/), and
 [Cognitect's Datomic](http://www.datomic.com). If you are not familiar
 with these technologies, fear not, this tutorial makes few
-expectations. You will be guided from the most basic declarative
+assumptions. You will be guided from the most basic declarative
 component to advanced components which transparently synchronize
 state divided over local and remote data sources.
 
 ## Setting Up
 
-This tutorial uses [Leiningen](http://leiningen.org) and
-[Figwheel](https://www.youtube.com/watch?v=j-kj2qwJa_E). Leiningen is
-a standard tool for managing Clojure and ClojureScript library
+This tutorial uses [Leiningen](http://leiningen.org),
+[Figwheel](https://www.youtube.com/watch?v=j-kj2qwJa_E), and
+[Google Chrome](http://www.google.com/chrome/). Leiningen is a
+standard tool for managing Clojure and ClojureScript library
 dependencies. Figwheel is a ClojureScript build tool and REPL that
 enables an expressive live programming model well suited for
 interactive application development. Figwheel also plays well with
 text editors that make traditional REPL integration more challenging.
+
+You can of course use any web browser, but this tutorial only includes
+relevant instructions for Chrome to avoid tangential material.
 
 Create a new Leiningen project and switch into it:
 
@@ -99,7 +103,7 @@ Make a file `resources/public/index.html` and include the following:
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title></title>
+        <title>Om Tutorial!</title>
     </head>
     <body>
         <div id="app"></div>
@@ -108,7 +112,48 @@ Make a file `resources/public/index.html` and include the following:
 </html>
 ```
 
-Point your browser at [http://localhost:3349](http://localhost:3349).
+## Checkpoint
+
+Create a file `src/om_tutorial/core.cljs`:
+
+```shell
+mkdir -p src/om_tutorial
+touch src/om_tutorial/core.cljs
+```
+
+Edit its contents to look like the following:
+
+```clj
+(ns om-tutorial.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(println "Hello world!")
+```
+
+Start Figwheel:
+
+```clj
+lein run -m clojure.main script/figwheel.clj
+```
+
+For enhanced REPL behavior it's recommended that you install
+[rlwrap](http://utopia.knoware.nl/~hlub/uck/rlwrap/). Under OS X this
+can be easily done with [brew](http://brew.sh).
+
+If you have `rlwrap` installed you can then launch with:
+
+```clj
+rlwrap lein run -m clojure.main script/figwheel.clj
+```
+
+Point your browser at
+[http://localhost:3349](http://localhost:3349). You should see a blank
+page with the title "Om Tutorial!" visible on your browser tab.
+
+Open the Chrome developer tools with the *View > Developer >
+JavaScript Console* menu.
 
 ## Your First Component
 
