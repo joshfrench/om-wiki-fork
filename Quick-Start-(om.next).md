@@ -49,14 +49,14 @@ Make a file `resources/public/index.html` and include the following:
 ```html
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    <div id="app"></div>
-    <script src="js/main.js"></script>
-</body>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script src="js/main.js"></script>
+    </body>
 </html>
 ```
 
