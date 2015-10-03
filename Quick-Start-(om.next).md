@@ -1,3 +1,5 @@
+> **WARNING**: This page is under heavy active development
+
 ## Introduction
 
 Om Next is a uniform yet extensible approach to building networked
@@ -166,8 +168,14 @@ In the JavaScript Console you should see `Hello, world!` printed out.
 
 ## Your First Component
 
-Create a file `src/om_tutorial/core.cljs` and edit it to look like the
-following:
+Create a file `src/om_tutorial/core.cljs`:
+
+```shell
+mkdir -p src/om_tutorial
+touch src/om_tutorial/core.cljs
+```
+
+Edit `src/om_tutorial/core.cljs` to look like the following:
 
 ```clj
 (ns om-tutorial.core
@@ -185,15 +193,17 @@ following:
 (js/React.render (hello) (gdom/getElement "app"))
 ```
 
-Try modifying the code and see that the browser immediately
-responds.
+Try modifying the `"Hello, world!"` string and saving the file. You
+should see that the browser immediately updates.
+
+This file presents a lot of new ideas, let's break them down.
 
 ### The `ns` form
 
 The very first thing we encounter is the ClojureScript `ns` form. This
 declares the current namespace (in other languages you might call this
-"module"). We require `goog.dom`, `om.next`, and `om.dom`. Other
-languages might call this "importing".
+"module"). We require the `goog.dom`, `om.next`, and `om.dom`
+libraries. Other languages might call this processs "importing".
 
 ### defui
 
