@@ -1,3 +1,5 @@
+## Setting Up
+
 Create a new Leiningen project:
 
 ```shell
