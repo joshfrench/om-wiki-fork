@@ -226,8 +226,8 @@ will customize the component in some way. The remaining arguments will
 be `children` - the components should should be rendered the parent
 component you are currently rendering.
 
-> **Note**: for a more detailed list of methods that components can
-> implement please refer to the
+> **Note**: For a more detailed list of React methods that components
+> may implement please refer to the
 > [React documetation](https://facebook.github.io/react/docs/component-specs.html)
 
 ### Next Steps
