@@ -162,9 +162,8 @@ Point your browser at
 page with the title "Om Tutorial!" visible on your browser tab.
 
 Open the Chrome developer tools with the **View > Developer >
-JavaScript Console** menu.
-
-In the JavaScript Console you should see `Hello, world!` printed out.
+JavaScript Console** menu. In the JavaScript Console you should see
+`Hello, world!` printed out.
 
 ## Your First Component
 
@@ -215,7 +214,7 @@ components.
 
 If you are familiar with Om, you will notice this is a big
 departure. Om Next components are truly plain JavaScript classes. This
-component only declares one JavaScript object method - `render`.
+component only declares one *JavaScript* `Object` method - `render`.
 
 ### render
 
@@ -234,13 +233,13 @@ component you are currently rendering.
 
 While it's entertaining that your modifications to the source file are
 reflected immediately into the browser this is not a practical path
-for application customization that isn't style oriented. We want to be
-able to customize a components data. For this we must learn how to
-parameterize components.
+for application customization that isn't just modifying the
+presentation aspects. We want to be able to customize a components
+*data*. For this we must learn how to parameterize components.
 
 ## Parameterizing Your Components
 
-Like plain React components Om components take props as their first
+Like plain React components, Om components take props as their first
 argument and children as the remaining ones. Let's modify our file to
 look like the following:
 
