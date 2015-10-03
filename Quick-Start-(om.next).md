@@ -152,8 +152,8 @@ Point your browser at
 [http://localhost:3349](http://localhost:3349). You should see a blank
 page with the title "Om Tutorial!" visible on your browser tab.
 
-Open the Chrome developer tools with the *View > Developer >
-JavaScript Console* menu.
+Open the Chrome developer tools with the **View > Developer >
+JavaScript Console** menu.
 
 In the JavaScript Console you should see `Hello, world!` printed out.
 
