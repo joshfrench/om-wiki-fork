@@ -213,7 +213,7 @@ the features of ClojureScript's `deftype` and `defrecord` with a
 variety of modifications better suited to the definition of React
 components.
 
-If you are familiar with Om note you will notice this is a big
+If you are familiar with Om, you will notice this is a big
 departure. Om Next components are truly plain JavaScript classes. This
 component only declares one JavaScript object method - `render`.
 
@@ -225,6 +225,10 @@ arguments. The first argument will be `props` - the properties that
 will customize the component in some way. The remaining arguments will
 be `children` - the components should should be rendered the parent
 component you are currently rendering.
+
+> **Note**: for a more detailed list of methods that components can
+> implement please refer to the
+> [React documetation](https://facebook.github.io/react/docs/component-specs.html)
 
 ### Next Steps
 
