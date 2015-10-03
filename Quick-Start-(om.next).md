@@ -1,26 +1,60 @@
+## Introduction
+
+Om Next provides a uniform approach to building networked interactive
+applications. By providing a disciplined approach to the management of
+application state, Om Next narrows the scope of incidental complexity
+often found in user interface development. The Om Next discipline is
+founded upon immutable data structures, declarative data
+specifications, and a simple convention for routing data access and
+mutations.
+
+Om Next borrows idea liberally from Facebook's Relay, Netflix's
+Falcor, and Cognitect's Datomic. If you are not familiar with these
+technologies, fear not, this tutorial make no expectations. You will
+be guided from the most basic component to advanced components which
+transparently divide their state between local and remote data
+sources.
+
 ## Setting Up
 
-Create a new Leiningen project:
+This tutorial uses Leiningen and Figwheel. Leiningen is a standard
+tool for managing Clojure and ClojureScript library
+dependencies. Figwheel is a ClojureScript build tool and REPL that
+enables an expressive live programming model well suited for
+interactive application development. Figwheel also plays well with
+text editors that make traditional REPL integration more challenging.
+
+Create a new Leiningen project and switch into it:
 
 ```shell
 lein new om-tutorial
+cd om-tutorial
 ```
 
-Modify your `project.clj` to look like the following:
+Inside your project directory modify `project.clj` to look like the
+following:
 
 ```clj
 (defproject om-tutorial "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :description "My first Om program!"
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.122"]
                  [org.omcljs/om "0.9.0-SNAPSHOT"]
                  [figwheel-sidecar "0.4.0" :scope "provided"]])
 ```
 
-Create a file `script/figwheel.clj`:
+A `project.clj` allows you to declare a variety of properties about
+your project, in our the case the most important are the list of
+`:dependencies`.
+
+Now create a file `script/figwheel.clj`.
+
+```
+mkdir script
+touch script/figwheel.clj
+```
+
+Change `script/figwheel.clj` to look like the following:
 
 ```clj
 (require '[figwheel-sidecar.repl :as r]
@@ -43,6 +77,9 @@ Create a file `script/figwheel.clj`:
 ```
 
 ## Markup
+
+We now need to provide some basic markup to host our ClojureScript
+application.
 
 Make a file `resources/public/index.html` and include the following:
 
