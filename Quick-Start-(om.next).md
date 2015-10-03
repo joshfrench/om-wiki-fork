@@ -71,12 +71,19 @@ Change `script/figwheel.clj` to look like the following:
      :source-paths ["src"]
      :compiler {:main 'om-tutorial.core
                 :asset-path "js"
-                :output-to  "resources/public/js/main.js"
+                :output-to "resources/public/js/main.js"
                 :output-dir "resources/public/js"
                 :verbose true}}]})
 
 (ra/cljs-repl)
 ```
+
+This file describes how to build your project and starts a REPL. If
+you are new to ClojureScript you may find it a bit bewildering. After
+this tutorial you may want to work through the ClojureScript
+[Quick Start](https://github.com/clojure/clojurescript/wiki/Quick-Start)
+to re-inforce ClojureScript tooling concepts encountered in this
+tutorial.
 
 ## Markup
 
