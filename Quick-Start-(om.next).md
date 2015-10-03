@@ -96,7 +96,14 @@ tutorial.
 We now need to provide some basic markup to host our ClojureScript
 application.
 
-Make a file `resources/public/index.html` and include the following:
+Make a file `resources/public/index.html`:
+
+```shell
+mkdir -p resources/public
+touch resources/public/index.html
+```
+
+Change the contents of this file to the following:
 
 ```html
 <!DOCTYPE html>
