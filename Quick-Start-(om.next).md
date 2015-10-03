@@ -14,12 +14,13 @@ Modify your `project.clj` to look like the following:
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.122"]
+                 [org.omcljs/om "0.9.0-SNAPSHOT"]
                  [figwheel-sidecar "0.4.0" :scope "provided"]])
 ```
 
 Create a file `script/figwheel.clj`:
 
-```
+```clj
 (require '[figwheel-sidecar.repl :as r]
          '[figwheel-sidecar.repl-api :as ra])
 
@@ -38,3 +39,5 @@ Create a file `script/figwheel.clj`:
 
 (ra/cljs-repl)
 ```
+
+Point your browser at http://localhost:3349.
