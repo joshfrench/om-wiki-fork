@@ -108,7 +108,7 @@ Make a file `resources/public/index.html` and include the following:
 </html>
 ```
 
-Point your browser at http://localhost:3349.
+Point your browser at [http://localhost:3349](http://localhost:3349).
 
 ## Your First Component
 
@@ -132,11 +132,43 @@ following:
 ```
 
 Try modifying the code and see that the browser immediately
-responds. After a while you might get the insight that you would like
+responds.
+
+### The `ns` form
+
+The very first thing we encounter is the ClojureScript `ns` form. This
+declares the current namespace (in other languages you might call this
+"module"). We require `goog.dom`, `om.next`, and `om.dom`. Other
+languages might call this "importing".
+
+### defui
+
+The most important bit is `defui`. The `defui` macro gives us a
+succinct syntax for declaring Om components. `defui` supports many of
+the features of ClojureScript's `deftype` and `defrecord` with a
+variety of modifications better suited to the definition of React
+components.
+
+If you are familiar with Om note you will notice this is a big
+departure. Om Next components are truly plain JavaScript classes. This
+component only declares one JavaScript object method - `render`.
+
+### render
+
+`render` should return an Om or React component. In our case we return
+a `div`. Components are usually constructed from two or more
+arguments. The first argument will be `props` - the properties that
+will customize the component in some way. The remaining arguments will
+be `children` - the components should should be rendered the parent
+component you are currently rendering.
+
+### Next Steps
+
+After a while you might get the insight that you would like
 to customize (aka parameterize) your component without hard coding a
 text value.
 
-### Parameterizing Your First Component
+## Parameterizing Components
 
 Like plain React components Om components take props as their first
 argument and children as the remaining ones. Let's modify our file to
