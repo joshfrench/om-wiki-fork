@@ -1,19 +1,21 @@
 ## Introduction
 
-Om Next provides a uniform approach to building networked interactive
-applications. By providing a disciplined approach to the management of
-application state, Om Next narrows the scope of incidental complexity
-often found in user interface development. The Om Next discipline is
-founded upon immutable data structures, declarative data
-specifications, and a simple convention for routing data access and
-mutations.
+Om Next is a uniform yet extensible approach to building networked
+interactive applications. By providing a structured discipline over
+the management of application state, Om Next narrows the scope of
+incidental complexity often found in user interface development. The
+Om Next discipline is founded upon immutable data structures,
+declarative data specifications, and a simple convention for routing
+data access and mutations.
 
-Om Next borrows idea liberally from Facebook's Relay, Netflix's
-Falcor, and Cognitect's Datomic. If you are not familiar with these
-technologies, fear not, this tutorial make no expectations. You will
-be guided from the most basic component to advanced components which
-transparently divide their state between local and remote data
-sources.
+Om Next borrows ideas liberally from
+[Facebook's Relay](https://facebook.github.io/relay/),
+[Netflix's Falcor](http://netflix.github.io/falcor/), and
+[Cognitect's Datomic](http://www.datomic.com). If you are not familiar
+with these technologies, fear not, this tutorial make no
+expectations. You will be guided from the most basic component to
+advanced components which transparently divide their state between
+local and remote data sources.
 
 ## Setting Up
 
