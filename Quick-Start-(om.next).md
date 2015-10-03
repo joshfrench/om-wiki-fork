@@ -12,15 +12,16 @@ Om Next borrows ideas liberally from
 [Facebook's Relay](https://facebook.github.io/relay/),
 [Netflix's Falcor](http://netflix.github.io/falcor/), and
 [Cognitect's Datomic](http://www.datomic.com). If you are not familiar
-with these technologies, fear not, this tutorial make no
-expectations. You will be guided from the most basic component to
-advanced components which transparently divide their state between
-local and remote data sources.
+with these technologies, fear not, this tutorial makes few
+expectations. You will be guided from the most basic declarative
+component to advanced components which transparently synchronize
+state divided over local and remote data sources.
 
 ## Setting Up
 
-This tutorial uses Leiningen and Figwheel. Leiningen is a standard
-tool for managing Clojure and ClojureScript library
+This tutorial uses [Leiningen](http://leiningen.org) and
+[Figwheel](https://www.youtube.com/watch?v=j-kj2qwJa_E). Leiningen is
+a standard tool for managing Clojure and ClojureScript library
 dependencies. Figwheel is a ClojureScript build tool and REPL that
 enables an expressive live programming model well suited for
 interactive application development. Figwheel also plays well with
@@ -45,13 +46,13 @@ following:
                  [figwheel-sidecar "0.4.0" :scope "provided"]])
 ```
 
-A `project.clj` allows you to declare a variety of properties about
-your project, in our the case the most important are the list of
-`:dependencies`.
+A Leiningen `project.clj` file simply allows you to declare a variety
+of properties about your project. In our the case the most important
+is the list of `:dependencies`.
 
 Now create a file `script/figwheel.clj`.
 
-```
+```shell
 mkdir script
 touch script/figwheel.clj
 ```
@@ -78,11 +79,12 @@ Change `script/figwheel.clj` to look like the following:
 (ra/cljs-repl)
 ```
 
-This file describes how to build your project and starts a REPL. If
-you are new to ClojureScript you may find it a bit bewildering. After
-this tutorial you may want to work through the ClojureScript
+This file describes how to build your ClojureScript project and starts
+a REPL. If you are new to ClojureScript you may find this file a bit
+overwhelming. If you would like to know more, after this tutorial you
+may want to work through the ClojureScript
 [Quick Start](https://github.com/clojure/clojurescript/wiki/Quick-Start)
-to re-inforce ClojureScript tooling concepts encountered in this
+to re-inforce fundamental ClojureScript concepts encountered in this
 tutorial.
 
 ## Markup
