@@ -82,3 +82,32 @@ following:
 
 (js/React.render (hello) (gdom/getElement "app"))
 ```
+
+Try modifying the code and see that the browser immediately
+responds. After a while you might get the insight that you would like
+to customize (aka parameterize) your component without hard coding a
+text value.
+
+### Parameterizing Your First Component
+
+Like plain React components Om components take props as their first
+argument and children as the remaining ones. Let's modify our file to
+look like the following:
+
+```clj
+(ns om-tutorial.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(defui HelloWorld
+  Object
+  (render [this]
+    (dom/div nil (get (om/props this) :title))))
+
+(def hello (om/create-factory HelloWorld))
+
+(js/React.render
+  (hello {:title "Hello, world!"})
+  (gdom/getElement "app"))
+```
