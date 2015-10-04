@@ -1,4 +1,5 @@
-> **WARNING**: This page is under heavy active development
+> **WARNING**: This page is under heavy active development. *DO NOT
+> EDIT THIS PAGE*.
 
 ## Introduction
 
@@ -282,3 +283,40 @@ For example we can change our code to the following:
 We can render as many `HelloWorld` components as we please and they
 all receive custom data. Feel free to change `(range 3)` to something
 else.
+
+## State
+
+We have thus far seen that Om Next components work quite well as plain
+React components. However we have yet to see anything that involves
+state changes. In Om Next state changes are managed by a
+*reconciler*. The reconciler accepts novelty, merges it into the
+application state, finds all affected components, and schedules a
+re-render.
+
+### Reconciler
+
+```clj
+(ns om-tutorial.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(def app-state (atom {:count 0}))
+
+(defui Counter
+  Object
+  (render [this]
+    (let [{:keys [count]} (om/props this)]
+      (dom/div nil
+        (dom/span nil (str "Count: " count))
+        (dom/button
+          #js {:onClick (fn [e])}
+          "Click me!")))))
+
+(def reconciler
+  (om/reconciler {:state app-state}))
+
+(om/add-root! reconciler
+  (gdom/getElement "app") Counter)
+```
+
