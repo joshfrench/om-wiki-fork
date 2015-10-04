@@ -337,7 +337,7 @@ for the reonciler to control.
   (om/reconciler {:state app-state}))
 
 (om/add-root! reconciler
-  (gdom/getElement "app") Counter)
+  Counter (gdom/getElement "app"))
 ```
 
 You should now see a counter in your browser window. Clicking on the
@@ -390,4 +390,4 @@ while delivering the benefits found in systems like Relay and Falcor.
 In Om Next we call this process "parsing" rather than routing. The
 reason will become apparent as the tutorial progresses.
 
-## Om Next Parsing
+## Parsing
