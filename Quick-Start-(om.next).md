@@ -358,3 +358,36 @@ own. In Om Next, instead of introducing a new abstraction we simply
 embrace a time tested way of preventing such state coupling.
 
 ## Client Server Architecture
+
+Om Next simply embraces a client server architecture to enforce a
+separation between components and code that modifies global
+state. This design is embraced even if an Om Next application is
+entirely client side.
+
+Applications designed in this way make it trivial to introduce more
+sophisticated stores like DataScript. In the case where there is a
+real remote server component, architecting Om Next applications in
+this way permits arbitrarily partitioning of state between local
+client logic and remote server logic, i.e. *fully transparent
+synchronization*.
+
+### Routing
+
+Adopting a client server architecture means there must a protocol
+between the client and the server. This protocol must satisfy how
+state is transferred to the client and how the client can communicate
+state transitions to the server.
+
+One of the most successful and popular concrete design patterns to
+emerge is REST due to its extreme simplicity - the unit of composition
+is a URL.
+
+Om Next however departs from tradition and embraces a simple data
+representation rather than a string. This simple data representation
+eliminates the problematic tradeoffs present in string based routing
+while delivering the benefits found in systems like Relay and Falcor.
+
+In Om Next we call this process "parsing" rather than routing. The
+reason will become apparent as the tutorial progresses.
+
+## Om Next Parsing
