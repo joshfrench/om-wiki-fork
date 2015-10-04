@@ -385,61 +385,63 @@ that is, *fully transparent synchronization*.
 
 ### Routing
 
-Adopting a client server architecture means there must a protocol
-between the client and the server. This protocol must satisfy how
-state is transferred to the client and how the client can communicate
-state transitions to the server.
+Adopting a client server architecture means there must some
+established protocol between the client and the server. This protocol
+must be able to describe state transfer (reads) and state transitions
+(mutations).
 
-One of the most successful and popular concrete design patterns to
-emerge is REST due to its extreme simplicity - the unit of composition
-is a URL.
+Typical web applications already follow this pattern in the form of
+REST. However the unit of composition is incredibly inexpressive - a
+URL. Relay and Falcor have already demonstrated the benefits of moving
+to a richer expression of client demands.
 
-Om Next however departs from tradition and embraces a simple data
-representation rather than a string. This simple data representation
-eliminates the problematic tradeoffs present in string based routing
-while delivering the benefits found in systems like Relay and Falcor.
+Om Next also departs from tradition and embraces a simple data
+representation of client. This simple data representation eliminates
+the problematic tradeoffs present in string based routing. The
+data representation is a variant on s-expressions - EDN.
 
-In Om Next we call this process "parsing" rather than routing. The
-reason will become apparent as the tutorial progresses.
+Because of these important difference, in Om Next we call this process
+"parsing" rather than routing. The rationale for this departure will
+become more and more self-evident as the tutorial progresses.
 
 ## Parsing & Query Expressions
 
 We will first study parsing in isolation.
 
-Parsing involves handing two kinds of operations - reads and
+Parsing involves handing two kinds of expressions - reads and
 mutations. Reads should return the requested application state,
-mtuations should transition the application state to some new
-desired state.
+mutations should transition the application state to some new
+desired state and describe what changed.
 
 A parser is created from two functions that provides semantics for
-reading and mutation.
+reads and mutations.
 
 ```clj
 (def my-parser (om.next/parser {:read read-fn :mutate mutate-fn}))
 ```
 
-A parser takes a **query expression** and evaluates it using your
-read and mutate implementations.
+A parser takes a **query expression** and evaluates it using the
+provided read and mutate implementations.
 
 Inspired by [Datomic Pull Syntax](http://docs.datomic.com/pull.html),
-an Om Next *query expression* is a vector that enumerates desires
+an Om Next *query expression* is a vector that enumerates the desired
 state reads and state mutations.
 
-For example to get a todo list might look something like the
+For example to getting a todo list might look something like the
 following:
 
 ```clj
 [{:todos/list [:todo/created :todo/title]}]
 ```
 
-To update a todo list item might look something like the following:
+Updating a todo list item might look something like the following:
 
 ```clj
 [(todo/update {:todo/title "Get Orange Juice"})]
 ```
 
-This might sound a bit abstract so let's just create a simple read
-function and a parser and see how it works in practice.
+We will interactively parse some query expressions at the REPL to
+build our intuition of this fundamental Om Next concept.
 
 ### A Read Function
 
