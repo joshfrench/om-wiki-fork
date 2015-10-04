@@ -1,5 +1,4 @@
-> **WARNING**: This page is under heavy active development. *DO NOT
-> EDIT THIS PAGE*.
+> **DO NOT EDIT THIS PAGE**: This page is under heavy active development. 
 
 ## Introduction
 
