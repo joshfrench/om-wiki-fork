@@ -409,6 +409,17 @@ reading and mutation.
 A parser takes a **query expression** and evaluates it using your
 read and mutate implementations.
 
+Inspired by [Datomic Pull Syntax](http://docs.datomic.com/pull.html),
+an Om Next *query expression* is a vector that enumerates desires
+state reads and state mutations.
+
+For example to get a todo list might look something like the
+following:
+
+```clj
+[{:todos/list [:todos/created :todos/title]}]
+```
+
 This might sound a bit abstract so let's just create a simple read
 function and a parser now.
 
