@@ -33,15 +33,20 @@ text editors that make traditional REPL integration more challenging.
 You can of course use any web browser, but this tutorial only includes
 relevant instructions for Chrome to avoid tangential material.
 
-Create a new Leiningen project and switch into it:
+Create a new project and switch into it:
 
 ```shell
-lein new om-tutorial
+mkdir om-tutorial
 cd om-tutorial
 ```
 
-Inside your project directory modify `project.clj` to look like the
-following:
+Inside your project directory create a `project.clj`:
+
+```clj
+touch project.clj
+```
+
+Make it look like the following:
 
 ```clj
 (defproject om-tutorial "0.1.0-SNAPSHOT"
