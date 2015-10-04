@@ -447,8 +447,23 @@ Let's create a parser:
 expressions.
 
 ```clj
-(my-parser {:state (atom {:count 0})}
-  [:count :title])
+(def my-state (atom {:count 0})
+(my-parser {:state my-state} [:count :title])
+;; => {:count 0, :title :not-found}
+```
+
+Aha! *We* supply the `env` parameter.
+
+A query expression is *always* a vector. The result of parsing a query
+expression is *always* a map.
+
+On the front end the reconciler will invoke your parser on your behalf
+and pass along the `:state` parameter.
+
+### A Mutate Function
+
+```clj
+
 ```
 
 ## Queries
