@@ -390,4 +390,69 @@ while delivering the benefits found in systems like Relay and Falcor.
 In Om Next we call this process "parsing" rather than routing. The
 reason will become apparent as the tutorial progresses.
 
-## Parsing
+## Parsing & Query Expressions
+
+We will first study parsing in isolation.
+
+Parsing involves handing two kinds of operations - reads and
+mutations. Reads should return the requested application state,
+mtuations should transition the application state to some new
+desired state.
+
+A parser is created from two functions that provides semantics for
+reading and mutation.
+
+```clj
+(def my-parser (om.next/parser {:read read-fn :mutate mutate-fn}))
+```
+
+A parser takes a **query expression** and evaluates it using your
+read and mutate implementations.
+
+This might sound a bit abstract so let's just create a simple read
+function and a parser now.
+
+### A Read Function
+
+The signature of a read function is `[env key params]`. `env` is a
+hash map containing any context necessary to accomplish reads. `key`
+is the key that is being requested to be read. Finally `params` is a
+hash map of parameters that can be used to customize the read. In many
+cases `params` will be empty.
+
+Let's make this concrete by trying some things at the Figwheel REPL:
+
+```cljs
+(defn read
+  [{:keys [state] :as env} key params]
+  (let [st @state]
+    (if-let [[_ v] (find st key)]
+      {:value v}
+      {:value :not-found})))
+```
+
+All our read function does is read from a `:state` property supplied
+by the `env` parameter. We will see how `:state` is supplied
+shortly. Our read simply checks if the application state contains the
+key. Your read function must return a hash map containing a `:value`
+entry.
+
+Let's create a parser:
+
+```clj
+(def my-parser (om/parser {:read read}))
+```
+
+`my-parser` is just a function. We can now read Om Next "query" 
+expressions.
+
+```clj
+(my-parser {:state (atom {:count 0})}
+  [:count :title])
+```
+
+## Queries
+
+## Mutations
+
+## Remoting
