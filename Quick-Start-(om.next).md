@@ -479,8 +479,18 @@ and pass along the `:state` parameter.
 
 ### A Mutate Function
 
-```clj
+Components will not just read data from the application state. They
+will want to trigger application state transitions based on user
+generated events like mouse clicks, and keyboard events. We need to
+supply a function that interprets these requests mutations.
 
+```clj
+(defn mutate
+  [{:keys [state] :as env} key params]
+  (if (= 'increment key)
+    {:value [:count]
+     :action #(swap! state update-in [:count] inc)})
+    {:value [:not-found]})
 ```
 
 ## Queries
