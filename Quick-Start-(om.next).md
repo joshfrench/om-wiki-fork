@@ -206,7 +206,7 @@ declares the current namespace (in other languages you might call this
 "module"). We require the `goog.dom`, `om.next`, and `om.dom`
 libraries. Other languages might call this processs "importing".
 
-### defui
+### `defui`
 
 The most important bit is `defui`. The `defui` macro gives us a
 succinct syntax for declaring Om components. `defui` supports many of
@@ -224,7 +224,7 @@ factory from the component class. The function return by
 the exception that the first argument is usually an immutable
 data structure.
 
-### render
+### `render`
 
 `render` should return an Om or React component. In our case we return
 a `div`. Components are usually constructed from two or more
