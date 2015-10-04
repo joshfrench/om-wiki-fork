@@ -347,5 +347,14 @@ reconciler to re-render the root.
 ### Global State Coupling
 
 The problem with the program above is that the counter is deeply
-coupled the global state atom. Counter has direct knowledge of the
-structure of the state atom.
+coupled to the global state atom. The counter has direct knowledge of
+the structure of the state atom. While this may be convenient in this
+trivial example, in larger applications this will be a endless supply
+of incidental complexity.
+
+Previously Om attempted to mitigate deep coupling to state via the
+cursor abstraction. Unfortunately cursors brought problems of their
+own. In Om Next, instead of introducing a new abstraction we simply
+embrace a time tested way of preventing such state coupling.
+
+## Client Server Architecture
