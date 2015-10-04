@@ -469,7 +469,7 @@ Let's create a parser:
 expressions.
 
 ```clj
-(def my-state (atom {:count 0})
+(def my-state (atom {:count 0}))
 (my-parser {:state my-state} [:count :title])
 ;; => {:count 0, :title :not-found}
 ```
@@ -498,8 +498,8 @@ into your Figwheel REPL:
   [{:keys [state] :as env} key params]
   (if (= 'increment key)
     {:value [:count]
-     :action #(swap! state update-in [:count] inc)})
-    {:value :not-found})
+     :action #(swap! state update-in [:count] inc)}
+    {:value :not-found}))
 ```
 
 We first check that the key is a mutation that we actually
@@ -519,7 +519,7 @@ reliable state management.
 Assuming you did the previous REPL interactions now try the following:
 
 ```clj
-(def my-parser (om/parser :read read :mutate mutate))
+(def my-parser (om/parser {:read read :mutate mutate}))
 (my-parser {:state my-state} '[(increment)])
 @my-state
 ;; => {:count 1}
