@@ -417,11 +417,17 @@ For example to get a todo list might look something like the
 following:
 
 ```clj
-[{:todos/list [:todos/created :todos/title]}]
+[{:todos/list [:todo/created :todo/title]}]
+```
+
+To update a todo list item might look something like the following:
+
+```clj
+[(todo/update {:todo/title "Get Orange Juice"})]
 ```
 
 This might sound a bit abstract so let's just create a simple read
-function and a parser now.
+function and a parser and see how it works in practice.
 
 ### A Read Function
 
