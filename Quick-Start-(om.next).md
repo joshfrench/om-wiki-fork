@@ -369,12 +369,19 @@ separation between components and code that modifies global
 state. This design is embraced even if an Om Next application is
 entirely client side.
 
-Applications designed in this way make it trivial to introduce more
-sophisticated stores like DataScript. In the case where there is a
-real remote server component, architecting Om Next applications in
-this way permits arbitrarily partitioning of state between local
-client logic and remote server logic, i.e. *fully transparent
-synchronization*.
+Instead of mixing control logic into components as is often
+encountered in React based systems, Om Next moves all state management
+into a router abstraction. Components declaratively request data
+(application) from the router. In additions, components do not mutate
+application state, instead they request application state transitions
+and the router will apply the state changes.
+
+Applications designed in this way make it trivial to introduce custom
+stores like DataScript without touching or changing any components. In
+the case where there is a real remote server component, this
+architectural design permits seamless arbitrary partitioning of
+application state between local client logic and remote server logic,
+that is, *fully transparent synchronization*.
 
 ### Routing
 
