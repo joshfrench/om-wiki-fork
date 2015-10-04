@@ -165,6 +165,8 @@ Open the Chrome developer tools with the **View > Developer >
 JavaScript Console** menu. In the JavaScript Console you should see
 `Hello, world!` printed out.
 
+Let's write our first component!
+
 ## Your First Component
 
 Create a file `src/om_tutorial/core.cljs`:
@@ -216,6 +218,12 @@ If you are familiar with Om, you will notice this is a big
 departure. Om Next components are truly plain JavaScript classes. This
 component only declares one *JavaScript* `Object` method - `render`.
 
+Finally, in order to create an Om component we must first produce a
+factory from the component class. The function return by
+`om.next/factory` has the same signature as plain React component with
+the exception that the first argument is usually an immutable
+data structure.
+
 ### render
 
 `render` should return an Om or React component. In our case we return
@@ -254,8 +262,8 @@ look like the following:
 ```
 
 This is slightly more verbose than our previous example but we've
-gained abstraction power - the `HelloWorld` component is no longer hard
-coded to a specific string.
+gained abstraction power - the `HelloWorld` component no longer hard
+codes a specific string.
 
 For example we can change our code to the following:
 
@@ -273,6 +281,7 @@ For example we can change our code to the following:
 (def hello (om/create-factory HelloWorld))
 
 (js/React.render
+  ;; CHANGED
   (apply dom/p nil
     (map #(hello {:title (str "Hello " %)})
       (range 3)))
@@ -281,18 +290,28 @@ For example we can change our code to the following:
 
 We can render as many `HelloWorld` components as we please and they
 all receive custom data. Feel free to change `(range 3)` to something
-else.
+else. Figwheel will reflect these changes immediately.
 
-## State
+## Adding State
 
-We have thus far seen that Om Next components work quite well as plain
-React components. However we have yet to see anything that involves
-state changes. In Om Next state changes are managed by a
+We have thus far only seen stateless Om Next components. In order to
+do something useful you might think that we would need to introduce
+stateful components. This is not the case. In Om Next we introduce
+state into the *application* via a global atom. 
+
+In Om Next application state changes are managed by a
 *reconciler*. The reconciler accepts novelty, merges it into the
 application state, finds all affected components, and schedules a
 re-render.
 
-### Reconciler
+### Naive Design
+
+We will first examine at a naive attempt to introduce application
+state.
+
+In the following we create a global atom to hold our application
+state. We create a reconciler using this atom and then we add a root
+for the reonciler to control.
 
 ```clj
 (ns om-tutorial.core
@@ -309,7 +328,9 @@ re-render.
       (dom/div nil
         (dom/span nil (str "Count: " count))
         (dom/button
-          #js {:onClick (fn [e])}
+          #js {:onClick
+               (fn [e]
+                 (swap! app-state update-in [:count] inc))}
           "Click me!")))))
 
 (def reconciler
@@ -319,3 +340,12 @@ re-render.
   (gdom/getElement "app") Counter)
 ```
 
+You should now see a counter in your browser window. Clicking on the
+button will increase the count in the global atom. This triggers the
+reconciler to re-render the root.
+
+### Global State Coupling
+
+The problem with the program above is that the counter is deeply
+coupled the global state atom. Counter has direct knowledge of the
+structure of the state atom.
