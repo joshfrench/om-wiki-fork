@@ -486,8 +486,12 @@ and pass along the `:state` parameter.
 
 Components will not just read data from the application state. They
 will want to trigger application state transitions based on user
-generated events like mouse clicks, and keyboard events. We need to
-supply a function that interprets these requests mutations.
+generated events like mouse clicks, keyboard events, and touch
+gestures. We need to supply a function that interprets these requests
+for application state transition.
+
+Let's create a simple `mutate` function. Copy and past the following
+into your Figwheel REPL:
 
 ```clj
 (defn mutate
@@ -495,7 +499,30 @@ supply a function that interprets these requests mutations.
   (if (= 'increment key)
     {:value [:count]
      :action #(swap! state update-in [:count] inc)})
-    {:value [:not-found]})
+    {:value :not-found})
+```
+
+We first check that the key is a mutation that we actually
+implement. If it is we return a map containing two keys, `:value` as
+before and `:action` which is a thunk. Mutations should return a
+*query expression* for the `:value`. This is query expression is just
+a convenience to communicate what read operations should be followed
+by a mutation. Mutations can easily change multiple aspects of the
+application (think Facebook "Add Friend"), and this helps identity
+stale keys which should be re-read.
+
+`:action` is a thunk that should transition the application state. You
+should never run side effects in the body of a mutate function
+yourself. Doing so makes it more challenging for Om Next to provide
+reliable state management.
+
+Assuming you did the previous REPL interactions now try the following:
+
+```clj
+(def my-parser (om/parser :read read :mutate mutate))
+(my-parser {:state my-state} '[(increment)])
+@my-state
+;; => {:count 1}
 ```
 
 ## Queries
