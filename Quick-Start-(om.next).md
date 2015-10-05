@@ -649,7 +649,7 @@ also possible to submit transactions directly to the reconciler.
 
 Try the following at Figwheel REPL:
 
-```
+```clj
 (om.next/transact! reconciler '[(increment)])
 ```
 
