@@ -476,8 +476,8 @@ Let's create a parser:
 (def my-parser (om/parser {:read read}))
 ```
 
-`my-parser` is just a function. We can now read Om Next "query" 
-expressions.
+`my-parser` is just a function. We can now read Om Next *query
+expressions*.
 
 ```clj
 (def my-state (atom {:count 0}))
