@@ -15,9 +15,10 @@ Om Next borrows ideas liberally from
 [Netflix's Falcor](http://netflix.github.io/falcor/), and
 [Cognitect's Datomic](http://www.datomic.com). If you are not familiar
 with these technologies, fear not, this tutorial makes few
-assumptions. You will be guided from the most basic declarative
-component to advanced components which transparently synchronize
-state divided over local and remote data sources.
+assumptions. You will be guided through all the core concepts of Om
+Next. This will prepare you for later tutorials that show custom
+storage integration and transparent synchronization between your UI
+and a remote service.
 
 ## Setting Up
 
@@ -640,3 +641,20 @@ The reconciler now takes your custom parser. All application state
 reads and mutations will go through your own custom parsing code. The
 reconciler will populate the `env` parameter with all the necessary
 context needed to make decisions about reads and mutations.
+
+### More about `om.next/transact`
+
+Components can run transactions. But for development convenience it's
+also possible to submit transactions directly to the reconciler.
+
+Try the following at Figwheel REPL:
+
+```
+(om.next/transact reconciler '[(increment)])
+```
+
+You should see the change reflected immediately in the UI. If you have
+the Chrome JavaScript Console open you should also that the
+transaction was logged.
+
+## Wrapping Up
