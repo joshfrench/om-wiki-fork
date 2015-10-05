@@ -194,7 +194,7 @@ Edit `src/om_tutorial/core.cljs` to look like the following:
   (render [this]
     (dom/div nil "Hello, world!")))
 
-(def hello (om/create-factory HelloWorld))
+(def hello (om/factory HelloWorld))
 
 (js/React.render (hello) (gdom/getElement "app"))
 ```
@@ -259,7 +259,7 @@ look like the following:
   (render [this]
     (dom/div nil (get (om/props this) :title))))
 
-(def hello (om/create-factory HelloWorld))
+(def hello (om/factory HelloWorld))
 
 (js/React.render
   (hello {:title "Hello, world!"})
@@ -283,7 +283,7 @@ For example we can change our code to the following:
   (render [this]
     (dom/div nil (get (om/props this) :title))))
 
-(def hello (om/create-factory HelloWorld))
+(def hello (om/factory HelloWorld))
 
 (js/React.render
   ;; CHANGED
