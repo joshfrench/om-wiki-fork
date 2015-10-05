@@ -215,11 +215,10 @@ libraries. Other languages might call this process "importing".
 
 ### `defui`
 
-The most important bit is `defui`. The `defui` macro gives us a
-succinct syntax for declaring Om components. `defui` supports many of
-the features of ClojureScript's `deftype` and `defrecord` with a
-variety of modifications better suited to the definition of React
-components.
+The `defui` macro gives us a succinct syntax for declaring Om
+components. `defui` supports many of the features of ClojureScript's
+`deftype` and `defrecord` with a variety of modifications better
+suited to the definition of React components.
 
 If you are familiar with Om, you will notice this is a big
 departure. Om Next components are truly plain JavaScript classes. This
