@@ -618,7 +618,7 @@ attached to the class (it will also be attached to instances).
 This is so that the reconciler can determine the query required to
 display the application without instantiating any components.
 
-#### 2. Invoke transact
+#### 2. Invoke `om.next/transact`
 
 The counter now calls `om.next/transact` with the desired transaction
 rather than touching the application state directly. This removes the
