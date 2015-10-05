@@ -470,8 +470,8 @@ All our read function does is read from a `:state` property supplied
 by the `env` parameter. We will see how `:state` is supplied
 shortly. Our read simply checks if the application state contains the
 key. Your read function must return a hash map containing a `:value`
-entry (note `:not-found` value shown for missing keys has no special
-meaning).
+entry (note the `:not-found` value shown here for missing keys has no
+special meaning in Om Next).
 
 Let's create a parser:
 
