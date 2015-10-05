@@ -657,4 +657,17 @@ You should see the change reflected immediately in the UI. If you have
 the Chrome JavaScript Console open you should also that the
 transaction was logged.
 
-## Wrapping Up
+While Om Next requires a little bit more work over just banging on
+atoms, it should now be readily apparent that Om Next streamlines the
+construction of declarative reusable components. The disciplined
+separation of application state reads and mutations means you can
+scale up your application without rapid expansion of your complexity
+budget.
+
+## Indexing
+
+Om Next supports a first class notion of *identity*. While React
+component do provide a kind of identity, Om Next provides a stronger
+model that can cut across the component tree. In addition this model
+deliver powerful debugging and reasoning facilities over those found
+in React itself.
