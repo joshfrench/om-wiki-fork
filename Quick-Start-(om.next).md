@@ -428,7 +428,7 @@ A parser takes a **query expression** and evaluates it using the
 provided read and mutate implementations.
 
 Inspired by [Datomic Pull Syntax](http://docs.datomic.com/pull.html),
-an Om Next *query expression* is a vector that enumerates the desired
+a Om Next **query expression** is a vector that enumerates the desired
 state reads and state mutations.
 
 For example to getting a todo list might look something like the
