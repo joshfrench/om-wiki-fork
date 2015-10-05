@@ -620,7 +620,7 @@ had to make three changes.
 
 Om Next components always declare the data they wish to read. This is
 done by implementing a simple protocol `om.next/IQuery`. This method
-should return a *query expression*. Note that we added a `static`
+should return a **query expression**. Note that we added a `static`
 before the protocol. This is required and ensures the method is
 attached to the class (it will also be attached to instances).
 
