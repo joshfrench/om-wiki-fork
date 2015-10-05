@@ -13,4 +13,6 @@
 ## Om Next
 
 * [[Quick Start (om.next)]]
+* [[DataScript Integration Tutorial]]
+* [[Datomic Integration Tutorial]]
 * [[Documentation (om.next)]]
