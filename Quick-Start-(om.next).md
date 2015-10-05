@@ -373,9 +373,9 @@ entirely client side.
 Instead of mixing control logic into components as is often
 encountered in React based systems, Om Next moves all state management
 into a router abstraction. Components declaratively request data
-(application) from the router. In additions, components do not mutate
+(reads) from the router. In additions, components do not mutate
 application state, instead they request application state transitions
-and the router will apply the state changes.
+(mutations) and the router will apply the state changes.
 
 Applications designed in this way make it trivial to introduce custom
 stores like DataScript without touching or changing any components. In
