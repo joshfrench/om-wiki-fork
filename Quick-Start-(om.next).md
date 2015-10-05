@@ -404,7 +404,7 @@ Because of these important difference, in Om Next we call this process
 "parsing" rather than routing. The rationale for this departure will
 become more and more self-evident as the tutorial progresses.
 
-## Parsing & Query Expressions
+### Parsing & Query Expressions
 
 We will first study parsing in isolation.
 
@@ -443,7 +443,7 @@ Updating a todo list item might look something like the following:
 We will interactively parse some query expressions at the REPL to
 build our intuition of this fundamental Om Next concept.
 
-### A Read Function
+#### A Read Function
 
 The signature of a read function is `[env key params]`. `env` is a
 hash map containing any context necessary to accomplish reads. `key`
@@ -491,7 +491,7 @@ expression is *always* a map.
 On the front end the reconciler will invoke your parser on your behalf
 and pass along the `:state` parameter.
 
-### A Mutate Function
+#### A Mutate Function
 
 Components will not just read data from the application state. They
 will want to trigger application state transitions based on user
@@ -534,7 +534,7 @@ Assuming you did the previous REPL interactions now try the following:
 ;; => {:count 1}
 ```
 
-## Adding Queries & Mutations
+## Components With Queries & Mutations
 
 Change `src/om_tutorial/core.cljs` to the following:
 
