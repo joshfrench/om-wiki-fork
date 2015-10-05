@@ -521,11 +521,11 @@ the following into your Figwheel REPL:
 We first check that the key is a mutation that we actually
 implement. If it is we return a map containing two keys, `:value` as
 before and `:action` which is a thunk. Mutations should return a
-*query expression* for the `:value`. This is query expression is just
-a convenience to communicate what read operations should be followed
-by a mutation. Mutations can easily change multiple aspects of the
-application (think Facebook "Add Friend"), and this helps identity
-stale keys which should be re-read.
+**query expression** for the `:value`. This is query expression is
+just a convenience to communicate what read operations should be
+followed by a mutation. Mutations can easily change multiple aspects
+of the application (think Facebook "Add Friend"), and this helps
+identity stale keys which should be re-read.
 
 `:action` is a thunk that should transition the application state. You
 should never run side effects in the body of a mutate function
