@@ -582,4 +582,21 @@ Change `src/om_tutorial/core.cljs` to the following:
 ```
 
 Before we dive in confirm that the behavior is the same as
-before. Open the JavaScript Console and you will see that 
+before. Open the JavaScript Console and you will see that every single
+transaction was logged by Om Next. The object which initiated the
+transaction, the contents of the transaction, and a UUID identifying the
+state of the application before the transaction was applied.
+
+Copy and paste one of the UUIDs and try the following at the REPL,
+*note that your UUID will be different!*:
+
+```clj
+(om/from-history reconciler
+  #uuid "9e7160a0-89cc-4482-aba1-7b894a1c54b4")
+;; => {:count 2}
+```
+
+> Fix & Continue: Om Next automatically records the last 100 states of the
+> application (the number of recorded states can be easily
+> configured). This feature makes it trivial to take the application
+> back to a previous state, fix a bug, and re-apply a transaction.
