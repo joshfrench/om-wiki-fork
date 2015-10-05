@@ -316,7 +316,7 @@ state. We will later revise this approach to something more robust.
 
 In the following we create a global atom to hold our application
 state. We create a reconciler using this atom and then we add a root
-for the reonciler to control.
+for the reconciler to control.
 
 ```clj
 (ns om-tutorial.core
