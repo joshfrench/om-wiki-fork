@@ -528,9 +528,9 @@ of the application (think Facebook "Add Friend"), and this helps
 identity stale keys which should be re-read. This idea is similar to
 the principles of [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS).
 
-`:action` is a thunk that should transition the application state. You
+`:action` is a thunk that should transition the application state. *You
 should never run side effects in the body of a mutate function
-yourself. Doing so makes it more challenging for Om Next to provide
+yourself*. Doing so makes it more challenging for Om Next to provide
 reliable state management.
 
 Assuming you did the previous REPL interactions now try the following:
