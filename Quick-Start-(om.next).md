@@ -525,7 +525,8 @@ before and `:action` which is a thunk. Mutations should return a
 just a convenience to communicate what read operations should be
 followed by a mutation. Mutations can easily change multiple aspects
 of the application (think Facebook "Add Friend"), and this helps
-identity stale keys which should be re-read.
+identity stale keys which should be re-read. This idea is similar to
+the that of [HATEOS](https://en.wikipedia.org/wiki/HATEOAS).
 
 `:action` is a thunk that should transition the application state. You
 should never run side effects in the body of a mutate function
