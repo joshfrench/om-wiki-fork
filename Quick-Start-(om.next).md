@@ -399,7 +399,8 @@ to a richer expression of client demands.
 Om Next also departs from tradition and embraces a simple data
 representation of client demands. This simple data representation
 eliminates the problematic tradeoffs present in string based
-routing. The data representation is a variant on s-expressions - EDN.
+routing. The data representation is a variant on s-expressions,
+[EDN](https://github.com/edn-format/edn).
 
 Because of these important differences, in Om Next we call this process
 "parsing" rather than routing. The rationale for this departure will
