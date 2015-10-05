@@ -24,7 +24,8 @@ and a remote service.
 
 This tutorial uses [Leiningen](http://leiningen.org),
 [Figwheel](https://www.youtube.com/watch?v=j-kj2qwJa_E), and
-[Google Chrome](http://www.google.com/chrome/). Leiningen is a
+[Google Chrome](http://www.google.com/chrome/). You should install
+Leiningen and Google Chrome before proceeding. Leiningen is a
 standard tool for managing Clojure and ClojureScript library
 dependencies. Figwheel is a ClojureScript build tool and REPL that
 enables an expressive live programming model well suited for
