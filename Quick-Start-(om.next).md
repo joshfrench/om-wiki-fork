@@ -211,7 +211,7 @@ This file presents a lot of new ideas, let's break them down.
 The very first thing we encounter is the ClojureScript `ns` form. This
 declares the current namespace (in other languages you might call this
 "module"). We require the `goog.dom`, `om.next`, and `om.dom`
-libraries. Other languages might call this processs "importing".
+libraries. Other languages might call this process "importing".
 
 ### `defui`
 
