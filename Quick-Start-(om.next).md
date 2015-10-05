@@ -666,8 +666,8 @@ budget.
 
 ## Indexing
 
-Om Next supports a first class notion of *identity*. While React
-component do provide a kind of identity, Om Next provides a stronger
-model that can cut across the component tree. In addition this model
-deliver powerful debugging and reasoning facilities over those found
-in React itself.
+Om Next supports a first class notion of *identity*. While mounted
+React components do provide a kind of identity, Om Next provides a
+stronger model that can cut across the mounted component tree. In
+addition this model deliver powerful debugging and reasoning
+facilities over those found in React itself.
