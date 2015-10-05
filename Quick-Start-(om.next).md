@@ -438,7 +438,7 @@ following:
 Updating a todo list item might look something like the following:
 
 ```clj
-[(todo/update {:todo/title "Get Orange Juice"})]
+[(todo/update {:id 0 :todo/title "Get Orange Juice"})]
 ```
 
 We will interactively parse some query expressions at the REPL to
