@@ -597,8 +597,7 @@ the transaction, the contents of the transaction, and a
 identifying the state of the application before the transaction was
 applied.
 
-Copy and paste one of the UUIDs and try the following at the REPL,
-*note that your UUID will be different!*:
+Copy and paste one of the UUIDs and try the following at the REPL (your UUID will be different!):
 
 ```clj
 (om/from-history reconciler
