@@ -493,8 +493,9 @@ Aha! *We* supply the `env` parameter.
 A query expression is *always* a vector. The result of parsing a query
 expression is *always* a map.
 
-On the front end the reconciler will invoke your parser on your behalf
-and pass along the `:state` parameter.
+On the frontend the Om Next reconciler will invoke your parser on your
+behalf and pass along the `:state` parameter. When writing a backend
+parser you will usually supply `env` yourself.
 
 #### A Mutate Function
 
