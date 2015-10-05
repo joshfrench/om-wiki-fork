@@ -311,8 +311,8 @@ re-render.
 
 ### Naive Design
 
-We will first examine at a naive attempt to introduce application
-state.
+We will first examine a naive attempt to introduce application
+state. We will later revise this approach to something more robust.
 
 In the following we create a global atom to hold our application
 state. We create a reconciler using this atom and then we add a root
