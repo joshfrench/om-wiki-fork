@@ -232,12 +232,11 @@ data structure.
 
 ### `render`
 
-`render` should return an Om or React component. In our case we return
-a `div`. Components are usually constructed from two or more
+`render` should return an Om Next or React component. In our case we
+return a `div`. Components are usually constructed from two or more
 arguments. The first argument will be `props` - the properties that
 will customize the component in some way. The remaining arguments will
-be `children` - the components should should be rendered the parent
-component you are currently rendering.
+be `children`, the sub-components hosted by this node.
 
 > **Note**: For a more detailed list of React methods that components
 > may implement please refer to the
