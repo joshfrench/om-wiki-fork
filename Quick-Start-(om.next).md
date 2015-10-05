@@ -578,7 +578,7 @@ Change `src/om_tutorial/core.cljs` to the following:
         (dom/span nil (str "Count: " count))
         (dom/button
           #js {:onClick
-               (fn [e] (om/transact this '[(increment)]))}
+               (fn [e] (om/transact! this '[(increment)]))}
           "Click me!")))))
 
 (def reconciler
@@ -629,9 +629,9 @@ attached to the class (it will also be attached to instances).
 This is so that the reconciler can determine the query required to
 display the application without instantiating any components.
 
-#### 2. Invoke `om.next/transact`
+#### 2. Invoke `om.next/transact!`
 
-The counter now calls `om.next/transact` with the desired transaction
+The counter now calls `om.next/transact!` with the desired transaction
 rather than touching the application state directly. This removes the
 tight coupling between components and global application state.
 
@@ -642,7 +642,7 @@ reads and mutations will go through your own custom parsing code. The
 reconciler will populate the `env` parameter with all the necessary
 context needed to make decisions about reads and mutations.
 
-### More about `om.next/transact`
+### More about `om.next/transact!`
 
 Components can run transactions. But for development convenience it's
 also possible to submit transactions directly to the reconciler.
@@ -650,7 +650,7 @@ also possible to submit transactions directly to the reconciler.
 Try the following at Figwheel REPL:
 
 ```
-(om.next/transact reconciler '[(increment)])
+(om.next/transact! reconciler '[(increment)])
 ```
 
 You should see the change reflected immediately in the UI. If you have
