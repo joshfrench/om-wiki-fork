@@ -354,7 +354,7 @@ reconciler to re-render the root.
 The problem with the program above is that the counter is deeply
 coupled to the global state atom. The counter has direct knowledge of
 the structure of the state atom. While this may be convenient in this
-trivial example, in larger applications this will be a endless supply
+trivial example, in larger applications this will be an endless supply
 of incidental complexity.
 
 Previously Om attempted to mitigate deep coupling to state via the
