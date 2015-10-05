@@ -163,7 +163,7 @@ rlwrap lein run -m clojure.main script/figwheel.clj
 ```
 
 Point your browser at
-[http://localhost:3349](http://localhost:3349). You should see a blank
+[http://localhost:3449](http://localhost:3449). You should see a blank
 page with the title "Om Tutorial!" visible on your browser tab.
 
 Open the Chrome developer tools with the **View > Developer >
