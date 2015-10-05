@@ -441,8 +441,8 @@ Updating a todo list item might look something like the following:
 [(todo/update {:id 0 :todo/title "Get Orange Juice"})]
 ```
 
-We will interactively parse some query expressions at the REPL to
-build our intuition of this fundamental Om Next concept.
+We will interactively parse some query expressions at the Figwheel
+REPL to build our intuition of this fundamental Om Next concept.
 
 #### A Read Function
 
@@ -452,7 +452,7 @@ is the key that is being requested to be read. Finally `params` is a
 hash map of parameters that can be used to customize the read. In many
 cases `params` will be empty.
 
-Let's make this concrete by trying some things at the Figwheel REPL:
+Enter the following into your Figwheel REPL:
 
 ```cljs
 (defn read
