@@ -589,7 +589,7 @@ Change `src/om_tutorial/core.cljs` to the following:
   Counter (gdom/getElement "app"))
 ```
 
-Before we dive in confirm that the behavior is the same as
+Before we dive in, confirm that the behavior is the same as
 before. Open the Chrome JavaScript Console and you will see that every
 single transaction was logged by Om Next. The object which initiated
 the transaction, the contents of the transaction, and a
