@@ -349,6 +349,11 @@ You should now see a counter in your browser window. Clicking on the
 button will increase the count in the global atom. This triggers the
 reconciler to re-render the root.
 
+> **Note**: `om.next/add-root!` takes a reconciler, a root class and a DOM
+> element. Unlike `React.render` we do not instantiate the
+> component. The reconciler will do this on our behalf as it may
+> need request data from an endpoint first.
+
 ### Global State Coupling
 
 The problem with the program above is that the counter is deeply
