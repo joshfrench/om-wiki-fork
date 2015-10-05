@@ -360,7 +360,8 @@ of incidental complexity.
 Previously Om attempted to mitigate deep coupling to state via the
 cursor abstraction. Unfortunately cursors brought problems of their
 own. In Om Next, instead of introducing a new abstraction we simply
-embrace a time tested way of preventing such state coupling.
+embrace a time tested way of preventing such state coupling - client
+server architecture.
 
 ## Client Server Architecture
 
