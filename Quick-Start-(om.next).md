@@ -500,8 +500,9 @@ generated events like mouse clicks, keyboard events, and touch
 gestures. We need to supply a function that interprets these requests
 for application state transition.
 
-Let's create a simple `mutate` function. Copy and past the following
-into your Figwheel REPL:
+Let's create a simple `mutate` function. The signature is identical to
+read functions, however the return value is different. Copy and paste
+the following into your Figwheel REPL:
 
 ```clj
 (defn mutate
