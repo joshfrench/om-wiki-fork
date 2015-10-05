@@ -244,9 +244,9 @@ be `children`, the sub-components hosted by this node.
 
 ## Parameterizing Your Components
 
-Like plain React components, Om components take props as their first
-argument and children as the remaining ones. Let's modify our file to
-look like the following:
+Like plain React components, Om Next components take `props` as their
+first argument and `children` as the remaining ones. Let's modify our
+file to look like the following:
 
 ```clj
 (ns om-tutorial.core
