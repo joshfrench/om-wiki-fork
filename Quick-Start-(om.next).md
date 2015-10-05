@@ -601,3 +601,32 @@ Copy and paste one of the UUIDs and try the following at the REPL,
 > easily configured). This feature makes it trivial to take the
 > application back to a previous state, fix a bug, and re-apply a
 > transaction.
+
+### Digging In
+
+The parsing bits should be familiar from the previous section. We only
+had to make three changes.
+
+#### 1. Implement `om.next/IQuery`
+
+Om Next components always declare the data they wish to read. This is
+done by implementing a simple protocol `om.next/IQuery`. This method
+should return a *query expression*. Note that we added a `static`
+before the protocol. This is required and ensure the method is
+attached to the class (it will also be attached to instances).
+
+This is so that the reconciler can determine the query required to
+display the application without instantiating any components.
+
+#### 2. Invoke transact
+
+The counter now calls `om.next/transact` with the desired transaction
+rather than touching the application state directly. This removes the
+tight coupling between components and global application state.
+
+#### 3. Provide a parser to the reconciler
+
+The reconciler now takes your custom parser. All application state
+reads and mutations will go through your own custom parsing code. The
+reconciler will populate the `env` parameter with all the necessary
+context needed to make decisions about reads and mutations.
