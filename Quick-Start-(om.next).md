@@ -392,9 +392,10 @@ must be able to describe state transfer (reads) and state transitions
 (mutations).
 
 Typical web applications already follow this pattern in the form of
-REST. However the unit of composition is incredibly inexpressive - a
-URL. Relay and Falcor have already demonstrated the benefits of moving
-to a richer expression of client demands.
+[REST](https://en.wikipedia.org/wiki/Representational_state_transfer). However
+the unit of composition is incredibly inexpressive - a URL. Relay and
+Falcor have already demonstrated the benefits of moving to a richer
+expression of client demands.
 
 Om Next also departs from tradition and embraces a simple data
 representation of client demands. This simple data representation
