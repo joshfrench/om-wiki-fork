@@ -502,7 +502,7 @@ On the frontend the Om Next reconciler will invoke your parser on your
 behalf and pass along the `:state` parameter. When writing a backend
 parser you will usually supply `env` yourself.
 
-#### A Mutate Function
+#### A Mutation Function
 
 Components will not just read data from the application state. They
 will want to trigger application state transitions based on user
