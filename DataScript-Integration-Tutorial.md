@@ -221,3 +221,25 @@ Make `src/om_datascript/core.cljs` look like the following:
 (om/add-root! reconciler
   Counter (gdom/getElement "app"))
 ```
+
+By now large portions of the program should look familiar to you. By
+putting DataScript reads and mutations behind the parser, the `Counter`
+component is freed from the precise details of the data source.
+
+Instead of an atom the DataScript database is now our state
+source. This is what we receive as the `:state` key in our `env`
+parameter in our read and mutation functions.
+
+Try clicking the button a few times. Once again you'll see logs
+dropped into the Chrome JavaScript Console. Grab one of the UUIDs
+and try the following at the Figwheel REPL (your UUID and DataScript
+state will not be the same):
+
+```clj
+(om/from-history reconciler
+  #uuid "c362be68-2867-46da-a8e5-5c107398e49d"
+;; =>
+;; #datascript/DB {:schema {},
+;;                 :datoms [[1 :app/count 6 536870919]
+;;                 [1 :app/title "Hello, DataScript!" 536870913]]}
+```
