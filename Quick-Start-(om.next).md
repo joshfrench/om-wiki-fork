@@ -372,10 +372,9 @@ server architecture.
 
 ## Client Server Architecture
 
-Om Next simply embraces a client server architecture to enforce a
-separation between components and code that modifies global
-state. This design is embraced even if an Om Next application is
-entirely client side.
+Om Next encourages a separation between components and code that
+actually reads and modifies global state. This design is desirable
+even if an Om Next application is entirely client side.
 
 Instead of mixing control logic into components as is often
 encountered in React based systems, Om Next moves all state management
@@ -393,14 +392,13 @@ that is, *fully transparent synchronization*.
 
 ### Routing
 
-Adopting a client server architecture means there must some
-established protocol between the client and the server. This protocol
-must be able to describe state transfer (reads) and state transitions
-(mutations).
+A client server architecture requires an established protocol
+between the client and the server. This protocol must be able to
+describe state transfer (reads) and state transitions (mutations).
 
 Typical web applications already follow this pattern in the form of
 [REST](https://en.wikipedia.org/wiki/Representational_state_transfer). However
-the unit of composition is incredibly inexpressive - a
+the unit of composition is incredibly inexpressive, a
 [URL](https://en.wikipedia.org/wiki/Uniform_Resource_Locator). Relay
 and Falcor have already demonstrated the benefits of moving to a
 richer expression of client demands.
@@ -413,7 +411,7 @@ routing. The data representation is a variant on s-expressions,
 
 Because of these important differences, in Om Next we call this process
 "parsing" rather than routing. The rationale for this departure will
-become more and more self-evident as the tutorial progresses.
+become more self-evident as the tutorial progresses.
 
 ### Parsing & Query Expressions
 
