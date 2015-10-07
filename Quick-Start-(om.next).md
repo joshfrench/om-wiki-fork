@@ -761,6 +761,17 @@ It should be clear now that the params have been bound to the query.
 Let's change the query by modifying the parameters. This can be done
 with `om.next/set-params!`.
 
+```clj
+(om/set-params! 
+  (om/class->any reconciler AnimalsList)
+  {:start 0 :end 5})
+```
+
+You should see the UI change immediately. You should also see Om Next
+log event in the Chrome JavaScript Console. Query modifications mutate
+the state of program and so are also recorded into the application
+state history log.
+
 ### The Indexer
 
 Om Next supports a first class notion of *identity*. While mounted
