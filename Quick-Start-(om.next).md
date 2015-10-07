@@ -764,7 +764,7 @@ with `om.next/set-params!`.
 ```
 
 You should see the UI change immediately. You should also see Om Next
-log event in the Chrome JavaScript Console. Query modifications mutate
+log an event in the Chrome JavaScript Console. Query modifications mutate
 the state of program and so are also recorded into the application
 state history log.
 
@@ -784,3 +784,13 @@ React components do provide a kind of identity, Om Next provides a
 stronger model that can cut across the mounted component tree. In
 addition this model delivers powerful debugging and reasoning
 facilities over those found in React itself.
+
+Every reconciler has an indexer. The indexer keep indexes that
+maintain a variety of useful mappings. For example a class to all
+mounted components of that class, or prop name and all components that
+use that prop name. For example we already say `om.next/class->any`
+which is incredibly useful when testing things out at a REPL.
+
+The details of the indexer are not fully ironed out yet, but suffice
+to say it is a critical component that both simplifies reconciliation
+and an enhances interactive development.
