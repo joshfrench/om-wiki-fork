@@ -24,7 +24,8 @@ and a remote service.
 
 This tutorial uses [Leiningen](http://leiningen.org),
 [Figwheel](https://www.youtube.com/watch?v=j-kj2qwJa_E), and
-[Google Chrome](http://www.google.com/chrome/). Leiningen is a
+[Google Chrome](http://www.google.com/chrome/). You should install
+Leiningen and Google Chrome before proceeding. Leiningen is a
 standard tool for managing Clojure and ClojureScript library
 dependencies. Figwheel is a ClojureScript build tool and REPL that
 enables an expressive live programming model well suited for
@@ -210,15 +211,14 @@ This file presents a lot of new ideas, let's break them down.
 The very first thing we encounter is the ClojureScript `ns` form. This
 declares the current namespace (in other languages you might call this
 "module"). We require the `goog.dom`, `om.next`, and `om.dom`
-libraries. Other languages might call this processs "importing".
+libraries. Other languages might call this process "importing".
 
 ### `defui`
 
-The most important bit is `defui`. The `defui` macro gives us a
-succinct syntax for declaring Om components. `defui` supports many of
-the features of ClojureScript's `deftype` and `defrecord` with a
-variety of modifications better suited to the definition of React
-components.
+The `defui` macro gives us a succinct syntax for declaring Om
+components. `defui` supports many of the features of ClojureScript's
+`deftype` and `defrecord` with a variety of modifications better
+suited to the definition of React components.
 
 If you are familiar with Om, you will notice this is a big
 departure. Om Next components are truly plain JavaScript classes. This
@@ -232,12 +232,11 @@ data structure.
 
 ### `render`
 
-`render` should return an Om or React component. In our case we return
-a `div`. Components are usually constructed from two or more
+`render` should return an Om Next or React component. In our case we
+return a `div`. Components are usually constructed from two or more
 arguments. The first argument will be `props` - the properties that
 will customize the component in some way. The remaining arguments will
-be `children` - the components should should be rendered the parent
-component you are currently rendering.
+be `children`, the sub-components hosted by this node.
 
 > **Note**: For a more detailed list of React methods that components
 > may implement please refer to the
@@ -245,9 +244,9 @@ component you are currently rendering.
 
 ## Parameterizing Your Components
 
-Like plain React components, Om components take props as their first
-argument and children as the remaining ones. Let's modify our file to
-look like the following:
+Like plain React components, Om Next components take `props` as their
+first argument and `children` as the remaining ones. Let's modify our
+file to look like the following:
 
 ```clj
 (ns om-tutorial.core
@@ -349,6 +348,11 @@ for the reconciler to control.
 You should now see a counter in your browser window. Clicking on the
 button will increase the count in the global atom. This triggers the
 reconciler to re-render the root.
+
+> **Note**: `om.next/add-root!` takes a reconciler, a root class and a DOM
+> element. Unlike `React.render` we do not instantiate the
+> component. The reconciler will do this on our behalf as it may
+> need request data from an endpoint first.
 
 ### Global State Coupling
 
@@ -498,7 +502,7 @@ On the frontend the Om Next reconciler will invoke your parser on your
 behalf and pass along the `:state` parameter. When writing a backend
 parser you will usually supply `env` yourself.
 
-#### A Mutate Function
+#### A Mutation Function
 
 Components will not just read data from the application state. They
 will want to trigger application state transitions based on user
@@ -527,11 +531,11 @@ just a convenience to communicate what read operations should be
 followed by a mutation. Mutations can easily change multiple aspects
 of the application (think Facebook "Add Friend"), and this helps
 identity stale keys which should be re-read. This idea is similar to
-the that of [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS).
+the principles of [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS).
 
-`:action` is a thunk that should transition the application state. You
+`:action` is a thunk that should transition the application state. *You
 should never run side effects in the body of a mutate function
-yourself. Doing so makes it more challenging for Om Next to provide
+yourself*. Doing so makes it more challenging for Om Next to provide
 reliable state management.
 
 Assuming you did the previous REPL interactions now try the following:
@@ -578,7 +582,7 @@ Change `src/om_tutorial/core.cljs` to the following:
         (dom/span nil (str "Count: " count))
         (dom/button
           #js {:onClick
-               (fn [e] (om/transact this '[(increment)]))}
+               (fn [e] (om/transact! this '[(increment)]))}
           "Click me!")))))
 
 (def reconciler
@@ -590,7 +594,7 @@ Change `src/om_tutorial/core.cljs` to the following:
   Counter (gdom/getElement "app"))
 ```
 
-Before we dive in confirm that the behavior is the same as
+Before we dive in, confirm that the behavior is the same as
 before. Open the Chrome JavaScript Console and you will see that every
 single transaction was logged by Om Next. The object which initiated
 the transaction, the contents of the transaction, and a
@@ -598,8 +602,7 @@ the transaction, the contents of the transaction, and a
 identifying the state of the application before the transaction was
 applied.
 
-Copy and paste one of the UUIDs and try the following at the REPL,
-*note that your UUID will be different!*:
+Copy and paste one of the UUIDs and try the following at the REPL (your UUID will be different!):
 
 ```clj
 (om/from-history reconciler
@@ -622,16 +625,16 @@ had to make three changes.
 
 Om Next components always declare the data they wish to read. This is
 done by implementing a simple protocol `om.next/IQuery`. This method
-should return a *query expression*. Note that we added a `static`
+should return a **query expression**. Note that we added a `static`
 before the protocol. This is required and ensures the method is
 attached to the class (it will also be attached to instances).
 
 This is so that the reconciler can determine the query required to
 display the application without instantiating any components.
 
-#### 2. Invoke `om.next/transact`
+#### 2. Invoke `om.next/transact!`
 
-The counter now calls `om.next/transact` with the desired transaction
+The counter now calls `om.next/transact!` with the desired transaction
 rather than touching the application state directly. This removes the
 tight coupling between components and global application state.
 
@@ -642,15 +645,15 @@ reads and mutations will go through your own custom parsing code. The
 reconciler will populate the `env` parameter with all the necessary
 context needed to make decisions about reads and mutations.
 
-### More about `om.next/transact`
+### More about `om.next/transact!`
 
 Components can run transactions. But for development convenience it's
 also possible to submit transactions directly to the reconciler.
 
 Try the following at Figwheel REPL:
 
-```
-(om.next/transact reconciler '[(increment)])
+```clj
+(om.next/transact! reconciler '[(increment)])
 ```
 
 You should see the change reflected immediately in the UI. If you have
