@@ -674,7 +674,7 @@ budget.
 Once you have declarative queries, it becomes quickly apparent
 they are an ideal way to change the behavior of the application. Like
 Relay, Om Next fully supports query modification. However it does so
-in a manner that does not interfere with global time travel.
+in a manner that does not compromise global time travel.
 
 Change `src/om_tutorial/core.cljs` to look like the following:
 
