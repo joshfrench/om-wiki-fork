@@ -308,8 +308,8 @@ state into the *application* via a global atom.
 
 In Om Next application state changes are managed by a
 *reconciler*. The reconciler accepts novelty, merges it into the
-application state, finds all affected components, and schedules a
-re-render.
+application state, finds all affected components based on their
+declared queries, and schedules a re-render.
 
 ### Naive Design
 
