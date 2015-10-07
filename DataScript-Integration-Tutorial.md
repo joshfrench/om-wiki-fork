@@ -191,7 +191,7 @@ Make `src/om_datascript/core.cljs` look like the following:
 
 (defmethod mutate 'app/increment
   [{:keys [state]} _ entity]
-  {:value [{:app/counter [:app/count]}]
+  {:value [:app/counter]
    :action (fn [] (d/transact! state
                     [(update-in entity [:app/count] inc)]))})
 
