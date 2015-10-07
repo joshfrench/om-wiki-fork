@@ -436,7 +436,7 @@ Inspired by [Datomic Pull Syntax](http://docs.datomic.com/pull.html),
 a Om Next **query expression** is a vector that enumerates the desired
 state reads and state mutations.
 
-For example to getting a todo list might look something like the
+For example getting a todo list might look something like the
 following:
 
 ```clj
