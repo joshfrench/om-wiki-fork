@@ -82,3 +82,89 @@ may want to work through the ClojureScript
 to re-inforce fundamental ClojureScript concepts encountered in this
 tutorial.
 
+## Markup
+
+We now need to provide some basic markup to host our ClojureScript
+application.
+
+Make a file `resources/public/index.html`:
+
+```shell
+mkdir -p resources/public
+touch resources/public/index.html
+```
+
+Change the contents of this file to the following:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Om Tutorial!</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script src="js/main.js"></script>
+    </body>
+</html>
+```
+
+## Checkpoint
+
+Create a file `src/om_tutorial/core.cljs`:
+
+```shell
+mkdir -p src/om_datascript
+touch src/om_datascript/core.cljs
+```
+
+Edit its contents to look like the following:
+
+```clj
+(ns om-datascript.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(enable-console-print!)
+
+(println "Hello world!")
+```
+
+Start Figwheel:
+
+```clj
+lein run -m clojure.main script/figwheel.clj
+```
+
+For enhanced REPL behavior it's recommended that you install
+[rlwrap](http://utopia.knoware.nl/~hlub/uck/rlwrap/). Under OS X this
+can be easily done with [brew](http://brew.sh).
+
+If you have `rlwrap` installed you can then launch with:
+
+```clj
+rlwrap lein run -m clojure.main script/figwheel.clj
+```
+
+Point your browser at
+[http://localhost:3449](http://localhost:3449). You should see a blank
+page with the title "Om Tutorial!" visible on your browser tab.
+
+Open the Chrome Developer Tools with the **View > Developer >
+JavaScript Console** menu. In the JavaScript Console you should see
+`Hello, world!` printed out.
+
+Let's begin!
+
+### Integrating DataScript
+
+Make `src/om_datascript/core.cljs` look like the following:
+
+```clj
+(ns om-datascript.core
+  (:require [om.next :as om]
+            [om.dom :as dom]
+            [datascript.core :as d]))
+```
