@@ -795,3 +795,12 @@ which is incredibly useful when testing things out at a REPL.
 The details of the indexer are not fully ironed out yet, but suffice
 to say it is a critical component that both simplifies reconciliation
 and an enhances interactive development.
+
+### Wrapping Up
+
+This covers all the Om Next fundamentals. It may not be fully apparent
+how the Om Next architecture seamless integration of custom stores or
+remote services, the following provide more details:
+
+* [[DataScript Integration Tutorial]]
+* [[Datomic Integration Tutorial]]
