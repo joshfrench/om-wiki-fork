@@ -626,12 +626,12 @@ had to make three changes.
 
 Om Next components always declare the data they wish to read. This is
 done by implementing a simple protocol `om.next/IQuery`. This method
-should return a **query expression**. Note that we added a `static`
+should return a **query expression**. Note that we added `static`
 before the protocol. This is required and ensures the method is
 attached to the class (it will also be attached to instances).
 
 This is so that the reconciler can determine the query required to
-display the application without instantiating any components.
+display the application without instantiating any components at all.
 
 #### 2. Invoke `om.next/transact!`
 
@@ -644,7 +644,8 @@ tight coupling between components and global application state.
 The reconciler now takes your custom parser. All application state
 reads and mutations will go through your own custom parsing code. The
 reconciler will populate the `env` parameter with all the necessary
-context needed to make decisions about reads and mutations.
+context needed to make decisions about reads and mutations including
+whatever `:state` parameter was provided to the reconciler.
 
 ### More about `om.next/transact!`
 
@@ -658,11 +659,11 @@ Try the following at Figwheel REPL:
 ```
 
 You should see the change reflected immediately in the UI. If you have
-the Chrome JavaScript Console open you should also that the
+the Chrome JavaScript Console open you should also see that the
 transaction was logged.
 
 While Om Next requires a little bit more work over just banging on
-atoms, it should now be readily apparent that Om Next streamlines the
+atoms, it should now be apparent that Om Next streamlines the
 construction of declarative reusable components. The disciplined
 separation of application state reads and mutations means you can
 scale up your application without rapid expansion of your complexity
