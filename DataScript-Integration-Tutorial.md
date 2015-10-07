@@ -237,7 +237,7 @@ state will not be the same):
 
 ```clj
 (om/from-history reconciler
-  #uuid "c362be68-2867-46da-a8e5-5c107398e49d"
+  #uuid "c362be68-2867-46da-a8e5-5c107398e49d")
 ;; =>
 ;; #datascript/DB {:schema {},
 ;;                 :datoms [[1 :app/count 6 536870919]
