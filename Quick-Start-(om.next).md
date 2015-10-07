@@ -235,7 +235,7 @@ be `children`, the sub-components hosted by this node.
 
 > **Note**: For a more detailed list of React methods that components
 > may implement please refer to the
-> [React documetation](https://facebook.github.io/react/docs/component-specs.html)
+> [React documentation](https://facebook.github.io/react/docs/component-specs.html)
 
 ## Parameterizing Your Components
 
