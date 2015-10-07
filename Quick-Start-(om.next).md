@@ -731,18 +731,18 @@ Change `src/om_tutorial/core.cljs` to look like the following:
   AnimalsList (gdom/getElement "app"))
 ```
 
-By this time all many of the bits related to parsing should be
-familiar to you so we'll focuses only on the new ideas. We switched
-our `read` function to a multimethod - this makes it easy to add cases
+By this now most of the the bits related to parsing should be
+familiar to you so we'll focus only on the new ideas. We switched
+our `read` function to a multimethod - this makes it easier to add cases
 in an open ended way.
 
-We implement the `:animals/list` case. We are finally use `params` and
-in this case we destructure `start` and `end` out of it.
+We implement the `:animals/list` case. We are finally using `params`, and
+in this case we destructure `start` and `end`.
 
 This brings us to the `AnimalsList` component. This component defines
 `om.next/IQueryParams` along with `om.next/IQuery`. The `params`
 method should return a map of bindings. These will be used to replace
-any occurrences of `?foo` in the actual query.
+any occurrences of `?some-var` in the actual query.
 
 At the Figwheel REPL try the following (you haven't seen
 `om.next/class->any` yet, we'll explain it in a moment):
@@ -767,11 +767,11 @@ with `om.next/set-params!`.
 
 You should see the UI change immediately. You should also see Om Next
 log an event in the Chrome JavaScript Console. Query modifications mutate
-the state of program and so are also recorded into the application
+the state of program and thus are also recorded into the application
 state history log.
 
 Grab one of the UUIDs and you'll see that query state is maintained
-when you time travel (again your UUID will not the be one below!):
+when you time travel (again your UUID will not be the one below!):
 
 ```clj
 (reset! app-state 
