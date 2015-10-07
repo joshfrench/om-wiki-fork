@@ -613,9 +613,9 @@ Copy and paste one of the UUIDs and try the following at the REPL
 
 > **Fix & Continue**: Om Next automatically records the last 100
 > states of the application (the number of recorded states can be
-> easily configured). This feature makes it trivial to take the
-> application back to a previous state, fix a bug, and re-apply a
-> transaction.
+> configured). This feature makes it trivial to take the application
+> back to a previous state, fix a bug, re-apply a transaction, and
+> continue development without further interruption.
 
 ### Digging In
 
