@@ -243,3 +243,8 @@ state will not be the same):
 ;;                 :datoms [[1 :app/count 6 536870919]
 ;;                 [1 :app/title "Hello, DataScript!" 536870913]]}
 ```
+
+That's all there is to it! Due to it's support for Datomic Pull
+Syntax, DataScript is a natural fit for Om Next applications
+especially if they do not or cannot have significant remote service
+integration.
