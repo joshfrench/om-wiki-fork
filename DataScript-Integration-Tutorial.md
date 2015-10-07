@@ -201,7 +201,7 @@ Make `src/om_datascript/core.cljs` look like the following:
     [{:app/counter [:db/id :app/title :app/count]}])
   Object
   (render [this]
-    (let [{:keys [db/id app/title app/count] :as entity}
+    (let [{:keys [app/title app/count] :as entity}
           (get-in (om/props this) [:app/counter 0])]
       (dom/div nil
         (dom/h2 nil title)
@@ -215,10 +215,8 @@ Make `src/om_datascript/core.cljs` look like the following:
 
 (def reconciler
   (om/reconciler
-    {:state     conn
-     :parser    (om/parser {:read read :mutate mutate})
-     :ui->props (fn [{:keys [parser] :as env} c]
-                  (parser env (om/get-query c)))}))
+    {:state conn
+     :parser (om/parser {:read read :mutate mutate})}))
 
 (om/add-root! reconciler
   Counter (gdom/getElement "app"))
