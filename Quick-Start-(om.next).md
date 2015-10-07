@@ -669,7 +669,7 @@ budget.
 
 ## Changing Queries Over Time
 
-Once you have declarative queries, it becomes quickly apparent that
+Once you have declarative queries, it becomes quickly apparent
 they are an ideal way to change the behavior of the application. Like
 Relay, Om Next fully supports query modification. However it does so
 in a manner that does not interfere with global time travel.
@@ -732,6 +732,34 @@ Change `src/om_tutorial/core.cljs` to look like the following:
 (om/add-root! reconciler
   AnimalsList (gdom/getElement "app"))
 ```
+
+By this time all many of the bits related to parsing should be
+familiar to you so we'll focuses only on the new ideas. We switched
+our `read` function to a multimethod - this makes it easy to add cases
+in an open ended way.
+
+We implement the `:animals/list` case. We are finally use `params` and
+in this case we destructure `start` and `end` out of it.
+
+This brings us to the `AnimalsList` component. This component defines
+`om.next/IQueryParams` along with `om.next/IQuery`. The `params`
+method should return a map of bindings. These will be used to replace
+any occurrences of `?foo` in the actual query.
+
+At the Figwheel REPL try the following (you haven't seen
+`om.next/class->any` yet, we'll explain it in a moment):
+
+```clj
+(om/get-query (om/class->any reconciler AnimalsList))
+;; => [:app/title (:animals/list {:start 0, :end 10})]
+```
+
+It should be clear now that the params have been bound to the query.
+
+### Change the Query!
+
+Let's change the query by modifying the parameters. This can be done
+with `om.next/set-params!`.
 
 ### The Indexer
 
