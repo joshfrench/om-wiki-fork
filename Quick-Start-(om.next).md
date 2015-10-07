@@ -178,13 +178,6 @@ Let's write our first component!
 
 ## Your First Component
 
-Create a file `src/om_tutorial/core.cljs`:
-
-```shell
-mkdir -p src/om_tutorial
-touch src/om_tutorial/core.cljs
-```
-
 Edit `src/om_tutorial/core.cljs` to look like the following:
 
 ```clj
