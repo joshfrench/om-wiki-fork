@@ -101,7 +101,7 @@ Change the contents of this file to the following:
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>Om Tutorial!</title>
+        <title>Om + DataScript!</title>
     </head>
     <body>
         <div id="app"></div>
@@ -112,7 +112,7 @@ Change the contents of this file to the following:
 
 ## Checkpoint
 
-Create a file `src/om_tutorial/core.cljs`:
+Create a file `src/om_datascript/core.cljs`:
 
 ```shell
 mkdir -p src/om_datascript
@@ -150,7 +150,7 @@ rlwrap lein run -m clojure.main script/figwheel.clj
 
 Point your browser at
 [http://localhost:3449](http://localhost:3449). You should see a blank
-page with the title "Om Tutorial!" visible on your browser tab.
+page with the title "Om + DataScript!" visible on your browser tab.
 
 Open the Chrome Developer Tools with the **View > Developer >
 JavaScript Console** menu. In the JavaScript Console you should see
