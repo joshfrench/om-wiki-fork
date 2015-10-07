@@ -423,7 +423,7 @@ mutations should transition the application state to some new
 desired state and describe what changed.
 
 A parser is created from two functions that provides semantics for
-reads and mutations.
+reads and mutations:
 
 ```clj
 (def my-parser (om.next/parser {:read read-fn :mutate mutate-fn}))
@@ -460,7 +460,7 @@ is the key that is being requested to be read. Finally `params` is a
 hash map of parameters that can be used to customize the read. In many
 cases `params` will be empty.
 
-Enter the following into your Figwheel REPL:
+Enter the following at the Figwheel REPL:
 
 ```cljs
 (defn read
@@ -471,12 +471,11 @@ Enter the following into your Figwheel REPL:
       {:value :not-found})))
 ```
 
-All our read function does is read from a `:state` property supplied
-by the `env` parameter. We will see how `:state` is supplied
-shortly. Our read simply checks if the application state contains the
-key. Your read function must return a hash map containing a `:value`
-entry (note the `:not-found` value shown here for missing keys has no
-special meaning in Om Next).
+Our read function reads from a `:state` property supplied by the `env`
+parameter (we will see how `:state` is supplied shortly). Our function
+checks if the application state contains the key. Read functions must
+return a hash map containing a `:value` entry (note the `:not-found`
+value shown here for missing keys has no special meaning in Om Next).
 
 Let's create a parser:
 
