@@ -682,8 +682,6 @@ Change `src/om_tutorial/core.cljs` to look like the following:
             [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]))
 
-(enable-console-print!)
-
 (def app-state
   (atom
     {:app/title "Animals"
@@ -710,12 +708,10 @@ Change `src/om_tutorial/core.cljs` to look like the following:
     {:start 0 :end 10})
   static om/IQuery
   (query [this]
-    '[:app/title
-      (:animals/list {:start ?start :end ?end})])
+    '[:app/title (:animals/list {:start ?start :end ?end})])
   Object
   (render [this]
     (let [{:keys [app/title animals/list]} (om/props this)]
-      (println list)
       (dom/div nil
         (dom/title nil title)
         (apply dom/ul nil
