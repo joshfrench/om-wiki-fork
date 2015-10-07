@@ -772,6 +772,15 @@ log event in the Chrome JavaScript Console. Query modifications mutate
 the state of program and so are also recorded into the application
 state history log.
 
+Grab one of the UUIDs and you'll see that query state is maintained
+when you time travel (again your UUID will not the be one below!):
+
+```clj
+(reset! app-state 
+  (om/from-history reconciler
+    #uuid "e0a07c41-413a-430c-8c91-976a155241c3"))
+```
+
 ### The Indexer
 
 Om Next supports a first class notion of *identity*. While mounted
