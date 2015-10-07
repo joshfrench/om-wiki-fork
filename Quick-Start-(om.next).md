@@ -168,7 +168,7 @@ Point your browser at
 [http://localhost:3449](http://localhost:3449). You should see a blank
 page with the title "Om Tutorial!" visible on your browser tab.
 
-Open the Chrome developer tools with the **View > Developer >
+Open the Chrome Developer Tools with the **View > Developer >
 JavaScript Console** menu. In the JavaScript Console you should see
 `Hello, world!` printed out.
 
@@ -202,7 +202,7 @@ Edit `src/om_tutorial/core.cljs` to look like the following:
 ```
 
 Try modifying the `"Hello, world!"` string and saving the file. You
-should see that the browser immediately updates.
+should see that the browser updates immediately.
 
 This file presents a lot of new ideas, let's break them down.
 
@@ -225,8 +225,8 @@ departure. Om Next components are truly plain JavaScript classes. This
 component only declares one *JavaScript* `Object` method - `render`.
 
 Finally, in order to create an Om component we must first produce a
-factory from the component class. The function return by
-`om.next/factory` has the same signature as plain React component with
+factory from the component class. The function returned by
+`om.next/factory` has the same signature as pure React components with
 the exception that the first argument is usually an immutable
 data structure.
 
