@@ -602,7 +602,8 @@ the transaction, the contents of the transaction, and a
 identifying the state of the application before the transaction was
 applied.
 
-Copy and paste one of the UUIDs and try the following at the REPL (your UUID will be different!):
+Copy and paste one of the UUIDs and try the following at the REPL
+(your UUID will be different!):
 
 ```clj
 (om/from-history reconciler
@@ -667,10 +668,139 @@ separation of application state reads and mutations means you can
 scale up your application without rapid expansion of your complexity
 budget.
 
-## Indexing
+## Changing Queries Over Time
+
+Once you have declarative queries, it becomes quickly apparent
+they are an ideal way to change the behavior of the application. Like
+Relay, Om Next fully supports query modification. However it does so
+in a manner that does not interfere with global time travel.
+
+Change `src/om_tutorial/core.cljs` to look like the following:
+
+```clj
+(ns om-tutorial.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(def app-state
+  (atom
+    {:app/title "Animals"
+     :animals/list
+     [[1 "Ant"] [2 "Antelope"] [3 "Bird"] [4 "Cat"] [5 "Dog"]
+      [6 "Lion"] [7 "Mouse"] [8 "Monkey"] [9 "Snake"] [10 "Zebra"]]}))
+
+(defmulti read (fn [env key params] key))
+
+(defmethod read :default
+  [{:keys [state] :as env} key params]
+  (let [st @state]
+    (if-let [[_ value] (find st key)]
+      {:value value}
+      {:value :not-found})))
+
+(defmethod read :animals/list
+  [{:keys [state] :as env} key {:keys [start end]}]
+  {:value (subvec (:animals/list @state) start end)})
+
+(defui AnimalsList
+  static om/IQueryParams
+  (params [this]
+    {:start 0 :end 10})
+  static om/IQuery
+  (query [this]
+    '[:app/title (:animals/list {:start ?start :end ?end})])
+  Object
+  (render [this]
+    (let [{:keys [app/title animals/list]} (om/props this)]
+      (dom/div nil
+        (dom/title nil title)
+        (apply dom/ul nil
+          (map
+            (fn [[i name]]
+              (dom/li nil (str i ". " name)))
+            list))))))
+
+(def reconciler
+  (om/reconciler
+    {:state app-state
+     :parser (om/parser {:read read})}))
+
+(om/add-root! reconciler
+  AnimalsList (gdom/getElement "app"))
+```
+
+By this time all many of the bits related to parsing should be
+familiar to you so we'll focuses only on the new ideas. We switched
+our `read` function to a multimethod - this makes it easy to add cases
+in an open ended way.
+
+We implement the `:animals/list` case. We are finally use `params` and
+in this case we destructure `start` and `end` out of it.
+
+This brings us to the `AnimalsList` component. This component defines
+`om.next/IQueryParams` along with `om.next/IQuery`. The `params`
+method should return a map of bindings. These will be used to replace
+any occurrences of `?foo` in the actual query.
+
+At the Figwheel REPL try the following (you haven't seen
+`om.next/class->any` yet, we'll explain it in a moment):
+
+```clj
+(om/get-query (om/class->any reconciler AnimalsList))
+;; => [:app/title (:animals/list {:start 0, :end 10})]
+```
+
+It should be clear now that the params have been bound to the query.
+
+### Change the Query!
+
+Let's change the query by modifying the parameters. This can be done
+with `om.next/set-params!`.
+
+```clj
+(om/set-params! 
+  (om/class->any reconciler AnimalsList)
+  {:start 0 :end 5})
+```
+
+You should see the UI change immediately. You should also see Om Next
+log an event in the Chrome JavaScript Console. Query modifications mutate
+the state of program and so are also recorded into the application
+state history log.
+
+Grab one of the UUIDs and you'll see that query state is maintained
+when you time travel (again your UUID will not the be one below!):
+
+```clj
+(reset! app-state 
+  (om/from-history reconciler
+    #uuid "e0a07c41-413a-430c-8c91-976a155241c3"))
+```
+
+### The Indexer
 
 Om Next supports a first class notion of *identity*. While mounted
 React components do provide a kind of identity, Om Next provides a
 stronger model that can cut across the mounted component tree. In
 addition this model delivers powerful debugging and reasoning
 facilities over those found in React itself.
+
+Every reconciler has an indexer. The indexer keep indexes that
+maintain a variety of useful mappings. For example a class to all
+mounted components of that class, or prop name and all components that
+use that prop name. For example we already say `om.next/class->any`
+which is incredibly useful when testing things out at a REPL.
+
+The details of the indexer are not fully ironed out yet, but suffice
+to say it is a critical component that both simplifies reconciliation
+and an enhances interactive development.
+
+### Wrapping Up
+
+This covers all the Om Next fundamentals. It may not be fully apparent
+how the Om Next architecture seamless integration of custom stores or
+remote services, the following provide more details:
+
+* [[DataScript Integration Tutorial]]
+* [[Datomic Integration Tutorial]]
