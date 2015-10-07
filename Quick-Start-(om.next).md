@@ -347,7 +347,7 @@ reconciler to re-render the root.
 > **Note**: `om.next/add-root!` takes a reconciler, a root class and a DOM
 > element. Unlike `React.render` we do not instantiate the
 > component. The reconciler will do this on our behalf as it may
-> need request data from an endpoint first.
+> need to request data from an endpoint first.
 
 ### Global State Coupling
 
