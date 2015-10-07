@@ -787,7 +787,7 @@ stronger model that can cut across the mounted component tree. In
 addition this model delivers powerful debugging and reasoning
 facilities over those found in React itself.
 
-Every reconciler has an indexer. The indexer keep indexes that
+Every reconciler has an indexer. The indexer keeps indexes that
 maintain a variety of useful mappings. For example a class to all
 mounted components of that class, or prop name and all components that
 use that prop name. For example we already say `om.next/class->any`
@@ -795,13 +795,13 @@ which is incredibly useful when testing things out at a REPL.
 
 The details of the indexer are not fully ironed out yet, but suffice
 to say it is a critical component that both simplifies reconciliation
-and an enhances interactive development.
+and enhances interactive development.
 
 ### Wrapping Up
 
-This covers all the Om Next fundamentals. It may not be fully apparent
-how the Om Next architecture seamless integration of custom stores or
-remote services, the following provide more details:
+This wraps up the Om Next fundamentals. It may not be fully apparent
+how the Om Next architecture permits seamless integration of custom
+stores or remote services. The following links provide more details:
 
 * [[DataScript Integration Tutorial]]
 * [[Datomic Integration Tutorial]]
