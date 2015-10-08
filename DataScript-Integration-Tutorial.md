@@ -236,6 +236,7 @@ and try the following at the Figwheel REPL (your UUID and DataScript
 state will not be the same):
 
 ```clj
+(in-ns 'om-datascript.core)
 (om/from-history reconciler
   #uuid "c362be68-2867-46da-a8e5-5c107398e49d")
 ;; =>
