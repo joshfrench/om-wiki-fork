@@ -11,6 +11,58 @@ Before we begin we need to look at normalization and identity.
 
 ### Normalization
 
+Consider the following bit of data. Let's assume for a moment that
+this is the data returned from a remote service based on a root
+query. Can you identify what is problematic about this representation
+in the context of a user interface?
+
+```clj
+(def init-date
+  {:list/one [{:name "John" :points 0}
+              {:name "Mary" :points 0}
+              {:name "Bob"  :points 0}]
+   :list/two [{:name "Mary" :points 0 :age 27}
+              {:name "Gwen" :points 0}
+              {:name "Jeff" :points 0}]})
+```
+
+The issue is that the value `"Mary"` appears *twice*. In this case
+this value represents the same logical entity. While this is fantastic
+for rendering this representation is extremely problematic for
+updates. You would need to track all the places where `"Mary"` occurs
+and update them by hand.
+
+If you give an Om Next reconciler some with data without wrapping it
+in an atom, the reconciler assumes the data has not yet been
+normalized. It will use the root query to normalize the data. For
+example assume the following bit of code:
+
+```clj
+(def reconciler
+  (om/reconciler
+    {:state  init-data
+     :parser (om/parser {:read read :mutate mutate})}))
+```
+
+If you deref'ed the `reconciler` you would see the following:
+
+```clj
+{:list/one
+ [[:person/by-name "John"]
+  [:person/by-name "Mary"]
+  [:person/by-name "Bob"]],
+ :list/two
+ [[:person/by-name "Mary"]
+  [:person/by-name "Gwen"]
+  [:person/by-name "Jeff"]],
+ :person/by-name
+ {"John" {:name "John", :points 0},
+  "Mary" {:name "Mary", :points 0, :age 27},
+  "Bob" {:name "Bob", :points 0},
+  "Gwen" {:name "Gwen", :points 0}, 
+  "Jeff" {:name "Jeff", :points 0}}}
+```
+
 ### Identity
 
 ## Appendix
