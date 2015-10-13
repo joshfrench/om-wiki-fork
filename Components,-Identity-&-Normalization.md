@@ -472,7 +472,7 @@ After `Person` add `ListView`:
   (render [this]
     (println "Render ListView" (-> this om/path first))
     (let [list (om/props this)]
-      (apply dom/ul #js {:style {:border "1px solid black"}}
+      (apply dom/ul nil
         (map person list)))))
 
 (def list-view (om/factory ListView))
@@ -614,7 +614,7 @@ The complete source for this tutorial.
   (render [this]
     (println "Render ListView" (-> this om/path first))
     (let [list (om/props this)]
-      (apply dom/ul #js {:style {:border "1px solid black"}}
+      (apply dom/ul nil
         (map person list)))))
 
 (def list-view (om/factory ListView))
