@@ -202,6 +202,14 @@ Return the DOM node associated with a component.
 
 ### transact!
 
+```clj
+(om.next/transact! some-component
+  `[(todo/update `{:title "Get Milk!"})])
+```
+
+Transition the application state. `transact!` only takes two
+arguments, the 
+
 ### parser
 
 ```clj
