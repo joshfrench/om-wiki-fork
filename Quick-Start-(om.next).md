@@ -792,9 +792,16 @@ and enhances interactive development.
 
 ### Wrapping Up
 
-This wraps up the Om Next fundamentals. It may not be fully apparent
-how the Om Next architecture permits seamless integration of custom
-stores or remote services. The following links provide more details:
+This wraps up the Om Next fundamentals. Take a breather and dive into
+the second tutorial when you're ready. The following tutorial shows
+how Om Next provides a powerful but simple tool for cutting across
+the component tree - identity.
+
+* [[Components & Identity]]
+
+Also, it may not be fully apparent how the Om Next architecture permits
+seamless integration of custom stores or remote services. The
+following links provide more details:
 
 * [[DataScript Integration Tutorial]]
 * [[Datomic Integration Tutorial]]
