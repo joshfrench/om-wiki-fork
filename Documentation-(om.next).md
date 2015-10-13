@@ -208,7 +208,8 @@ Return the DOM node associated with a component.
 ```
 
 Transition the application state. `transact!` only takes two
-arguments, the 
+arguments, the component and a **query expression** that includes
+mutation.
 
 ### parser
 
