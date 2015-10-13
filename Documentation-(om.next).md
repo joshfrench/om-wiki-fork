@@ -28,7 +28,23 @@ and `om.next/IQueryParams`.
 
 ### get-query
 
+```clj
+(om.next/get-query MyComponent)
+```
+
+Returns the bound query for the component.
+
 ### factory
+
+```clj
+(om.next/factory MyComponent
+  {:keyfn :id :validator my-validator})
+```
+
+Create a factory function from an Om component. Can optionally supply
+`:keyfn` - this should produce the React `key` property from the
+component props. Can also supply `:validator`, a function which should
+`assert` that the props are valid.
 
 ### component?
 
