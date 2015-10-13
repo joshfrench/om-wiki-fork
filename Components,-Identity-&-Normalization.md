@@ -119,6 +119,214 @@ colocated queries. The **identity** operation also makes UI
 reconciliation trivial since we now which UI elements map to which
 data.
 
+Lets see how this works in practice. You can skip the following three
+sections if you've already done the setup from the Quick Start.
+
+## Setting Up
+
+This tutorial uses [Leiningen](http://leiningen.org),
+[Figwheel](https://www.youtube.com/watch?v=j-kj2qwJa_E), and
+[Google Chrome](http://www.google.com/chrome/). You should install
+Leiningen and Google Chrome before proceeding. Leiningen is a
+standard tool for managing Clojure and ClojureScript library
+dependencies. Figwheel is a ClojureScript build tool and REPL that
+enables an expressive live programming model well suited for
+interactive application development. Figwheel also plays well with
+text editors that make traditional REPL integration more challenging.
+
+You can of course use any web browser, but this tutorial only includes
+relevant instructions for Chrome to avoid tangential material.
+
+Create a new project and switch into it:
+
+```shell
+mkdir om-tutorial
+cd om-tutorial
+```
+
+Inside your project directory create a `project.clj`:
+
+```clj
+touch project.clj
+```
+
+Make it look like the following:
+
+```clj
+(defproject om-tutorial "0.1.0-SNAPSHOT"
+  :description "My first Om program!"
+  :dependencies [[org.clojure/clojure "1.7.0"]
+                 [org.clojure/clojurescript "1.7.122"]
+                 [org.omcljs/om "0.9.0-SNAPSHOT"]
+                 [figwheel-sidecar "0.4.0" :scope "provided"]])
+```
+
+A Leiningen `project.clj` file simply allows you to declare a variety
+of properties about your project. In our the case the most important
+is the list of `:dependencies`.
+
+Now create a file `script/figwheel.clj`.
+
+```shell
+mkdir script
+touch script/figwheel.clj
+```
+
+Change `script/figwheel.clj` to look like the following:
+
+```clj
+(require '[figwheel-sidecar.repl :as r]
+         '[figwheel-sidecar.repl-api :as ra])
+
+(ra/start-figwheel!
+  {:figwheel-options {}
+   :build-ids ["dev"]
+   :all-builds
+   [{:id "dev"
+     :figwheel true
+     :source-paths ["src"]
+     :compiler {:main 'om-tutorial.core
+                :asset-path "js"
+                :output-to "resources/public/js/main.js"
+                :output-dir "resources/public/js"
+                :verbose true}}]})
+
+(ra/cljs-repl)
+```
+
+This file describes how to build your ClojureScript project and starts
+a REPL. If you are new to ClojureScript you may find this file a bit
+overwhelming. If you would like to know more, after this tutorial you
+may want to work through the ClojureScript
+[Quick Start](https://github.com/clojure/clojurescript/wiki/Quick-Start)
+to re-inforce fundamental ClojureScript concepts encountered in this
+tutorial.
+
+## Markup
+
+We now need to provide some basic markup to host our ClojureScript
+application.
+
+Make a file `resources/public/index.html`:
+
+```shell
+mkdir -p resources/public
+touch resources/public/index.html
+```
+
+Change the contents of this file to the following:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Om Tutorial!</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script src="js/main.js"></script>
+    </body>
+</html>
+```
+
+## Checkpoint
+
+Create a file `src/om_tutorial/core.cljs`:
+
+```shell
+mkdir -p src/om_tutorial
+touch src/om_tutorial/core.cljs
+```
+
+Edit its contents to look like the following:
+
+```clj
+(ns om-tutorial.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(enable-console-print!)
+
+(println "Hello world!")
+```
+
+Start Figwheel:
+
+```clj
+lein run -m clojure.main script/figwheel.clj
+```
+
+For enhanced REPL behavior it's recommended that you install
+[rlwrap](http://utopia.knoware.nl/~hlub/uck/rlwrap/). Under OS X this
+can be easily done with [brew](http://brew.sh).
+
+If you have `rlwrap` installed you can then launch with:
+
+```clj
+rlwrap lein run -m clojure.main script/figwheel.clj
+```
+
+Point your browser at
+[http://localhost:3449](http://localhost:3449). You should see a blank
+page with the title "Om Tutorial!" visible on your browser tab.
+
+Open the Chrome Developer Tools with the **View > Developer >
+JavaScript Console** menu. In the JavaScript Console you should see
+`Hello, world!` printed out.
+
+## Studying Identity & Normalization
+
+Change `src/om_tutorial/core.cljs` to look like the following:
+
+```clj
+(ns om-tutorial.core
+  (:require [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom]))
+
+(enable-console-print!)
+
+(def init-data
+  {:list/one [{:name "John" :points 0}
+              {:name "Mary" :points 0}
+              {:name "Bob"  :points 0}]
+   :list/two [{:name "Mary" :points 0 :age 27}
+              {:name "Gwen" :points 0}
+              {:name "Jeff" :points 0}]})
+```
+
+This is the same bit of data we saw above.
+
+### Parsing
+
+Let's write our parsing code next and test as we go along. First lets
+deal with reading:
+
+```clj
+(defmulti read om/dispatch)
+
+(defmethod read :default
+  [{:keys [state] :as env} key params]
+  (let [st @state]
+    (if-let [[_ value] (find st key)]
+      {:value value}
+      {:value :not-found})))
+
+(defn get-people [state key]
+  (let [st @state]
+    (into [] (map #(get-in st %)) (get st key))))
+
+(defmethod read :list/one
+  [{:keys [state] :as env} key params]
+  {:value (get-people state key)})
+
+(defmethod read :list/two
+  [{:keys [state] :as env} key params]
+  {:value (get-people state key)})
+```
+
 ## Appendix
 
 The complete source for this tutorial.
