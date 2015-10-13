@@ -197,3 +197,14 @@ Return the DOM node associated with a component.
 ### reconciler?
 
 ### from-history
+
+```clj
+(om.next/from-history reconciler
+  #uuid "894e7a30-a5b8-4751-8bd6-a51aa122a919")
+```
+
+When mutating the application state via transactions or query
+modifications, Om will log a UUID associated with an application state
+before the change was applied. You can use the UUID to recover a
+previous application state. Useful for "Fix & Continue" development
+workflows.
