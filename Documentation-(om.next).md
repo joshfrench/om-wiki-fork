@@ -57,12 +57,6 @@
 
 ### class->any
 
-### ref->paths
-
-### ref->any-path
-
-### subpath
-
 ### merge!
 
 ### reconciler
