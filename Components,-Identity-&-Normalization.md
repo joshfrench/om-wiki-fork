@@ -72,12 +72,12 @@ all parts of our user interface that need it will update accordingly.
 
 But how was Om Next able to automatically normalize the data?
 
-Surprise, surprise, co-located queries with a little bit of help from
-the components them selves!
+Surprise, surprise, colocated component queries with a extra
+bit of help to determine **idenity**.
 
 ### Identity
 
-Co-located queries actually give us an incredible amount of
+Colocated queries actually give us an incredible amount of
 information with regards to intent.
 
 ```clj
@@ -95,7 +95,7 @@ information with regards to intent.
 ```
 
 For example if you get a query from a component via
-`om.next/get-query` you'll see that the query has some useful
+`om.next/get-query` you'll see that the query has some interesting
 metadata:
 
 ```clj
@@ -103,12 +103,21 @@ metadata:
 ;; => {:component om-tutorial.core/Person}
 ```
 
-This means that we know what component is associated with what data in
-the denormalized response. Now all we need to do is implement a
-protocol `om.next/Ident` to normalize the data. `om.next/Ident` takes
-props to client unique key. This key has a purpose beyond
+This means we always know what component is associated with what data
+in the denormalized response.
+
+However this isn't enough to normalize. We need to know what unique
+identity value should replace the original one. Se we must implement a
+protocol `om.next/Ident`. `om.next/Ident` takes props to a client
+unique key. This key has an additional related purpose beyond
 normalization - we can also use this key to know which components are
-backed by the same data and trivially keep them in sync.
+backed by the same data.
+
+So **normalization** simplifies updates. Providing an **identity**
+operation allows us to automate **normalization** based on the
+colocated queries. The **identity** operation also makes UI
+reconciliation trivial since we now which UI elements map to which
+data.
 
 ## Appendix
 
