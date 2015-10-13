@@ -72,8 +72,8 @@ all parts of our user interface that need it will update accordingly.
 
 But how was Om Next able to automatically normalize the data?
 
-Surprise, surprise, colocated component queries with a extra
-bit of help to determine **idenity**.
+Surprise, surprise ... this falls out of colocated component queries
+with a small bit of extra help to determine **idenity**.
 
 ### Identity
 
@@ -370,6 +370,55 @@ Now let's verify that we can reconstruct the data:
 You should see denormalized data.
 
 ### Adding Mutations
+
+Lets add some simple mutations to increment and decrement the `:point`
+field of the various characters:
+
+```clj
+(defmulti mutate om/dispatch)
+
+(defmethod mutate 'points/increment
+  [{:keys [state]} _ {:keys [name]}]
+  {:action
+   (fn []
+     (swap! state update-in
+       [:person/by-name name :points]
+       inc))})
+
+(defmethod mutate 'points/decrement
+  [{:keys [state]} _ {:keys [name]}]
+  {:action
+   (fn []
+     (swap! state update-in
+       [:person/by-name name :points]
+       #(let [n (dec %)] (if (neg? n) 0 n))))})
+```
+
+By now this should look pretty straightforward.
+
+Let's verify that we can mutate and get the expected denormalized
+view in the Figwheel REPL:
+
+```clj
+(def parser (om/parser {:read read :mutate mutate}))
+(def st (atom norm-data))
+(parser {:state st} '[(points/increment {:name "Mary"})])
+(parser {:state st} '[:list/one])
+```
+
+You should see that `"Mary"` has her points incrmented.
+
+But wait! She also appears in `:list/two`, we better check that
+as well:
+
+```clj
+(parser {:state st} '[:list/two])
+```
+
+You should see that her score is correct in both places.
+
+This is a lot of power for little effort. Normalization is strategy
+directly liften from Relay and Falcor.
 
 ## Appendix
 
