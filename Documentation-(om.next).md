@@ -204,11 +204,48 @@ Return the DOM node associated with a component.
 
 ### parser
 
+```clj
+(om.next/parser {:read read-fn :mutate mutate-fn})
+```
+
+Construct a parser from the supplied configuration map. The map should
+only have two keys:
+
+* `:read` - a function of three arguments `[env key params]` that
+  should return a valid parse result map. This map should only contain
+  `:value`, `:remote` or both. If `:value` is supplied will be uses to
+  rewrite a value in the resulting tree. If `:remote` is supplied will
+  be used to determine the remote query when running the parser in
+  remote mode.
+* `:mutate` - a function of three arguments `[env key params]` that
+   should return a valid parse mutation result map. This map should
+   only contain the keys valid for `:read` functions in addition to
+   a `:action` key. This should be a function of zero arguments that
+   applies the requested mutation.
+
 ### ref->components
+
+```clj
+(om.next/ref->component reconciler [todo/by-id 0])
+```
+
+A development time helper. Given an Om ref return all the components that match.
 
 ### ref->any
 
+```clj
+(om.next/ref->any reconciler [todo/by-id 0])
+```
+
+A development time helper. Given an Om ref return the first component that matches.
+
 ### class->any
+
+```clj
+(om.next/class->any reconciler SomeClass)
+```
+
+A development time helper. Given a class return a matching component.
 
 ### merge!
 
