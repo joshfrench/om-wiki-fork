@@ -348,7 +348,15 @@ each logical person in our test data:
      `[{:list/one ~subquery} {:list/two ~subquery}])))
 ```
 
-This is all we need to do to view a normalized version of our data,
+The only new idea here is `om.next/Ident`. Like `om.next/IQuery` it's
+a static method so that we can invoke regardless of whether we have
+instantiated any components or not. This method takes the props the
+component will receive (or has received) and return a unique
+identifier. This identifier will be used for normalization (to dedupe)
+as well as to identify which mounted components depend on the same
+data and therefore should change together.
+
+In anycase this is all we need to do to view a normalized version of our data,
 try the following at the Figwheel REPL:
 
 ```clj
@@ -502,6 +510,18 @@ you change Mary in one list she will change in the other. But you
 already knew that since you tested this in the REPL.
 
 ## Minimal Updates
+
+Open up the Chrome Developer Console if isn't already open. Notice
+that every component prints when it renders. Notice that after the
+initial render, components only re-render themselves on data changes -
+this is a significant render optimization.
+
+At the same time we haven't had to resort to caching via local state
+or other shenanigans that would break time travel.
+
+So you *can* have your cake and eat it too!
+
+The full code for this tutorial follows.
 
 ## Appendix
 
