@@ -425,8 +425,8 @@ as well:
 
 You should see that her score is correct in both places.
 
-This is a lot of power for little effort. Normalization is strategy
-directly liften from Relay and Falcor.
+This is a lot of power for little effort. Normalization is a strategy
+directly lifted from Relay and Falcor.
 
 ### Something to look at
 
