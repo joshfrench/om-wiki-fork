@@ -90,7 +90,7 @@ information with regards to intent.
     '[:name :points :age])
   Object
   (render [this]
-    ;; ...
+    ;; ... elided ...
     ))
 ```
 
