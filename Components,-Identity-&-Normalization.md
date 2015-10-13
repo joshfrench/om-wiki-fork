@@ -299,7 +299,7 @@ Change `src/om_tutorial/core.cljs` to look like the following:
 
 This is the same bit of data we saw above.
 
-### Parsing
+### Adding Reads
 
 Let's write our parsing code next and test as we go along. First lets
 deal with reading:
@@ -345,8 +345,31 @@ each logical person in our test data:
   static om/IQuery
   (query [this]
     (let [subquery (om/get-query Person)]
-      `[{:list/one ~subquery} {:list/two ~subquery}])))
+     `[{:list/one ~subquery} {:list/two ~subquery}])))
 ```
+
+This is all we need to do to view a normalized version of our data,
+try the following at the Figwheel REPL:
+
+```clj
+(in-ns 'om-tutorial.core)
+(require '[cljs.pprint :as pp])
+(def norm-data (om/normalize RootView init-data true))
+(pp/pprint norm-data)
+```
+
+You should see a normalized version of the data pretty printed.
+
+Now let's verify that we can reconstruct the data:
+
+```clj
+(def parser (om/parser {:read read}))
+(parser {:state (atom norm-data)} '[:list/one])
+```
+
+You should see denormalized data.
+
+### Adding Mutations
 
 ## Appendix
 
