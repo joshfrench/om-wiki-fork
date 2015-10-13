@@ -146,11 +146,35 @@ Return the rendered component local state.
 
 ### set-query!
 
+```clj
+(om.next/set-query! some-component [:foo :baz]})
+```
+
+Mutate the query of a component. Schedules the component for re-render.
+
 ### set-params!
+
+```clj
+(om.next/set-params! some-component {:start 5 :end 10})
+```
+
+Mutate the query params of a component. Schedules the component for re-render.
 
 ### mounted?
 
+```clj
+(om.next/mounted? some-component)
+```
+
+Returns true if the component is mounted.
+
 ### dom-node
+
+```clj
+(om.next/dom-node some-component)
+```
+
+Return the DOM node associated with a component.
 
 ### add-root!
 
