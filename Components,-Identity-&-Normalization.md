@@ -3,8 +3,8 @@
 ## Introduction
 
 The [[Quick Start (om.next)]] introduced the fundamentals, now we'll
-explore more deeply how Om Next permits the coordination of state
-across the component without introducing boilerplate or additional
+explore more closely how Om Next simplifies coordination of state
+across the component tree without introducing boilerplate or additional
 complexity.
 
 Before we begin we need to look at normalization and identity.
