@@ -420,6 +420,89 @@ You should see that her score is correct in both places.
 This is a lot of power for little effort. Normalization is strategy
 directly liften from Relay and Falcor.
 
+### Something to look at
+
+Modify `Person` to the following:
+
+```clj
+(defui Person
+  static om/Ident
+  (ident [this {:keys [name]}]
+    [:person/by-name name])
+  static om/IQuery
+  (query [this]
+    '[:name :points :age])
+  Object
+  (render [this]
+    (println "Render Person" (-> this om/props :name))
+    (let [{:keys [points name foo] :as props} (om/props this)]
+      (dom/li nil
+        (dom/label nil (str name ", points: " points))
+        (dom/button
+          #js {:onClick
+               (fn [e]
+                 (om/transact! this
+                   `[(points/increment ~props)]))}
+          "+")
+        (dom/button
+          #js {:onClick
+               (fn [e]
+                 (om/transact! this
+                   `[(points/decrement ~props)]))}
+          "-")))))
+
+(def person (om/factory Person {:keyfn :name}))
+```
+          
+This should look pretty straighforward.
+
+After `Person` add `ListView`:
+
+```clj
+(defui ListView
+  Object
+  (render [this]
+    (println "Render ListView" (-> this om/path first))
+    (let [list (om/props this)]
+      (apply dom/ul #js {:style {:border "1px solid black"}}
+        (map person list)))))
+
+(def list-view (om/factory ListView))
+```
+
+After `ListView` add `RootView`, the reconciler construction and kick off:
+
+```clj
+(defui RootView
+  static om/IQuery
+  (query [this]
+    (let [subquery (om/get-query Person)]
+      `[{:list/one ~subquery} {:list/two ~subquery}]))
+  Object
+  (render [this]
+    (println "Render RootView")
+    (let [{:keys [list/one list/two]} (om/props this)]
+      (apply dom/div nil
+        [(dom/h2 nil "List A")
+         (list-view one)
+         (dom/h2 nil "List B")
+         (list-view two)]))))
+
+(def reconciler
+  (om/reconciler
+    {:state  init-data
+     :parser (om/parser {:read read :mutate mutate})}))
+
+(om/add-root! reconciler
+  RootView (gdom/getElement "app"))
+```
+
+You should now see a UI that you can interact with. You'll see that if
+you change Mary in one list she will change in the other. But you
+already knew that since you tested this in the REPL.
+
+## Minimal Updates
+
 ## Appendix
 
 The complete source for this tutorial.
