@@ -307,13 +307,6 @@ deal with reading:
 ```clj
 (defmulti read om/dispatch)
 
-(defmethod read :default
-  [{:keys [state] :as env} key params]
-  (let [st @state]
-    (if-let [[_ value] (find st key)]
-      {:value value}
-      {:value :not-found})))
-
 (defn get-people [state key]
   (let [st @state]
     (into [] (map #(get-in st %)) (get st key))))
@@ -325,6 +318,34 @@ deal with reading:
 (defmethod read :list/two
   [{:keys [state] :as env} key params]
   {:value (get-people state key)})
+```
+
+Note that in this case we *must* supply read functions - our data will
+be normalized so we have to build the original tree form. Fortunately
+doing this is usually a one liner. However even one liners can have
+bugs so we'll want to do some interactive testing with the REPL
+momentarily.
+
+But before we do that we need some help from our components that will
+map this data into the UI. Fortunately we can write components without
+render functions to simplify design and testing. We know that we'll be
+rendering a `RootView` with two lists and a `Person` component for
+each logical person in our test data:
+
+```clj
+(defui Person
+  static om/Ident
+  (ident [this {:keys [name]}]
+    [:person/by-name name])
+  static om/IQuery
+  (query [this]
+    '[:name :points]))
+
+(defui RootView
+  static om/IQuery
+  (query [this]
+    (let [subquery (om/get-query Person)]
+      `[{:list/one ~subquery} {:list/two ~subquery}])))
 ```
 
 ## Appendix
@@ -351,13 +372,6 @@ The complete source for this tutorial.
 ;; Parsing
 
 (defmulti read om/dispatch)
-
-(defmethod read :default
-  [{:keys [state] :as env} key params]
-  (let [st @state]
-    (if-let [[_ value] (find st key)]
-      {:value value}
-      {:value :not-found})))
 
 (defn get-people [state key]
   (let [st @state]
