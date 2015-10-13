@@ -795,9 +795,9 @@ and enhances interactive development.
 This wraps up the Om Next fundamentals. Take a breather and dive into
 the second tutorial when you're ready. The following tutorial shows
 how Om Next provides a powerful but simple tool for cutting across
-the component tree - identity.
+the component tree - identity:
 
-* [[Components & Identity]]
+* [[Components, Identity & Normalization]]
 
 Also, it may not be fully apparent how the Om Next architecture permits
 seamless integration of custom stores or remote services. The
