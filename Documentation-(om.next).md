@@ -194,7 +194,26 @@ Return the DOM node associated with a component.
 
 ### reconciler
 
+```clj
+(om.next/reconciler
+  {:state app-state
+   :parser my-parser})
+```
+
+Construct a reconciler based on the supplied configuration. The
+configuration can be a map with the following keys:
+
+* `:state` - the application state. If not an atom the reconciler will
+normalize the data with the query supplied by the root component.
+* `:parser` - a parser
+
 ### reconciler?
+
+```clj
+(om.next/reconciler? x)
+```
+
+Returns true if the argument is a reconciler instance, false otherwise.
 
 ### from-history
 
