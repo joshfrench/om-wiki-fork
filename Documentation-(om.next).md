@@ -2,6 +2,26 @@
 
 #### om.next
 
+* [defui](#defui)
+* [IQuery](#IQuery)
+* [IQueryParams](#IQueryParams)
+* [get-query](#get-query)
+* [factory](#factory)
+* [component?](#component?)
+* [react-key](#react-key)
+* [react-type](#react-type)
+* [props](#props)
+* [set-state!](#set-state!)
+* [get-state](#get-state)
+* [get-rendered-state](#get-rendered-state)
+* [set-query!](#set-query!)
+* [set-params!](#set-params!)
+* [mounted?](#mounted?)
+* [dom-node](#dom-node)
+* [reconciler](#reconciler)
+* [reconciler?](#reconciler?)
+* [from-history](#from-history)
+
 #### om.dom
 
 * [Props](#props)
