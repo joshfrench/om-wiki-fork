@@ -7,7 +7,7 @@ explore more closely how Om Next simplifies coordination of state
 across the component tree without introducing boilerplate or additional
 complexity.
 
-Before we begin we need to look at normalization and identity.
+Before we begin we need to look at **normalization** and **identity**.
 
 ### Normalization
 
