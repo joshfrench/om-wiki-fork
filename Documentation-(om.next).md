@@ -108,6 +108,17 @@ been mounted.
 
 ### props
 
+```clj
+(defui MyComponent
+  Object
+  (render [this]
+    (let [{:keys [foo bar]} (om/props this)]
+      ;; ...
+      )))
+```
+
+Get the immutable props for an Om component.
+
 ### set-state!
 
 ### get-state!
