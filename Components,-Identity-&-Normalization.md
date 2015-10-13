@@ -63,7 +63,52 @@ If you deref'ed the `reconciler` you would see the following:
   "Jeff" {:name "Jeff", :points 0}}}
 ```
 
+Notice that all the data has been de-duplicated. In place of the
+original values in `:line/one` and `:list/two` we instead have a
+vector that can get be used with `get-in` to get the actual
+data. `"Mary"` now appears only once and all the fields are
+preserved. We can now update `"Mary"` in one location and expect that
+all parts of our user interface that need it will update accordingly.
+
+But how was Om Next able to automatically normalize the data?
+
+Surprise, surprise, co-located queries with a little bit of help from
+the components them selves!
+
 ### Identity
+
+Co-located queries actually give us an incredible amount of
+information with regards to intent.
+
+```clj
+(defui Person
+  static om/Ident
+  (ident [this {:keys [name]}]
+    [:person/by-name name])
+  static om/IQuery
+  (query [this]
+    '[:name :points :age])
+  Object
+  (render [this]
+    ;; ...
+    ))
+```
+
+For example if you get a query from a component via
+`om.next/get-query` you'll see that the query has some useful
+metadata:
+
+```clj
+(-> Person om.next/get-query meta)
+;; => {:component om-tutorial.core/Person}
+```
+
+This means that we know what component is associated with what data in
+the denormalized response. Now all we need to do is implement a
+protocol `om.next/Ident` to normalize the data. `om.next/Ident` takes
+props to client unique key. This key has a purpose beyond
+normalization - we can also use this key to know which components are
+backed by the same data and trivially keep them in sync.
 
 ## Appendix
 
