@@ -9,6 +9,19 @@
 
 ### defui
 
+```clj
+(defui MyComponent
+  Object
+  (render [this]
+    (div nil "Hello, world!")))
+```
+
+Macro for defining components. `defui` creates a JavaScript class that
+inherits from `React.Component`. `defui` is like `deftype` but there
+is no support for defining fields. In addition there is special
+handling of the "static" protocols `om.next/Ident`, `om.next/IQuery`
+and `om.next/IQueryParams`.
+
 ### IQueryParams
 
 ### IQuery
