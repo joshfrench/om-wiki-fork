@@ -121,9 +121,28 @@ Get the immutable props for an Om component.
 
 ### set-state!
 
-### get-state!
+```clj
+(om.next/set-state! some-component {:foo :bar})
+```
 
-### get-rendered-state!
+Set component local state. Will schedule the component for re-render.
+
+### get-state
+
+```clj
+(om.next/get-state some-component)
+```
+
+Return the component local state. Will be the latest state, not the
+rendered component state.
+
+### get-rendered-state
+
+```clj
+(om.next/get-rendered-state some-component)
+```
+
+Return the rendered component local state.
 
 ### set-query!
 
