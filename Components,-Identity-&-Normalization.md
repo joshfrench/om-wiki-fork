@@ -116,7 +116,7 @@ key to know which components are backed by the same data.
 So **normalization** simplifies updates. Providing an **identity**
 operation allows us to automate **normalization** based on the
 colocated queries. The **identity** operation also makes UI
-reconciliation trivial since we now which UI elements map to which
+reconciliation trivial since we now know which UI elements map to which
 data.
 
 Lets see how this works in practice. You can skip the following three
