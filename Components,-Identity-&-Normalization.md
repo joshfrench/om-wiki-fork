@@ -414,7 +414,7 @@ view in the Figwheel REPL:
 (parser {:state st} '[:list/one])
 ```
 
-You should see that `"Mary"` has her points incrmented.
+You should see that `"Mary"` has her points incremented.
 
 But wait! She also appears in `:list/two`, we better check that
 as well:
