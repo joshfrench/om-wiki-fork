@@ -107,11 +107,11 @@ This means we always know what component is associated with what data
 in the denormalized response.
 
 However this isn't enough to normalize. We need to know what unique
-identity value should replace the original one. Se we must implement a
-protocol `om.next/Ident`. `om.next/Ident` takes props to a client
-unique key. This key has an additional related purpose beyond
-normalization - we can also use this key to know which components are
-backed by the same data.
+identity value should replace the original one. So we implement the
+protocol `om.next/Ident`. `om.next/Ident` takes props and returns a
+unique key (unique to the client, not globally). This key has an
+additional related purpose beyond normalization - we can also use this
+key to know which components are backed by the same data.
 
 So **normalization** simplifies updates. Providing an **identity**
 operation allows us to automate **normalization** based on the
