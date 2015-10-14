@@ -282,7 +282,7 @@ For example we can change our code to the following:
 
 (js/React.render
   ;; CHANGED
-  (apply dom/p nil
+  (apply dom/div nil
     (map #(hello {:title (str "Hello " %)})
       (range 3)))
   (gdom/getElement "app"))
