@@ -121,6 +121,14 @@ colocated queries. The **identity** operation also makes UI
 reconciliation trivial since we now know which UI elements map to which
 data.
 
+> **Note on DataScript**: the previous sections *do not* apply to a
+> custom store like DataScript which already stores all data in a
+> normalized form. Normalization is necessary only in the cases
+> where you wish to represent client state with simple EDN data or
+> where the data is being supplied by a remote service that responds
+> to **query expressions**. These results will be in tree form ready
+> to render, but again this form isn't ideal for updates.
+
 Lets see how this works in practice. You can skip the following three
 sections if you've already done the setup from the Quick Start.
 
