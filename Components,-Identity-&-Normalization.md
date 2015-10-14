@@ -511,7 +511,7 @@ other. But you already knew that since you tested this in the REPL.
 
 ## Minimal Updates
 
-Open up the Chrome Developer Console if isn't already open. Notice
+Open the Chrome Developer Console if it isn't already open. Notice
 that every component prints when it renders. Notice that after the
 initial render, components only re-render themselves on data changes -
 this is a significant render optimization.
