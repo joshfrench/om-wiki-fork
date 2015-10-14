@@ -506,8 +506,8 @@ After `ListView` add `RootView`, the reconciler construction and kick off:
 ```
 
 You should now see a UI that you can interact with. You'll see that if
-you change Mary in one list she will change in the other. But you
-already knew that since you tested this in the REPL.
+you change Mary's points in one list her points will change in the
+other. But you already knew that since you tested this in the REPL.
 
 ## Minimal Updates
 
