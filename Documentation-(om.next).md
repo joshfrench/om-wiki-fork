@@ -198,6 +198,14 @@ Return the DOM node associated with a component.
 
 ### add-root!
 
+```clj
+(om.next/add-root! reconciler
+  MyRootComponent (goog.dom/getElement "app"))
+```
+
+Add a DOM root for the reconciler to control. The first argument is a
+reconciler, the second a root component, and the last, a DOM node target.
+
 ### remove-root!
 
 ### transact!
@@ -243,7 +251,8 @@ remote, defaults to `false`.
 (om.next/ref->component reconciler [todo/by-id 0])
 ```
 
-A development time helper. Given an Om ref return all the components that match.
+A development time helper. Given an Om ref return all the components
+that match.
 
 ### ref->any
 
@@ -251,7 +260,8 @@ A development time helper. Given an Om ref return all the components that match.
 (om.next/ref->any reconciler [todo/by-id 0])
 ```
 
-A development time helper. Given an Om ref return the first component that matches.
+A development time helper. Given an Om ref return the first component
+that matches.
 
 ### class->any
 
