@@ -1,5 +1,7 @@
 #### Table of Contents
 
+> WARNING: This page documents alpha software.
+
 #### om.next
 
 * [defui](#defui)
@@ -19,6 +21,14 @@
 * [set-params!](#set-params!)
 * [mounted?](#mounted?)
 * [dom-node](#dom-node)
+* [add-root!](#add-root!)
+* [remote-root!](#remove-root!)
+* [transact!](#transact!)
+* [parser](#parser)
+* [ref->components](#ref->components)
+* [class->any](#class->any)
+* [ref->any](#ref->any)
+* [class->any](#class->any)
 * [reconciler](#reconciler)
 * [reconciler?](#reconciler?)
 * [from-history](#from-history)
