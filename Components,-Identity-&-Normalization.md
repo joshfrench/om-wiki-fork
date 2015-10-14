@@ -27,15 +27,15 @@ in the context of a user interface?
 ```
 
 The issue is that the value `"Mary"` appears *twice*. In this case
-this value represents the same logical entity. While this is fantastic
-for rendering this representation is extremely problematic for
-updates. You would need to track all the places where `"Mary"` occurs
-and update them by hand.
+this value represents the same logical entity. While this is fine for
+rendering this, representation is problematic for updates. You would
+need to track all the places where `"Mary"` occurs and update them by
+hand.
 
-If you give an Om Next reconciler some with data without wrapping it
-in an atom, the reconciler assumes the data has not yet been
-normalized. It will use the root query to normalize the data. For
-example assume the following bit of code:
+If you give an Om Next reconciler data without wrapping it in an atom,
+the reconciler assumes the data has not yet been normalized. It will
+use the root query to normalize the data. For example assume the
+following bit of code:
 
 ```clj
 (def reconciler
