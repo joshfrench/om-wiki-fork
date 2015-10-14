@@ -28,7 +28,7 @@ in the context of a user interface?
 
 The issue is that the value `"Mary"` appears *twice*. In this case
 this value represents the same logical entity. While this is fine for
-rendering this, representation is problematic for updates. You would
+rendering, this representation is problematic for updates. You would
 need to track all the places where `"Mary"` occurs and update them by
 hand.
 
