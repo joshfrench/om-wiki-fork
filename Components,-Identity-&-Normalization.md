@@ -8,8 +8,8 @@ across the component tree without introducing boilerplate or additional
 complexity.
 
 Before we begin we need to look at **normalization** and
-**identity**. Note the following sections are *not* intended to be
-entered into a REPL.
+**identity**. Note the following two subsections are *not* intended to
+be entered into a REPL.
 
 ### Normalization
 
