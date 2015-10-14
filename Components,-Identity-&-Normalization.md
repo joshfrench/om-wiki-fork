@@ -379,7 +379,7 @@ You should see denormalized data.
 
 ### Adding Mutations
 
-Lets add some simple mutations to increment and decrement the `:point`
+Lets add some simple mutations to increment and decrement the `:points`
 field of the various characters:
 
 ```clj
