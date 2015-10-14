@@ -208,6 +208,13 @@ reconciler, the second a root component, and the last, a DOM node target.
 
 ### remove-root!
 
+```clj
+(om.next/add-root! reconciler (goog.dom/getElement "app"))
+```
+
+Given a reconciler and DOM target node, remove the DOM target from the
+reconciler's control.
+
 ### transact!
 
 ```clj
