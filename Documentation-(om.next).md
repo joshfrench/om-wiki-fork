@@ -3,6 +3,7 @@
 #### om.next
 
 * [defui](#defui)
+* [Ident](#Ident)
 * [IQuery](#IQuery)
 * [IQueryParams](#IQueryParams)
 * [get-query](#get-query)
@@ -41,6 +42,22 @@ inherits from `React.Component`. `defui` is like `deftype` but there
 is no support for defining fields. In addition there is special
 handling of the "static" protocols `om.next/Ident`, `om.next/IQuery`
 and `om.next/IQueryParams`.
+
+### Ident
+
+```clj
+(defui MyComponent
+  static om/Ident
+  (ident [this props}]
+    [:some/key (:some/id props)])
+```
+
+A protocol for identity resolution. This protocol is used to solve two
+problems. First, in the case where initial state or state novelty is
+supplied in a denormalized form. Second, when making an association
+from a logical entity to multiple component instances. The first case
+simplifies the problem of updating data while the later simplifies
+keep multiple view of the same data in sync.
 
 ### IQuery
 
