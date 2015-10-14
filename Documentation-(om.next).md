@@ -48,7 +48,7 @@ and `om.next/IQueryParams`.
 ```clj
 (defui MyComponent
   static om/Ident
-  (ident [this props}]
+  (ident [this props]
     [:some/key (:some/id props)])
 ```
 
