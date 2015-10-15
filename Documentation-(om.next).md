@@ -33,15 +33,18 @@
 ```clj
 (defui MyComponent
   Object
+  (componentDidMount [this]
+                     (.log js/console "did mount"))
   (render [this]
-    (div nil "Hello, world!")))
+          (div nil "Hello, world!")))
+
 ```
 
 Macro for defining components. `defui` creates a JavaScript class that
 inherits from `React.Component`. `defui` is like `deftype` but there
 is no support for defining fields. In addition there is special
 handling of the "static" protocols `om.next/Ident`, `om.next/IQuery`
-and `om.next/IQueryParams`.
+and `om.next/IQueryParams`. The React component specs and lifecycle methods are available at the [react docs](https://facebook.github.io/react/docs/component-specs.html). 
 
 ### Ident
 
