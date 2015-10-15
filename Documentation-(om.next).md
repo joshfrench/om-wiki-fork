@@ -272,7 +272,7 @@ remote, defaults to `false`.
 ### ref->components
 
 ```clj
-(om.next/ref->component reconciler [todo/by-id 0])
+(om.next/ref->components reconciler [todo/by-id 0])
 ```
 
 A development time helper. Given an Om ref return all the components
