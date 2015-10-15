@@ -75,7 +75,7 @@ all parts of our user interface that need it will update accordingly.
 But how was Om Next able to automatically normalize the data?
 
 Surprise, surprise ... this falls out of colocated component queries
-with a small bit of extra help to determine **idenity**.
+with a small bit of extra help to determine **identity**.
 
 ### Identity
 

@@ -15,5 +15,5 @@
 * [[Quick Start (om.next)]]
 * [[Components, Identity & Normalization]]
 * [[DataScript Integration Tutorial]]
-* [[Datomic Integration Tutorial]], NOT DONE
+* [[Remote Synchronization Tutorial]], NOT DONE
 * [[Documentation (om.next)]], NOT DONE
