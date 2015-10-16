@@ -70,7 +70,7 @@ problems. First, in the case where initial state or state novelty is
 supplied in a denormalized form. Second, when making an association
 from a logical entity to multiple component instances. The first case
 simplifies the problem of updating data while the later simplifies
-keep multiple view of the same data in sync.
+keeping multiple views of the same data in sync.
 
 ### IQuery
 
@@ -86,7 +86,7 @@ keep multiple view of the same data in sync.
 
 A protocol for declaring queries. This method should always return
 a vector. The query may include quoted symbols that start with `?`. If
-bindings for these query varialbes are supplied via `IQueryParams`
+bindings for these query variables are supplied via `IQueryParams`
 they will replace the symbols.
 
 ### IQueryParams
@@ -133,7 +133,7 @@ component props. Can also supply `:validator`, a function which should
 (om.next/component? 1) ;; false
 ```
 
-Returns true if the argument is a compoennt.
+Returns true if the argument is a component.
 
 ### react-key
 
@@ -239,7 +239,7 @@ reconciler, the second a root component, and the last, a DOM node target.
 ### remove-root!
 
 ```clj
-(om.next/add-root! reconciler (goog.dom/getElement "app"))
+(om.next/remove-root! reconciler (goog.dom/getElement "app"))
 ```
 
 Given a reconciler and DOM target node, remove the DOM target from the
@@ -267,14 +267,14 @@ only have two keys:
 
 * `:read` - a function of three arguments `[env key params]` that
   should return a valid parse result map. This map should only contain
-  `:value`, `:remote` or both. If `:value` is supplied will be used to
-  rewrite a value in the resulting tree. If `:remote` is supplied will
+  `:value`, `:remote` or both. If `:value` is supplied it will be used to
+  rewrite a value in the resulting tree. If `:remote` is supplied it will
   be used to determine the remote query when running the parser in
   remote mode.
 * `:mutate` - a function of three arguments `[env key params]` that
   should return a valid parse mutation result map. This map should
   only contain the keys valid for `:read` functions in addition to
-  a `:action` key. This should be a function of zero arguments that
+  an `:action` key. This should be a function of zero arguments that
   applies the requested mutation.
 
 Returns a function of up to three arguments. The first argument should
