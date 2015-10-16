@@ -22,7 +22,7 @@
 * [mounted?](#mounted?)
 * [dom-node](#dom-node)
 * [add-root!](#add-root!)
-* [remote-root!](#remove-root!)
+* [remove-root!](#remove-root!)
 * [transact!](#transact!)
 * [parser](#parser)
 * [ref->components](#ref->components)
