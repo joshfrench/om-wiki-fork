@@ -456,6 +456,7 @@ cases `params` will be empty.
 Enter the following at the Figwheel REPL:
 
 ```cljs
+(in-ns 'om-tutorial.core)
 (defn read
   [{:keys [state] :as env} key params]
   (let [st @state]
@@ -507,6 +508,7 @@ read functions, however the return value is different. Copy and paste
 the following into your Figwheel REPL:
 
 ```clj
+(in-ns 'om-tutorial.core)
 (defn mutate
   [{:keys [state] :as env} key params]
   (if (= 'increment key)
@@ -599,6 +601,7 @@ Copy and paste one of the UUIDs and try the following at the REPL
 (your UUID will be different!):
 
 ```clj
+(in-ns 'om-tutorial.core)
 (om/from-history reconciler
   #uuid "9e7160a0-89cc-4482-aba1-7b894a1c54b4")
 ;; => {:count 2}
@@ -648,6 +651,7 @@ also possible to submit transactions directly to the reconciler.
 Try the following at Figwheel REPL:
 
 ```clj
+(in-ns 'om-tutorial.core)
 (om.next/transact! reconciler '[(increment)])
 ```
 
@@ -741,6 +745,7 @@ At the Figwheel REPL try the following (you haven't seen
 `om.next/class->any` yet, we'll explain it in a moment):
 
 ```clj
+(in-ns 'om-tutorial.core)
 (om/get-query (om/class->any reconciler AnimalsList))
 ;; => [:app/title (:animals/list {:start 0, :end 10})]
 ```
