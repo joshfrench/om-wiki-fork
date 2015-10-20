@@ -80,7 +80,7 @@ a result for each:
 
 which means "I'd like to query for the properties :user/name and :user/address".
 
-The output of read must always be a map. In this case, a map keyed by the
+The result of a parse of such a query must always be a map. In this case, a map keyed by the
 requested properties:
 
 ```clj
@@ -120,7 +120,7 @@ So, a *query* might look like this:
 which is asking for two things (which themselves will contain zero or more
 sub-things).
 
-Remember that the output of a query is always a map, and in this case, 
+Remember that the output of a parse of a query is always a map, and in this case
 the query result should take this form:
 
 ```clj
@@ -131,30 +131,41 @@ the query result should take this form:
 }
 ```
 
-*IMPORTANT NOTE*: Om Next has no magic here. It cannot magically
-create this output result...that is what you are supposed to do.
-The parser, however, is written to make it pretty easy. So, let's
-look at how we do that.
+*IMPORTANT NOTE*: Om Next has no magic here. It cannot magically create this
+output result...you have to play along.  The parser, however, is written to make
+it pretty easy. So, let's look at how we do that.
 
 ## Implementing Read
 
 When building your application a good deal of the initial effort will be
-in writing you read function such that it can interpret the grammar.
+in writing you read function such that it can pull data that the 
+parser needs to fill in the result.
 
-The Om Next parser understands the grammar, but it does nothing more
-than read the top-level query and call your function on each element.
+The Om Next parser understands the grammar, but you know your data.
+By default, the parse only invokes read for each top-level element
+in the query. So:
 
 ```clj
 [:kw {:j [:v]}]
 ```
 
 would result in a call to your read function on :kw and {:j [:v]}. Two
-calls. No automatic recursion. Done.
+calls. No automatic recursion. Done. The output value of the 
+*parse* will be a map (that parse creates) which contains
+the keys (from the query, copied over by the parser) and 
+values (obtained from your read):
 
-Dealing with recursive queries is a natural fit for a recusive 
-algorithm, and it is perfectly fine to invoke the om/parse function
-to descend the query. In fact, the parse function is passed as
-part of your environment.
+```clj
+{ :kw value-from-read :j value-from-read }
+```
+
+Note that if your read accidentally returns a scalar for `:j` then you've not
+done the right thing...a join like `{ :j [:k] }` expects a result that is a
+vector of (zero or more) things.
+
+Dealing with recursive queries is a natural fit for a recusive algorithm, and it
+is perfectly fine to invoke the om/parse function to descend the query. In fact,
+the parse function is passed as part of your environment.
 
 So, the read function you write:
 
@@ -167,8 +178,7 @@ So, the read function you write:
     - Parameters (which are nil if not supplied in the query)
 - Must return a value that has the shape implied the grammar element being read.
 
-The parse will create an output map that has the key (e.g. :user/name) associated
-with your return value.
+The parse will create the output map.
 
 ### Reading a keyword
 
@@ -180,22 +190,22 @@ If the parser encounters a keyword `:kw`, your function will be called with:
            nil) ;; no parameters
 ```
 
-in this case, your read function should return some value that makes sense for that spot in the grammar.
-There are no real restrictions on what that data value has to be. It could be a string, number,
-Entity Object, JS Date, etc. The grammar says a value has to be there, but it doesn't care
-about what is in it.
+in this case, your read function should return some value that makes sense for
+that spot in the grammar.  There are no real restrictions on what that data
+value has to be in this case. There is no further shape implied by the grammar.
+It could be a string, number, Entity Object, JS Date, nil, etc.
 
-Your return value must be a map, and due to additional features you need to wrap your 
-return value in a map with the key `:value`. Thus, a very simple read for keywords 
-could be:
+Due to additional features of the parser, your return value must be wrapped in a
+map with the key `:value`. Thus, a very simple read for keywords could be:
 
 ```clj
 (defn read [env key params] { :value 42 }) 
 ```
 
-and you have a read function that returns the meaning of life the universe and everything in 
-a single line! Of course we're ignoring the meaning of the question, but we can now read
-any query that contains only keywords. Try it out via the REPL:
+and you have a read function that returns the meaning of life the universe and
+everything in a single line! Of course we're ignoring the meaning of the
+question, but we can now read any query that contains only keywords. Try it out
+via the REPL:
 
 ```clj
 (def state (atom {}))
@@ -228,10 +238,28 @@ and you should see the following output:
 {:a 1, :b 2, :c 99}
 ```
 
-
 ### Reading a join
 
 Of course, your app state probably has some more structure to it.
-Joins are the naturally recursive
+Joins are the naturally recursive, and if we revert back to
+our old parser that thinks `42` is right for all questions:
+
+```clj
+(def app-state (atom {:a 1 :b 2 :c 99}))
+(defn read [env key params] { :value 42 })
+(def my-parser (om/parser {:read read}))
+(my-parser {:state app-state} '[:a {:user [:user/name]} :c])
+```
+
+then the read of the join is:
+
+```clj
+{:a 42, :user 42, :c 42}
+```
+
+No recursion happened! If you put a println in the read, you'll see it is only
+called three times.
+
+Those that are used to writing parsers probably already see the solution.
 
 
