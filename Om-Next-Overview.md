@@ -262,4 +262,41 @@ called three times.
 
 Those that are used to writing parsers probably already see the solution.
 
+Let's clarify what the read function will receive in this case. When
+parsing:
 
+```clj
+{ :j [:a :b :c] }
+```
+
+your read function will be called with:
+
+```clj
+(your-read { :state state :parse (fn ...) :selector [:a :b :c] } ; NOTE: selector is set
+           :j                                                    ; keyword as expected
+           nil)
+```
+
+So, we can get a basic recursive parse using just a bit more flat data:
+
+```clj
+(def app-state (atom {:a 1 :user/name "Sam" :c 99}))
+
+(defn read [{:keys [state parse selector] :as env} key params]
+  (if (= :user key)
+    {:value (parse env selector)}
+    {:value (get @state key)}))
+
+(def my-parser (om/parser {:read read}))
+(my-parser {:state app-state} '[:a {:user [:user/name]} :c])
+```
+
+The important bit is the `then` part of the `if`. Return a value that is 
+the recursive parse of the selector. Otherwise, we just look up the keyword
+in the state (which is a very flat map).
+
+The return value now has the correct structure of the desired response:
+
+```clj
+{:a 1, :user {:user/name "Sam"}, :c 99}
+```
