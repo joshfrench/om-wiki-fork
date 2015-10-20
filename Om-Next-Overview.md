@@ -300,3 +300,11 @@ The return value now has the correct structure of the desired response:
 ```clj
 {:a 1, :user [{:user/name "Sam"}], :c 99}
 ```
+
+*IMPORTANT NOTE*: A join implies a there could be many results. That is the
+reason we've wrapped the parser result into a vector.
+
+In this case, we're just showing that you can use the parser to parse something
+you already know how to parse, and that in turn will call your read function.
+In a real application, you will almost certainly not call `parse` in quite this 
+way (since you need to actually do something to *run* your join!).
