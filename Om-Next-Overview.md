@@ -284,7 +284,7 @@ So, we can get a basic recursive parse using just a bit more flat data:
 
 (defn read [{:keys [state parse selector] :as env} key params]
   (if (= :user key)
-    {:value (parse env selector)}
+    {:value [(parse env selector)]}
     {:value (get @state key)}))
 
 (def my-parser (om/parser {:read read}))
@@ -298,5 +298,5 @@ in the state (which is a very flat map).
 The return value now has the correct structure of the desired response:
 
 ```clj
-{:a 1, :user {:user/name "Sam"}, :c 99}
+{:a 1, :user [{:user/name "Sam"}], :c 99}
 ```
