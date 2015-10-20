@@ -1,5 +1,8 @@
 # **WARNING: THIS DOCUMENT HAS NOT BEEN REVIEWED/APPROVED BY DAVID. IT MAY CONTAIN INCORRECT OR MISLEADING INFORMATION**
 
+Also, refresh your browser often. I'm pushing very frequent commits to this file
+at the moment.
+
 ## Introduction
 
 It is a good idea to start with [[Quick Start (om.next)]].
