@@ -612,3 +612,31 @@ means look up a person whose id 42. The response will be:
 
 Again, by convention, your read probably returns a map, but there is nothing
 to say that this couldn't be a more complex object (e.g. a Datascript Entity).
+
+### References and state
+
+In the earlier example of writing read/parser, the app state was using raw numbers
+as IDs. For demonstration purposes this was simpler (in that it required no
+further explanation), but you'll find it much easier to reason about your code
+if you store your references in the query grammar format above. It make the 
+data more obvious, and it also makes it trivial to write your read methods since
+the incoming key can just go straight to a `get-in`. Below is an example of
+our previous app state refactored to use reference notation:
+
+```clj
+(def app-state (atom {
+    :window/size [1920 1200]
+    :friends #{[:person/by-id 1] [:person/by-id 3]}
+    :person/by-id { 
+            1 { :id 1 :name "Sally" :age 22 :married false }
+            2 { :id 2 :name "Joe" :age 22 :married false }
+            3 {:id 3 :name "Paul" :age 22 :married true :married-to [:person/by-id 2]}
+            4 { :id 4 :name "Mary" :age 22 :married false } }
+     }))
+```
+
+If you now go back and work through the parser code, you'll see that a lot
+of it gets a bit shorter. Not a bad exercise for the reader. Those who
+have read [[Components, Identity & Normalization]] will recognize that
+the built-in normalization support can use your UI code to build
+normalized tables that look a lot like what you see above. 
