@@ -640,3 +640,277 @@ of it gets a bit shorter. Not a bad exercise for the reader. Those who
 have read [[Components, Identity & Normalization]] will recognize that
 the built-in normalization support can use your UI code to build
 normalized tables that look a lot like what you see above. 
+
+## Mutation
+
+OK, the mutation side of the grammar should now be easier to understand. Some of
+the details are the same: The parser understands the basic structure of the
+syntax, but you're responsible for the grunt work.
+
+Running mutations is done with `transact!`. For the moment we'll ignore the UI
+side of the equation and just concentrate on the data. It's important to
+understand that there are two concerns: changing the app state and updating
+the UI to reflect the changes. Your mutation functions don't have to worry
+(too much) about the UI. The details of UI update are still in a little bit
+of flux, and you can definitely get mutation working (i.e. changing app state)
+without thinking about the UI at all. 
+
+So, we'll start with understanding how to write our mutations, and we'll verify
+that our app state changes.
+
+### The primary mutation grammar
+
+Mutations go in a vector, just like reads. The *element* grammar looks just like
+a clojure function call (albeit a function of arity one that optionally takes a
+map).
+
+```clj
+(fire-missiles! {:target :foo})
+```
+
+So, a transaction is just a vector of these:
+
+```clj
+[ (make-friend { :person/by-id 42 })
+  (send-business-card { :person/by-id 33 }) ]
+```
+
+Now, this makes a lot of sense to those that are well-versed in Clojure(script),
+but for those that are starting out I want to point out that a transaction
+(the vector above) needs to be *data*. If we type it into our code as shown, the
+compiler will try to evaluate the plain lists (e.g. `(make-friend)`) and
+will crash with "symbol not found". Those "symbols" are not *meant* to be
+functions in our code, they are meant to be instructions to our `transact!`.
+
+Thus you'll often see them quoted:
+
+```clj
+'[ (f) (g) (h) ]
+```
+
+Unfortunately, plain quoting is kind of a pain when you want to embed values
+from variables, since everything is literal. If we use a different quote, the
+syntax quote, then we also have the ability to unquote with `~`:
+
+```clj
+(let [p 42]
+  `[ (f { :person ~p }) ]
+  )
+```
+
+The `~` is an unquote, which says "stop quoting for this next form". Alas, this
+still isn't quite right, because syntax quoting tries to "help you" (these are
+used in macros, where they do actually help) by putting namespaces on all of the
+symbols! Thus, `f` in the above example ends up with the current namespace
+prepended (e.g. `om-tutorial.core/f`). You can prevent this by namespacing your
+symbols manually. The symbols are all make-believe, so just make them work for
+your understanding:
+
+```clj
+(let [p 42]
+  `[ (people/make-friend { :person/by-id ~p } ]
+  )
+```
+
+Read up on quote, syntax quote, and unquote. If you're working in Om Next, it's
+time you understood how to quote.
+
+Another strategy is to use the `list` function to build the list:
+
+```clj
+[ (list 'make-friend {:p p} ) ]
+```
+
+This is both better and worse. `p` is properly expanded, we can use plain
+quoting on the symbol `make-friend`, namespacing isn't an issue, and there
+are no squiggles...but now we have the word list in there. 
+
+One might suggest
+
+```clj
+(def invoke-mutation list)
+```
+
+so you can write:
+
+```clj
+[(invoke-mutation 'make-friend {:p p})]
+```
+
+I'm sure others will write macros. Whatever. 
+
+### Checkpoint
+
+So, the summary of facts we covered so far:
+
+- Mutation grammar is just data. It looks like function calls, but should be
+  passed to transact as data (for transact to parse, not the cljs compiler)
+- The grammar uses lists, which the compiler will be sorely tempted to interpret
+  into function calls.
+- Use quoting (or whatever mechanism you want) to make sure `transact!` receives
+  the grammar unmolested.
+
+### The Pieces of the Mutation Puzzle
+
+There are several bits that fit together to make mutation work (and of course
+those pieces are also ultimately interested in your UI being up-to-date).
+
+The pieces are:
+
+- Reconciler : This is the bit that tries to merge novelty into the state. It
+  sits between your UI and the mutation functions you write. It is 
+  (mostly indirectly) invoked when you run `transact!`.
+- Parser : This is the same parser you were using for reads. When it sees
+  something that conforms to a `mutate` grammar, it tries to run it instead
+  of calling read. The reconciler uses the parser to understand the grammar
+  of the `transact!` statements.
+- Mutation functions: Code you write that understands how to actually change
+  the underlying application state. The parser ends up invoking these when
+  it sees a mutation grammar form.
+- Indexer : This one keeps track of things. It knows which components on the
+  screen share the same Ident (and therefore should update when that underlying
+  data changes). The indexer is incomplete, but my understanding of the plan
+  is to leverage this to help figure out what needs to update in the UI
+  when data changes with more interesting cases than just Ident. At the
+  moment, you have to help a bit. 
+
+### Your part: The mutate function
+
+Just like `read`, the `mutate` operation is just a function you write
+that is called with the signature `[env key params]`. In the case
+of mutate, the `key` will be the symbol you "called" and `params` will
+be the map you passed. `env` is as before (includes app state).
+
+Since you invented the symbol name, you invent the operations, but there
+is one catch: you don't do it during the call itself. You instead return
+a lambda to do it for you when the reconciler decides it wants to do it:
+
+```clj
+(defn mutate [env key params]
+   (cond
+      (= 'make-friend key) { :action (fn [] ...) }
+      (= 'send-business-card key) { :action (fn [] ...) }
+      ))
+```
+
+Of course, as before, you probably want to use a multimethod that dispatches
+on key instead of some monolith.
+
+**NOTE:** We're just talking state changes at the moment. There is more to say
+about how this works with the UI...there are more requirements.
+
+### Mutation Example (sans UI)
+
+The [[Quick Start (om.next)]] has already covered a mutation example, but
+for completeness, we'll include another sample here:
+
+```clj
+(def app-state (atom {:count 0}))
+
+(defmulti mutate om/dispatch)
+
+(defmethod mutate 'counter/add [{:keys [state]} key params]
+  (let [n (or (:n params) 1)]
+    {:action (fn [] (swap! state update :count (partial + n)))}
+    ))
+
+(def my-parser (om/parser {:mutate mutate}))
+
+(def reconciler (om/reconciler {:state app-state :parser my-parser}))
+```
+
+Now every time you run a `transact!` like this:
+
+```clj
+(om/transact! reconciler '[(counter/add {:n 3})])
+```
+
+the contents of `@app-state` will go up by amount `n`.
+
+*IMPORTANT*: You should not, in general, call `transact!` directly on the
+reconciler. Such a call is legal, but ...(*HELP*: someone tell me the
+badness. I know "David says don't do it, normally", but I cannot explain why.
+Does it cause a full re-render? I don't have all the facts here...I'm vamping).
+
+### Notes on Mutate
+
+So far, I'm aware of some restrictions:
+
+- Do not remove objects from normalized tables generated by Om Next. A GC is
+  planned for that kind of state, and removing the objects could cause bad
+  things to happen (e.g. are you sure the object isn't being rendered by
+  something else, or isn't needed in the future?)
+
+### More of the Mutate Story
+
+Om Next needs a little help from your mutation function. Sure, it is simple for
+you to go about writing new random bits of data into your app state, but Om Next
+can't read your mind (or your code, even though the latter might be
+possible...it *is* Clojurescript, after all).  
+
+The indexer and declared Ident in the UI code give it some ability to figure out
+what changed, but since your read functions could in fact do any number of
+interesting things (like derive aggregates) there is no way to completely
+automate the re-render of the UI (except by doing the pathalogical thing and
+re-render it all!).
+
+For your UI to work properly, you need to give Om Next some hints about what
+you changed. This is the purpose of the `:value` attribute in the return
+value of mutate (which I've elided to this point):
+
+(defmethod mutate 'counter/add [{:keys [state]} key params]
+  (let [n (or (:n params) 1)]
+    { :action (fn [] (swap! state update :count (partial + n)))
+      :value [:count] }
+    ))
+
+*HELP*: I know `:value` is a query, but I'm not clear on the details (and I 
+know they are not complete). I'm pretty sure it ends up being used as a key into
+the indexer to try to find components that rendered the data, but does it need
+to have the recursive bits?
+
+### Calling transact
+
+The general rule for calling `transact!` is to invoke it within a component
+instance that conceptually owns the target data of the mutation. The first
+argument to `transact!` is that component:
+
+```clj
+(defui Thing
+  static om/IQuery
+  (query [this] '[:boo])
+  Object
+  (render [this]
+      (dom/button #js { :onClick #(transact! this '[(change-boo)]) } )))
+```
+
+Components with no IQuery declaration should not invoke it, but instead should
+use callbacks. Subcomponents that wish to affect parents should do the same.
+This means simply passing a lambda through props.
+
+*Side note*: In discusson on the #om slack channel, it seems that it is likely
+as the indexer matures it may become possible to declare more abstractly what
+a component relies on such that Om Next can fully derive the UI update set. If
+this works out the rules around `transact!` will likely improve.
+
+## The UI (finally!!!)
+
+So, at this point you understand most of the basic state management code
+you'll need to write. We'll clarify the mutation story a bit more as we 
+talk about real UI, since the remaining bits of mutation have to do
+with our biggest UI concern: keeping the UI up-to-date with respect
+to the application state. Om Next already has a great story for a lot of this,
+and it will likely improve.
+
+Once you've understood the read function, parser, and query grammar then you
+should be capable of writing a UI component that gets something on the
+screen. Hopefully you've already done that in the [[Quick Start (om.next)]].
+
+In this section I want to make sure you understand:
+
+- How to compose the UI (and queries)
+- The difference between stateful and stateless components
+- A bit about how Om Next tracks queries
+- Proper use of `transact!`
+- How to force additional UI updates (possible hack) when using `transact!`
+- A bit more on Ident
