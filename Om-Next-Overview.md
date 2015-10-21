@@ -435,7 +435,120 @@ Now things get interesting, and I'm sure more than one reader will have
 an opinion on how to proceed. My aim is to show that the parser
 can be called recursively to handle these things, not to find
 the perfect structure for the parser in general, so I'm going 
-to do something simple:
+to do something simple.
 
+The primary trick I'm going to exploit is the fact that `env` is just a map, and
+that we can add stuff to it. When we are in the context of a person, we'll add
+`:person` to the environment, and pass that to parse. This makes parsing a
+selector like `[:name :age]` as trivial as:
 
+```clj
+(defmethod rread :name [{:keys [person]} key _] {:value (get person key)})
+(defmethod rread :age [{:keys [person]} key _] {:value (get person key)})
+(defmethod rread :married [{:keys [person]} key _] {:value (get person key)})
+
+(defmethod rread :friends [{:keys [state selector parse path] :as env} key params]
+  (let [friend-ids (get @state :friends)
+        get-person (fn [id]
+                     (let [raw-person (get-in @state [:people/by-id id])
+                           env' (dissoc env :selector) ; clear the parent selector
+                           env-with-person (assoc env' :person raw-person)]
+                       (parse env-with-person selector)
+                       ))
+        friends (mapv get-person friend-ids)]
+    {:value friends}
+    )
+  )
+```
+
+The three important bits:
+
+- We need to remove the :selector from the environment, otherwise our nested
+  read function will get the old selector on plain keywords, making it 
+  impossible to tell if the parser saw [:married-to] vs. { :married-to [...] }.
+- For convenience, we add `:person` to the environment.
+- The `rread` for plain scalars (like `:name`) are now trivial...just look on the
+  person in the environment!
+
+The final piece is hopefully pretty transparent at this point.  For
+`:married-to`, we have two possibilities: it is queried as a raw value
+`[:married-to]` or it is joined `{ :married-to [:attrs] }`. By clearing
+the selector in the `:friends` rread, we can tell the difference
+since parse will add back a selector if it parses a join.
+
+**NOTE to David**: Seems like we could clean the parser up a bit. Possibly
+pass the AST node type through to the reader, or at least clear the 
+selector automatically on a plain prop.
+
+So, our final bit of this parser could be:
+
+```clj
+(defmethod rread :married-to
+  [{:keys [state person parse selector] :as env} key params]
+  (let [partner-id (:married-to person)]
+    (cond
+      (and selector partner-id) { :value [(select-keys (get-in @state [:people/by-id partner-id]) selector)]}
+      :else {:value partner-id}
+      )))
+```
+
+If further recursion is to be supported on this selector, then rinse and repeat.
+
+For those who read to the end first, here is an overall runnable segment of code
+for this parser:
+
+```clj
+(def app-state (atom {
+                      :window/size  [1920 1200]
+                      :friends      #{1 3} ; these are people IDs...see map below for the objects themselves
+                      :people/by-id {
+                                     1 {:id 1 :name "Sally" :age 22 :married false}
+                                     2 {:id 2 :name "Joe" :age 22 :married false}
+                                     3 {:id 3 :name "Paul" :age 22 :married true :married-to 2}
+                                     4 {:id 4 :name "Mary" :age 22 :married false}}
+                      }))
+
+(def query-props [:window/size {:friends [:name :married :married-to]}])
+(def query-joined [:window/size {:friends [:name :married {:married-to [:name]}]}])
+
+(defmulti rread om/dispatch)
+
+(defmethod rread :default [{:keys [state]} key params] (println "YOU MISSED " key) nil)
+
+(defmethod rread :window/size [{:keys [state]} key params] {:value (get @state :window/size)})
+
+(defmethod rread :name [{:keys [person selector]} key params] {:value (get person key)})
+(defmethod rread :age [{:keys [person selector]} key params] {:value (get person key)})
+(defmethod rread :married [{:keys [person selector]} key params] {:value (get person key)})
+
+(defmethod rread :married-to
+  ;; person is placed in env by rread :friends
+  [{:keys [state person parse selector] :as env} key params]
+  (let [partner-id (:married-to person)]
+    (cond
+      (and selector partner-id) {:value [(select-keys (get-in @state [:people/by-id partner-id]) selector)]}
+      :else {:value partner-id}
+      )))
+
+(defmethod rread :friends [{:keys [state selector parse path] :as env} key params]
+  (let [friend-ids (get @state :friends)
+        keywords (filter keyword? selector)
+        joins (filter map? selector)
+        get-person (fn [id]
+                     (let [raw-person (get-in @state [:people/by-id id])
+                           env' (dissoc env :selector)
+                           env-with-person (assoc env' :person raw-person)]
+                       ;; recursively call parse w/modified env
+                       (parse env-with-person selector)
+                       ))
+        friends (mapv get-person friend-ids)]
+    {:value friends}
+    )
+  )
+
+(def my-parser (om/parser {:read rread}))
+
+(my-parser {:state app-state} query-props)
+(my-parser {:state app-state} query-joined)
+```
 
