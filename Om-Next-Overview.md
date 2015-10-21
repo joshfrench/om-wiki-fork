@@ -43,6 +43,12 @@ Let's start with the function that retrieve data, and the Grammar.
 
 ## Reads and the Query Grammar
 
+**NOTE**: You will often see quoting used in queries. Many of the examples
+in this document do not use quoting, because the data in question is
+just data. You should make sure you understand quoting, syntax quote, 
+and unquote (in Clojure(script)). Some of the grammar uses parens, 
+which is what leads to the quoting in examples.
+
 The basic read functions provide a "router/parser" in concept. The 
 base requirement is that they understand the Query Grammar, and
 return data in a form that matches the expected query response.
@@ -70,9 +76,12 @@ with additional ones on the way.
 
 ### Getting Started
 
-In order to get started, we'll just consider the two most common bits of query notation: keywords and joins.
+In order to get started, we'll just consider the two most common bits of query
+notation: keywords (props) and joins.  The params are simply that: parameters
+you want to pass to the query. These can be static data, and can also be
+manipulated. But more on that later.
 
-### Keyword
+### Keyword (prop)
 
 The simplest item in the vector is just a keyword. More than one indicates you want 
 a result for each:
@@ -311,3 +320,122 @@ In this case, we're just showing that you can use the parser to parse something
 you already know how to parse, and that in turn will call your read function.
 In a real application, you will almost certainly not call `parse` in quite this 
 way (since you need to actually do something to *run* your join!).
+
+So, let's put a little better state in our application, and write a 
+more realistic parser.
+
+### A Non-trivial, Recursive Example
+
+Let's start with the following hand-normalized application state. Note that 
+I'm not using the query grammar for object references (which take the 
+form [:kw id]). Writing a more complex parser will benefit from doing
+so, but it's our data, and we can do what we want to! (actually, there
+do seem to be some limits, but I'm still gaining clarity on that).
+
+```clj
+(def app-state (atom {
+    :window/size [1920 1200]
+    :friends #{1 3} ; these are people IDs...see map below for the objects themselves
+    :people/by-id { 
+            1 { :id 1 :name "Sally" :age 22 :married false }
+            2 { :id 2 :name "Joe" :age 22 :married false }
+            3 { :id 3 :name "Paul" :age 22 :married true }
+            4 { :id 4 :name "Mary" :age 22 :married false } }
+     }))
+```
+
+now we want to be able to write the following query:
+
+```clj
+(def query [:window/size {:friends [:name :married]}])
+```
+
+Here is where multi-methods start to come in handy. Let's use 
+one:
+
+```clj
+(defmulti rread om/dispatch) ; dispatch by key
+(defmethod rread :default [{:keys [state]} key params] nil)
+```
+
+The `om/dispatch` literally means dispatch by the `key` parameter.
+We also define a default method, so that if we fail we'll get
+an error message in our console, but the parse will continue
+(returning nil from a read elides that key in the result).
+
+Now we can do the easy case: If we see something ask for 
+window size:
+
+```clj
+(defmethod rread :window/size [{:keys [state]} key params] {:value (get @state :window/size)})
+```
+
+Bingo! We've got part of our parser. Try it out:
+
+```clj
+(def my-parser (om/parser {:read rread}))
+(my-parser {:state app-state} query)
+```
+
+and you should see:
+
+```clj
+{:window/size [1920 1200]}
+```
+
+The join result (`friends`) is elided because our default rread got
+called and returned `nil` (no results). OK, let's fix that:
+
+```clj
+(defmethod rread :friends [{:keys [state selector parse path]} key params]
+      (let [friend-ids (get @state :friends)
+            get-friend (fn [id] (get-in @state [:people/by-id id]))
+            friends (mapv get-friend friend-ids)]
+        {:value friends}
+        )
+      )
+```
+
+when you run the query now, you should see:
+
+```clj
+{:window/size [1920 1200], 
+ :friends [{:id 1, :name "Sally", :age 22, :married false} 
+           {:id 3, :name "Paul", :age 22, :married true, :married-to 2}]}
+```
+
+Looks *mostly* right...but we only asked for `:name` and `:married`. Your 
+read function is responsible for the value, and we ignored the selector!
+
+This is pretty easy to remedy with the standard `select-keys` function. Change
+the get-friend embedded function to:
+
+```clj
+            get-friend (fn [id] (select-keys (get-in @state [:people/by-id id]) selector))
+```
+
+and now you've satisfied the query:
+
+```clj
+{:window/size [1920 1200], 
+ :friends [{:name "Sally", :married false} 
+           {:name "Paul", :married true}]}
+```
+
+Those of you paying close attention will notice that we have yet to need
+recursion. We've also done something a bit naive: select-keys assumes
+that selector contains only keys! What if our query were instead:
+
+```clj
+(def query [:window/size 
+            {:friends [:name :married {:married-to [:name]} ]}])
+```
+
+Now things get interesting, and I'm sure more than one reader will have
+an opinion on how to proceed. My aim is to show that the parser
+can be called recursively to handle these things, not to find
+the perfect structure for the parser in general, so I'm going 
+to do something simple:
+
+
+
