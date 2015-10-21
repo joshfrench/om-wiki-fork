@@ -553,3 +553,62 @@ for this parser:
 (cljs.pprint/pprint (my-parser {:state app-state} query-joined))
 ```
 
+**NOTE**: Comments desired. I'm trying to make the points clear above, not write
+the most elegant possible recursive parser. If you have suggestions for
+improving the example that will make the main points more clear, please let
+me know on the Slack #om channel or via an issue/PR.
+
+## Parameters
+
+In the query grammar most kinds of rules accept parameters. These are intended
+to be combined with dynamic queries that will allow your UI to have some control
+over what you want to read from the application state (think filtering and such).
+
+Remember that Om Next has a story for integrating with server communications,
+and these queries are meant to be transparent (from the UI perspective). If
+the UI needs less data, parameters and propery selectors can fine-tune what
+gets transferred over the wire.
+
+As you might expect, the parameters are just passed into your read function as
+the third argument. You are responsible for both defining and interpreting them.
+They have no rules other than they are maps:
+
+```clj
+[(:load/start-time {:locale "es-MX" })]                ;;prop + params
+```
+
+invokes read with:
+
+```clj
+(your-read env :load/start-time { :locale "es-MX" })
+```
+
+the implication is clear. The code is up to you.
+
+## References
+
+The query grammar includes a form for an entity reference:
+
+```clj
+[:people/by-id id]
+```
+
+The *convention* is that the keyword be namespaced with the type of thing,
+and the name indicate how it is indexed. This is a convention, but since
+it is self-documenting, it is wise to follow it. 
+
+Also, remember the queries are enclosed in vectors, so asking for something by
+reference means you end up with a double-nested vector:
+
+```clj
+[ [:people/by-id 42] ]
+```
+
+means look up a person whose id 42. The response will be:
+
+```clj
+{ [:people/by-id 42] ...whatever your read returns... }
+```
+
+Again, by convention, your read probably returns a map, but there is nothing
+to say that this couldn't be a more complex object (e.g. a Datascript Entity).
