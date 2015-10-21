@@ -548,7 +548,8 @@ for this parser:
 
 (def my-parser (om/parser {:read rread}))
 
-(my-parser {:state app-state} query-props)
-(my-parser {:state app-state} query-joined)
+;; remember to add a require for cljs.pprint to your namespace
+(cljs.pprint/pprint (my-parser {:state app-state} query-props))
+(cljs.pprint/pprint (my-parser {:state app-state} query-joined))
 ```
 
